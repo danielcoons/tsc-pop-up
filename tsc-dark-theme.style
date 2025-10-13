@@ -1,0 +1,156 @@
+<Object>
+<Name>Theme.lvclass</Name>
+<NumLevels>1</NumLevels>
+<Class>Theme.lvclass</Class>
+<Version>1.0.0.33</Version>
+<Cluster>
+<Name>Theme.lvclass</Name>
+<NumElts>4</NumElts>
+<Cluster>
+<Name>dialog colors</Name>
+<NumElts>3</NumElts>
+<U32>
+<Name>Header</Name>
+<Val>2631720</Val>
+</U32>
+<U32>
+<Name>Background</Name>
+<Val>0</Val>
+</U32>
+<U32>
+<Name>Picture Background</Name>
+<Val>16777216</Val>
+</U32>
+</Cluster>
+<Cluster>
+<Name>button colors</Name>
+<NumElts>8</NumElts>
+<Cluster>
+<Name>false color</Name>
+<NumElts>2</NumElts>
+<U32>
+<Name>border</Name>
+<Val>5263440</Val>
+</U32>
+<U32>
+<Name>fill</Name>
+<Val>1184274</Val>
+</U32>
+</Cluster>
+<Cluster>
+<Name>hover color</Name>
+<NumElts>2</NumElts>
+<U32>
+<Name>border</Name>
+<Val>5263440</Val>
+</U32>
+<U32>
+<Name>fill</Name>
+<Val>5263440</Val>
+</U32>
+</Cluster>
+<Cluster>
+<Name>press color</Name>
+<NumElts>2</NumElts>
+<U32>
+<Name>border</Name>
+<Val>6579300</Val>
+</U32>
+<U32>
+<Name>fill</Name>
+<Val>6579300</Val>
+</U32>
+</Cluster>
+<U32>
+<Name>Boolean Text</Name>
+<Val>16777215</Val>
+</U32>
+<String>
+<Name>Text.Font Name</Name>
+<Val>Segoe UI</Val>
+</String>
+<U32>
+<Name>Text.Font Size</Name>
+<Val>20</Val>
+</U32>
+<Boolean>
+<Name>Bold?</Name>
+<Val>1</Val>
+</Boolean>
+<Boolean>
+<Name>Itallic?</Name>
+<Val>0</Val>
+</Boolean>
+</Cluster>
+<Cluster>
+<Name>message font</Name>
+<NumElts>5</NumElts>
+<String>
+<Name>Text.Font Name</Name>
+<Val>Segoe UI</Val>
+</String>
+<U32>
+<Name>Text.Font Size</Name>
+<Val>30</Val>
+</U32>
+<U32>
+<Name>Color</Name>
+<Val>16777215</Val>
+</U32>
+<EW>
+<Name>Text.Justification</Name>
+<Choice>Left</Choice>
+<Choice>Center</Choice>
+<Choice>Right</Choice>
+<Val>1</Val>
+</EW>
+<Cluster>
+<Name>messge color</Name>
+<NumElts>2</NumElts>
+<U32>
+<Name>border</Name>
+<Val>1184274</Val>
+</U32>
+<U32>
+<Name>fill</Name>
+<Val>1184274</Val>
+</U32>
+</Cluster>
+</Cluster>
+<Cluster>
+<Name>input</Name>
+<NumElts>5</NumElts>
+<String>
+<Name>Text.Font Name</Name>
+<Val>Segoe UI</Val>
+</String>
+<U32>
+<Name>Text.Font Size</Name>
+<Val>30</Val>
+</U32>
+<U32>
+<Name>Color</Name>
+<Val>16777215</Val>
+</U32>
+<EW>
+<Name>Text.Justification</Name>
+<Choice>Left</Choice>
+<Choice>Center</Choice>
+<Choice>Right</Choice>
+<Val>1</Val>
+</EW>
+<Cluster>
+<Name>messge color</Name>
+<NumElts>2</NumElts>
+<U32>
+<Name>border</Name>
+<Val>1184274</Val>
+</U32>
+<U32>
+<Name>fill</Name>
+<Val>1184274</Val>
+</U32>
+</Cluster>
+</Cluster>
+</Cluster>
+</Object>
