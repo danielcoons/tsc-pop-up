@@ -22,34 +22,6 @@
 		<Item Name="Timeout.lvclass" Type="LVClass" URL="../Standard/Timeout/Timeout.lvclass"/>
 		<Item Name="Two Button.lvclass" Type="LVClass" URL="../Standard/Two Button/Two Button.lvclass"/>
 	</Item>
-	<Item Name="Gif" Type="Folder">
-		<Item Name="Custom" Type="Folder">
-			<Property Name="NI.SortType" Type="Int">0</Property>
-			<Item Name="Gif - Input (DBL).lvclass" Type="LVClass" URL="../Gif/Custom/Gif - Input (DBL)/Gif - Input (DBL).lvclass"/>
-			<Item Name="Gif - Input (I32).lvclass" Type="LVClass" URL="../Gif/Custom/Gif - Input (I32)/Gif - Input (I32).lvclass"/>
-			<Item Name="Gif - Input (String).lvclass" Type="LVClass" URL="../Gif/Custom/Gif - Input (String)/Gif - Input (String).lvclass"/>
-			<Item Name="Gif - One Button.lvclass" Type="LVClass" URL="../Gif/Custom/Gif - One Button/Gif - One Button.lvclass"/>
-			<Item Name="Gif - Timeout One Button.lvclass" Type="LVClass" URL="../Gif/Custom/Gif - Timeout One Button/Gif - Timeout One Button.lvclass"/>
-			<Item Name="Gif - Timeout Two Button.lvclass" Type="LVClass" URL="../Gif/Custom/Gif - Timeout Two Button/Gif - Timeout Two Button.lvclass"/>
-			<Item Name="Gif - Timeout.lvclass" Type="LVClass" URL="../Gif/Custom/Gif - Timeout/Gif - Timeout.lvclass"/>
-			<Item Name="Gif - Two Button.lvclass" Type="LVClass" URL="../Gif/Custom/Gif - Two Button/Gif - Two Button.lvclass"/>
-		</Item>
-		<Item Name="Gif Parent.lvclass" Type="LVClass" URL="../Gif/Gif Parent.lvclass"/>
-	</Item>
-	<Item Name="SVG" Type="Folder">
-		<Item Name="Custom" Type="Folder">
-			<Property Name="NI.SortType" Type="Int">0</Property>
-			<Item Name="SVG - Input (DBL).lvclass" Type="LVClass" URL="../SVG/Custom/SVG - Input (DBL)/SVG - Input (DBL).lvclass"/>
-			<Item Name="SVG - Input (I32).lvclass" Type="LVClass" URL="../SVG/Custom/SVG - Input (I32)/SVG - Input (I32).lvclass"/>
-			<Item Name="SVG - Input (String).lvclass" Type="LVClass" URL="../SVG/Custom/SVG - Input (String)/SVG - Input (String).lvclass"/>
-			<Item Name="SVG - One Button.lvclass" Type="LVClass" URL="../SVG/Custom/SVG - One Button/SVG - One Button.lvclass"/>
-			<Item Name="SVG - Timeout One Button.lvclass" Type="LVClass" URL="../SVG/Custom/SVG - Timeout One Button/SVG - Timeout One Button.lvclass"/>
-			<Item Name="SVG - Timeout Two Button.lvclass" Type="LVClass" URL="../SVG/Custom/SVG - Timeout Two Button/SVG - Timeout Two Button.lvclass"/>
-			<Item Name="SVG - Timeout.lvclass" Type="LVClass" URL="../SVG/Custom/SVG - Timeout/SVG - Timeout.lvclass"/>
-			<Item Name="SVG - Two Button.lvclass" Type="LVClass" URL="../SVG/Custom/SVG - Two Button/SVG - Two Button.lvclass"/>
-		</Item>
-		<Item Name="SVG Parent.lvclass" Type="LVClass" URL="../SVG/SVG Parent.lvclass"/>
-	</Item>
 	<Item Name="PNG" Type="Folder">
 		<Item Name="Custom" Type="Folder">
 			<Property Name="NI.SortType" Type="Int">0</Property>

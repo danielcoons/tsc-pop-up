@@ -1,5 +1,38 @@
-# README - TSC Pop-Up
-Below are instructions to follow on how to extend the TSC Pop-Up library.
+# tsc-pop-up
+Find the VIP here:
+
+The TSC pop-up library gives LabVIEW developers the ability to create customized, beautiful pop-up dialogs to users to give instructions, warnings, or to get their attention!
+
+`Standard`  image pop-ups provide a consistent size and set of selected images
+
+`PNG` image pop-ups allow for developer to define a custom image to load while running and give the ability to customize placement of image and size of message text box
+
+`Plain` simple dialog for one, two, or three button message with a defined **Title**
+
+See Example VIs for usage of a few of the different types of pop ups.
+
+## Pop-Up Types:
+In general, each included pop-up library type has the following options:
+- One Button - dialog box with a single button option
+- Two Button - dialog with choices of `Y` or `N` option
+- Timeout - display message for defined time
+- Timeout One Button - display message until alloted time or toggle of single button
+- Timeout Two Button - display message until alloted time or choice of `Y` or `N` option (`N` is selected as default if time elapsed)
+- Input (DBL) - input DBL value
+- Input (I32)  - input an I32 value
+- Input (String) - input a String value
+
+        Note: the typical toggle action is RETURN will trigger the single or Y button and ESC will toggle the N button
+
+## Theme
+The pop-up library allows you to define a theme for the coloration of the pop ups in an application. Open the theme definer by going to:
+
+    Tools->TSC->Theme Definer UI...
+
+Edit and save the theme for use in LabVIEW with **download button** or `Ctrl+S`. For the application, the data is saved in a flattened XML file using a LabVIEW class.
+<img src="./assets/images/Theme Definer.png" alt = "Theme Definer UI" /> 
+
+Choose the color scheme and see a live preview with the standard `hourglass` image applied for reference on how the theme will appear when applied. Once completed, save the theme (*.style) file for use in your development. This theme can be loaded in program `initialization` by calling `Theme.lvclass:Load Theme.vi`.
 
 ## Additional Standard Images
 
@@ -7,20 +40,16 @@ For the standard pop-ups, the Graphics input is a type definition combo box but 
 
 1. Image Dimensions are `Height = 264px` and `Width = 420px` with a recommendation for whitespace around the image border so that no portion is cut off.
 
-2. The image must be a `PNG` file.
+2. The image must be a `PNG` or `JPEG` file.
 
-3. The image is stored in the `Graphics` folder.
+3. Modify the VI `Pop-Up.lvlib:Popup.lvclass:Convert Enum to Image.vi` and add a new case.
+  
+        Note: In original design, this VI would open from the file, but it is a much faster process to keep it standardized and hardcode the constant for the `image data` into the case structure
 
-As long as these rules are followed, developers can extend the standard library of pop-up images. If any images should be considered for addition to the library as a standard selection, email: <daniel.coons@tsc.com>. 
+As long as these rules are followed, developers can extend the standard library of pop-up images. If any images should be considered for addition to the library as a standard selection, add them to the [Issues](https://github.com/danielcoons/tsc-pop-up/issues) page.  
 
 ## Additional Pop-Up Type
 
 To create an additional pop-up type, create a new class and choose PopUp.lvclass as the parent. The required override method is called `Display.vi` - it is a protected method meaning that it cannot be called from within a VI outside of the class hierarchy. This means that an accessor VI or constructor of some sort must be created to launch the dialog. 
 
 The front panel of the dialog should be designed to mimic how the desired behavior should be for the application. Setting up a pop-up in this manner allows the developer to use any functionality built into the class to apply a theme, set up the message, and pass the information into the `Display.vi` override. 
-
-## Using with an Executable
-
-Using standard pop-ups with an executable have a setup expectation. They are expected to be included in the `data` folder of the EXE. This is defined in the `Convert Enum to Image.vi` function. This takes the name of the image and loads it as a PNG file to be displayed. Therefore, if the developer changes the output directory for these standard graphics, the standard pop-up images will not be found correctly. 
-
-If additional standard images are created by the developer for a project, they should also get located in this folder for the executable output.

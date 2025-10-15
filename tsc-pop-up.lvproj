@@ -33,6 +33,7 @@
 			<Item Name="Dialog Tester.vi" Type="VI" URL="../Test/Dialog Tester.vi"/>
 			<Item Name="message.ini" Type="Document" URL="../Test/message.ini"/>
 		</Item>
+		<Item Name="Example" Type="Folder"/>
 		<Item Name="Pop-Up.lvlib" Type="Library" URL="../Pop-Up.lvlib"/>
 		<Item Name="Theme.lvclass" Type="LVClass" URL="../Theme/Theme.lvclass"/>
 		<Item Name="Theme Definer UI.vi" Type="VI" URL="../Theme Definer UI.vi"/>
@@ -93,10 +94,7 @@
 				<Item Name="BuildHelpPath.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/BuildHelpPath.vi"/>
 				<Item Name="GetHelpDir.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/GetHelpDir.vi"/>
 				<Item Name="Empty Picture" Type="VI" URL="/&lt;vilib&gt;/picture/picture.llb/Empty Picture"/>
-				<Item Name="Application Directory.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/file.llb/Application Directory.vi"/>
 				<Item Name="Color to RGB.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/colorconv.llb/Color to RGB.vi"/>
-				<Item Name="G-Image.lvlib" Type="Library" URL="/&lt;vilib&gt;/Dataflow_G/G-Image/G-Image.lvlib"/>
-				<Item Name="g_image_64.dll" Type="Document" URL="/&lt;vilib&gt;/Dataflow_G/G-Image/Lib/g_image_64.dll"/>
 				<Item Name="Trim Whitespace One-Sided.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Trim Whitespace One-Sided.vi"/>
 			</Item>
 			<Item Name="user32.dll" Type="Document" URL="user32.dll">
