@@ -11,7 +11,7 @@ The TSC pop-up library gives LabVIEW developers the ability to create customized
 
 See Example VIs for usage of a few of the different types of pop ups.
 
-#### ! ~Double Click the Pop-Up for it to go Semi-Transparent~ !
+#### ! Double Click the Pop-Up for it to go Semi-Transparent !
 
 ## Pop-Up Types:
 In general, each included pop-up library type has the following options:
