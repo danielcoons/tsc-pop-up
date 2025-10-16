@@ -1,7 +1,7 @@
-<VI_Package_Builder_Settings Version="2020.1" Created_Date="2023-12-28 17:33:43" Modified_Date="2025-10-16 13:01:10" Creator="Daniel Coons" Comments="" ID="3a93e0ebe65bfb08aad58f00ea396c05">
+<VI_Package_Builder_Settings Version="2020.1" Created_Date="2023-12-28 17:33:43" Modified_Date="2025-10-16 13:15:28" Creator="Daniel Coons" Comments="" ID="30e60b55126427886a9262f11607fb11">
   <Library_General_Settings>
     <Package_File_Name>TSC_lib_TSC_Pop_Up</Package_File_Name>
-    <Library_Version>4.0.0.7</Library_Version>
+    <Library_Version>4.0.0.8</Library_Version>
     <Auto_Increment_Version>false</Auto_Increment_Version>
     <Library_Source_Folder>..</Library_Source_Folder>
     <Library_Output_Folder>.</Library_Output_Folder>
@@ -35,7 +35,7 @@
       <Release_Notes>v4.0.0
 -prepared for public release
 -moved SVG and GIF to their own libraries
--made compatible back to LabVIEW 2019
+-made compatible back to LabVIEW 2021
 -added examples
 -removed external package dependencies
 
@@ -466,7 +466,7 @@ v3.0.1 - minor bug fixes to the theme designer and added capability to define fo
         <Path>..\Theme</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>9CC14DD4415F467A3CE59EADA4BE8AC6</GUID>
+      <GUID>71928E51DD360D74AC9A2B6E2C0D8709</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -599,7 +599,7 @@ v3.0.1 - minor bug fixes to the theme designer and added capability to define fo
         <Path>..\Custom\Custom - Input (String)\Display Input (String) Popup (Custom).vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>B6446D98A5F67851CFA8F092E249E979</GUID>
+      <GUID>B591ECF6248FC7C7DF73D7503F2350EF</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -690,7 +690,7 @@ v3.0.1 - minor bug fixes to the theme designer and added capability to define fo
         <Path>..\Popup\Close Pop-Up (Two Button Choice).vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>3830CECC6E8975538ED59BD78E3E0AC0</GUID>
+      <GUID>1AE362A36C9C575AC665F6C57F01BE8C</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -809,7 +809,7 @@ v3.0.1 - minor bug fixes to the theme designer and added capability to define fo
         <Path>..\Theme\Temp - Change Font.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>D4EE9832C9D8EDB1CDCD80E2331C727A</GUID>
+      <GUID>732BF68AE657905B82F6B455EEDA1C79</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -872,7 +872,7 @@ v3.0.1 - minor bug fixes to the theme designer and added capability to define fo
         <Path>..\Plain\Plain - Three Button\Display Three Button Popup (Plain).vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>E074E66501709984FD4873329ABE051A</GUID>
+      <GUID>FA4C881DCF2DCBF3D5C850ACFF574A88</GUID>
     </Functions_Palette_Data>
   </Library_Palette_Definition>
 </VI_Package_Builder_Settings>
