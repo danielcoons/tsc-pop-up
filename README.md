@@ -1,5 +1,5 @@
 # tsc-pop-up
-Find the VIP here:
+Find the VIP here: [![Image](https://www.vipm.io/package/tsc_lib_tsc_pop_up/badge.svg?metric=installs)](https://www.vipm.io/package/tsc_lib_tsc_pop_up/) [![Image](https://www.vipm.io/package/tsc_lib_tsc_pop_up/badge.svg?metric=stars)](https://www.vipm.io/package/tsc_lib_tsc_pop_up/)
 
 The TSC pop-up library gives LabVIEW developers the ability to create customized, beautiful pop-up dialogs to users to give instructions, warnings, or to get their attention!
 
