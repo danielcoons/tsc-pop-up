@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 - Future features to include
 
+## [4.0.0] - 10.16.2025
+### Added
+- Released the tool as a public, open-source project
+- Example VI and style output to show ability to theme the dialogs
+
+### Changed
+- Updated minimum compatible version to LabVIEW 2021
+
+### Removed
+- Moved the GIF and SVG pop-up types to their own repos because of a package dependency needed
+- External package dependency for this version
+
 ## [3.6.0] - 10.22.2024
 ### Added
 - Added a new data member access method to track the `Timeout` result; tracked as a Boolean and is written and read in all timeout pop up types
