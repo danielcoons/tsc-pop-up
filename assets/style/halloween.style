@@ -2,7 +2,7 @@
 <Name>Theme.lvclass</Name>
 <NumLevels>1</NumLevels>
 <Class>Theme.lvclass</Class>
-<Version>1.0.0.33</Version>
+<Version>4.0.0.0</Version>
 <Cluster>
 <Name>Theme.lvclass</Name>
 <NumElts>4</NumElts>
@@ -11,15 +11,15 @@
 <NumElts>3</NumElts>
 <U32>
 <Name>Header</Name>
-<Val>1668818</Val>
+<Val>0</Val>
 </U32>
 <U32>
 <Name>Background</Name>
-<Val>1668818</Val>
+<Val>16428656</Val>
 </U32>
 <U32>
 <Name>Picture Background</Name>
-<Val>16748889</Val>
+<Val>16777216</Val>
 </U32>
 </Cluster>
 <Cluster>
@@ -30,11 +30,11 @@
 <NumElts>2</NumElts>
 <U32>
 <Name>border</Name>
-<Val>14474460</Val>
+<Val>9868950</Val>
 </U32>
 <U32>
 <Name>fill</Name>
-<Val>16777215</Val>
+<Val>9004668</Val>
 </U32>
 </Cluster>
 <Cluster>
@@ -42,11 +42,11 @@
 <NumElts>2</NumElts>
 <U32>
 <Name>border</Name>
-<Val>14474460</Val>
+<Val>13816530</Val>
 </U32>
 <U32>
 <Name>fill</Name>
-<Val>14474460</Val>
+<Val>10386578</Val>
 </U32>
 </Cluster>
 <Cluster>
@@ -54,16 +54,16 @@
 <NumElts>2</NumElts>
 <U32>
 <Name>border</Name>
-<Val>1067897</Val>
+<Val>6579300</Val>
 </U32>
 <U32>
 <Name>fill</Name>
-<Val>1067897</Val>
+<Val>7755883</Val>
 </U32>
 </Cluster>
 <U32>
 <Name>Boolean Text</Name>
-<Val>1668818</Val>
+<Val>14869218</Val>
 </U32>
 <String>
 <Name>Text.Font Name</Name>
@@ -87,15 +87,15 @@
 <NumElts>5</NumElts>
 <String>
 <Name>Text.Font Name</Name>
-<Val>Segoe UI</Val>
+<Val>Chiller</Val>
 </String>
 <U32>
 <Name>Text.Font Size</Name>
-<Val>30</Val>
+<Val>72</Val>
 </U32>
 <U32>
 <Name>Color</Name>
-<Val>0</Val>
+<Val>15790320</Val>
 </U32>
 <EW>
 <Name>Text.Justification</Name>
@@ -109,11 +109,11 @@
 <NumElts>2</NumElts>
 <U32>
 <Name>border</Name>
-<Val>16777215</Val>
+<Val>13816530</Val>
 </U32>
 <U32>
 <Name>fill</Name>
-<Val>16777215</Val>
+<Val>9868950</Val>
 </U32>
 </Cluster>
 </Cluster>
@@ -130,7 +130,7 @@
 </U32>
 <U32>
 <Name>Color</Name>
-<Val>0</Val>
+<Val>15790320</Val>
 </U32>
 <EW>
 <Name>Text.Justification</Name>
@@ -144,11 +144,11 @@
 <NumElts>2</NumElts>
 <U32>
 <Name>border</Name>
-<Val>14474460</Val>
+<Val>13816530</Val>
 </U32>
 <U32>
 <Name>fill</Name>
-<Val>16777215</Val>
+<Val>9868950</Val>
 </U32>
 </Cluster>
 </Cluster>

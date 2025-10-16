@@ -1,6 +1,6 @@
 ﻿<?xml version='1.0' encoding='UTF-8'?>
-<Project Type="Project" LVVersion="19008000">
-	<Property Name="NI.LV.All.SaveVersion" Type="Str">19.0</Property>
+<Project Type="Project" LVVersion="21008000">
+	<Property Name="NI.LV.All.SaveVersion" Type="Str">21.0</Property>
 	<Property Name="NI.LV.All.SourceOnly" Type="Bool">true</Property>
 	<Property Name="NI.Project.Description" Type="Str"></Property>
 	<Item Name="My Computer" Type="My Computer">
@@ -33,7 +33,28 @@
 			<Item Name="Dialog Tester.vi" Type="VI" URL="../Test/Dialog Tester.vi"/>
 			<Item Name="message.ini" Type="Document" URL="../Test/message.ini"/>
 		</Item>
-		<Item Name="Example" Type="Folder"/>
+		<Item Name="assets" Type="Folder">
+			<Item Name="images" Type="Folder">
+				<Item Name="dbl-input.png" Type="Document" URL="../assets/images/dbl-input.png"/>
+				<Item Name="i32-input.png" Type="Document" URL="../assets/images/i32-input.png"/>
+				<Item Name="one-button.png" Type="Document" URL="../assets/images/one-button.png"/>
+				<Item Name="str-input.png" Type="Document" URL="../assets/images/str-input.png"/>
+				<Item Name="Theme Definer.png" Type="Document" URL="../assets/images/Theme Definer.png"/>
+				<Item Name="timeout-one.png" Type="Document" URL="../assets/images/timeout-one.png"/>
+				<Item Name="timeout-two.png" Type="Document" URL="../assets/images/timeout-two.png"/>
+				<Item Name="timeout.png" Type="Document" URL="../assets/images/timeout.png"/>
+				<Item Name="two-button.png" Type="Document" URL="../assets/images/two-button.png"/>
+				<Item Name="well-done.png" Type="Document" URL="../assets/images/well-done.png"/>
+			</Item>
+			<Item Name="style" Type="Folder">
+				<Item Name="halloween.style" Type="Document" URL="../assets/style/halloween.style"/>
+				<Item Name="tsc-dark-theme.style" Type="Document" URL="../assets/style/tsc-dark-theme.style"/>
+				<Item Name="tsc-default-theme.style" Type="Document" URL="../assets/style/tsc-default-theme.style"/>
+			</Item>
+		</Item>
+		<Item Name="Example" Type="Folder">
+			<Item Name="main--pop up example.vi" Type="VI" URL="../Example/main--pop up example.vi"/>
+		</Item>
 		<Item Name="Pop-Up.lvlib" Type="Library" URL="../Pop-Up.lvlib"/>
 		<Item Name="Theme.lvclass" Type="LVClass" URL="../Theme/Theme.lvclass"/>
 		<Item Name="Theme Definer UI.vi" Type="VI" URL="../Theme Definer UI.vi"/>
@@ -95,7 +116,6 @@
 				<Item Name="GetHelpDir.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/GetHelpDir.vi"/>
 				<Item Name="Empty Picture" Type="VI" URL="/&lt;vilib&gt;/picture/picture.llb/Empty Picture"/>
 				<Item Name="Color to RGB.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/colorconv.llb/Color to RGB.vi"/>
-				<Item Name="Trim Whitespace One-Sided.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Trim Whitespace One-Sided.vi"/>
 			</Item>
 			<Item Name="user32.dll" Type="Document" URL="user32.dll">
 				<Property Name="NI.PreserveRelativePath" Type="Bool">true</Property>
