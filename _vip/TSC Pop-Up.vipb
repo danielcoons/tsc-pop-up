@@ -1,7 +1,7 @@
-<VI_Package_Builder_Settings Version="2020.1" Created_Date="2023-12-28 17:33:43" Modified_Date="2025-10-16 13:15:28" Creator="Daniel Coons" Comments="" ID="30e60b55126427886a9262f11607fb11">
+<VI_Package_Builder_Settings Version="2020.1" Created_Date="2023-12-28 17:33:43" Modified_Date="2025-10-16 13:29:17" Creator="Daniel Coons" Comments="" ID="8bbe2aaf27d086bf1725390a786d79b2">
   <Library_General_Settings>
     <Package_File_Name>TSC_lib_TSC_Pop_Up</Package_File_Name>
-    <Library_Version>4.0.0.8</Library_Version>
+    <Library_Version>4.0.0.9</Library_Version>
     <Auto_Increment_Version>false</Auto_Increment_Version>
     <Library_Source_Folder>..</Library_Source_Folder>
     <Library_Output_Folder>.</Library_Output_Folder>
@@ -466,7 +466,7 @@ v3.0.1 - minor bug fixes to the theme designer and added capability to define fo
         <Path>..\Theme</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>71928E51DD360D74AC9A2B6E2C0D8709</GUID>
+      <GUID>EA667026C43400965D44118A6D56E194</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -599,7 +599,7 @@ v3.0.1 - minor bug fixes to the theme designer and added capability to define fo
         <Path>..\Custom\Custom - Input (String)\Display Input (String) Popup (Custom).vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>B591ECF6248FC7C7DF73D7503F2350EF</GUID>
+      <GUID>1D4D295861ECC882DAFF50D1379D6E79</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -690,7 +690,7 @@ v3.0.1 - minor bug fixes to the theme designer and added capability to define fo
         <Path>..\Popup\Close Pop-Up (Two Button Choice).vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>1AE362A36C9C575AC665F6C57F01BE8C</GUID>
+      <GUID>4FF28486BB832C96F99679170B61AB71</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -784,20 +784,6 @@ v3.0.1 - minor bug fixes to the theme designer and added capability to define fo
       <Items_Data>
         <Type>Item</Type>
         <Sub_Palette_Index>-1</Sub_Palette_Index>
-        <NameSub_Menu_Name>Read Theme.vi</NameSub_Menu_Name>
-        <Short_Name/>
-        <is_Merge_VI>false</is_Merge_VI>
-        <Position>
-          <Row>2</Row>
-          <Column>3</Column>
-        </Position>
-        <Icon>00000000</Icon>
-        <Path>..\Theme\Read Theme.vi</Path>
-        <VI_Title/>
-      </Items_Data>
-      <Items_Data>
-        <Type>Item</Type>
-        <Sub_Palette_Index>-1</Sub_Palette_Index>
         <NameSub_Menu_Name>Temp - Change Font.vi</NameSub_Menu_Name>
         <Short_Name/>
         <is_Merge_VI>false</is_Merge_VI>
@@ -809,7 +795,35 @@ v3.0.1 - minor bug fixes to the theme designer and added capability to define fo
         <Path>..\Theme\Temp - Change Font.vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>732BF68AE657905B82F6B455EEDA1C79</GUID>
+      <Items_Data>
+        <Type>Item</Type>
+        <Sub_Palette_Index>-1</Sub_Palette_Index>
+        <NameSub_Menu_Name>Read Theme.vi</NameSub_Menu_Name>
+        <Short_Name/>
+        <is_Merge_VI>false</is_Merge_VI>
+        <Position>
+          <Row>1</Row>
+          <Column>3</Column>
+        </Position>
+        <Icon>00000000</Icon>
+        <Path>..\Theme\Read Theme.vi</Path>
+        <VI_Title/>
+      </Items_Data>
+      <Items_Data>
+        <Type>Item</Type>
+        <Sub_Palette_Index>-1</Sub_Palette_Index>
+        <NameSub_Menu_Name>Load Theme - Light Gray.vi</NameSub_Menu_Name>
+        <Short_Name/>
+        <is_Merge_VI>false</is_Merge_VI>
+        <Position>
+          <Row>2</Row>
+          <Column>3</Column>
+        </Position>
+        <Icon>00000000</Icon>
+        <Path>..\Theme\Load Theme - Light Gray.vi</Path>
+        <VI_Title/>
+      </Items_Data>
+      <GUID>21B2E6B92869B68AB2058BBC59D30C92</GUID>
     </Functions_Palette_Data>
     <Functions_Palette_Data>
       <Parent_Palette_Index>0</Parent_Palette_Index>
@@ -872,7 +886,7 @@ v3.0.1 - minor bug fixes to the theme designer and added capability to define fo
         <Path>..\Plain\Plain - Three Button\Display Three Button Popup (Plain).vi</Path>
         <VI_Title/>
       </Items_Data>
-      <GUID>FA4C881DCF2DCBF3D5C850ACFF574A88</GUID>
+      <GUID>B6BBBF94F6C4663BDF65F06A3439808F</GUID>
     </Functions_Palette_Data>
   </Library_Palette_Definition>
 </VI_Package_Builder_Settings>
