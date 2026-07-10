@@ -1,4 +1,12 @@
 # tsc-pop-up
+
+<!-- labview-ci:dashboard -->
+## LabVIEW CI
+
+[![LabVIEW CI dashboard](https://img.shields.io/badge/LabVIEW%20CI-dashboard-2ea44f)](https://danielcoons.github.io/tsc-pop-up/)
+
+LabVIEW CI runs on every pull request. See the [**CI dashboard**](https://danielcoons.github.io/tsc-pop-up/) for build status, VI Analyzer results, VI diffs, and mass-compile reports.
+
 Find the VIP here: [![Image](https://www.vipm.io/package/tsc_lib_tsc_pop_up/badge.svg?metric=installs)](https://www.vipm.io/package/tsc_lib_tsc_pop_up/) [![Image](https://www.vipm.io/package/tsc_lib_tsc_pop_up/badge.svg?metric=stars)](https://www.vipm.io/package/tsc_lib_tsc_pop_up/)
 
 The TSC pop-up library gives LabVIEW developers the ability to create customized, beautiful pop-up dialogs to users to give instructions, warnings, or to get their attention!
