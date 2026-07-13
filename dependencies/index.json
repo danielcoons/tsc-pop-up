@@ -1,8 +1,15 @@
 {
   "schema": 1,
   "repo": "danielcoons/tsc-pop-up",
-  "sha": "87bde951dbdc3cf136daa2e8caabd40b425e8f5d",
+  "sha": "b16947476f664a7c93e4dbc695ae7b49679033a7",
   "revisions": [
+    {
+      "sha": "b16947476f664a7c93e4dbc695ae7b49679033a7",
+      "short": "b169474",
+      "message": "updated the antidoc packages json",
+      "author": "daniel-coons",
+      "date": "2026-07-13T22:00:14Z"
+    },
     {
       "sha": "87bde951dbdc3cf136daa2e8caabd40b425e8f5d",
       "short": "87bde95",
