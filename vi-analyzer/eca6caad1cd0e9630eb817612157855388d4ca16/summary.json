@@ -1,0 +1,275 @@
+{
+  "meta": {
+    "sha": "eca6caad1cd0e9630eb817612157855388d4ca16",
+    "short": "eca6caa",
+    "platform": "windows",
+    "repo": "danielcoons/tsc-pop-up",
+    "pages_url": "https://danielcoons.github.io/tsc-pop-up",
+    "pages_base": "../..",
+    "commit": {
+      "message": "Merge pull request #3 from danielcoons/develop",
+      "author": "Daniel Coons",
+      "date": "2026-07-13T11:41:58-04:00"
+    },
+    "generated_utc": "2026-07-13 20:05 UTC",
+    "analysis_date": "Monday, July 13, 2026 8:04:50 PM",
+    "duration": "00:04:36.40"
+  },
+  "summary": {
+    "vis_analyzed": 156,
+    "tests_run": 16224,
+    "passed": 15522,
+    "failed": 702,
+    "skipped": 0,
+    "findings": 957,
+    "vis_with_findings": 138
+  },
+  "errors": {
+    "vi_not_loadable": 0,
+    "test_not_loadable": 0,
+    "test_not_runnable": 0,
+    "test_error_out": 0
+  },
+  "rule_counts": [
+    {
+      "test": "Error Cluster Wired",
+      "severity": "correctness",
+      "count": 184,
+      "vi_count": 53
+    },
+    {
+      "test": "Spell Check",
+      "severity": "documentation",
+      "count": 150,
+      "vi_count": 118
+    },
+    {
+      "test": "Panel Size and Position",
+      "severity": "style",
+      "count": 121,
+      "vi_count": 85
+    },
+    {
+      "test": "Wire Bends",
+      "severity": "style",
+      "count": 103,
+      "vi_count": 64
+    },
+    {
+      "test": "Font Usage",
+      "severity": "style",
+      "count": 60,
+      "vi_count": 24
+    },
+    {
+      "test": "Platform Portability",
+      "severity": "style",
+      "count": 46,
+      "vi_count": 23
+    },
+    {
+      "test": "Diagram Size",
+      "severity": "style",
+      "count": 40,
+      "vi_count": 40
+    },
+    {
+      "test": "Wire Crossings",
+      "severity": "style",
+      "count": 40,
+      "vi_count": 10
+    },
+    {
+      "test": "Control Alignment",
+      "severity": "style",
+      "count": 39,
+      "vi_count": 39
+    },
+    {
+      "test": "Wires Under Objects",
+      "severity": "style",
+      "count": 32,
+      "vi_count": 8
+    },
+    {
+      "test": "Case Structure Default Frame",
+      "severity": "style",
+      "count": 13,
+      "vi_count": 10
+    },
+    {
+      "test": "Pattern Label",
+      "severity": "style",
+      "count": 13,
+      "vi_count": 9
+    },
+    {
+      "test": "Enabled Debugging",
+      "severity": "performance",
+      "count": 11,
+      "vi_count": 11
+    },
+    {
+      "test": "Connector Inputs and Outputs",
+      "severity": "correctness",
+      "count": 9,
+      "vi_count": 9
+    },
+    {
+      "test": "Unused Code",
+      "severity": "performance",
+      "count": 9,
+      "vi_count": 9
+    },
+    {
+      "test": "Fan Out",
+      "severity": "style",
+      "count": 8,
+      "vi_count": 8
+    },
+    {
+      "test": "For Loop Error Handling",
+      "severity": "correctness",
+      "count": 8,
+      "vi_count": 5
+    },
+    {
+      "test": "Control Terminal Wiring",
+      "severity": "style",
+      "count": 7,
+      "vi_count": 2
+    },
+    {
+      "test": "Transparent Labels",
+      "severity": "style",
+      "count": 7,
+      "vi_count": 7
+    },
+    {
+      "test": "Alignment Grid Setting",
+      "severity": "style",
+      "count": 6,
+      "vi_count": 6
+    },
+    {
+      "test": "Dialog Controls",
+      "severity": "style",
+      "count": 5,
+      "vi_count": 1
+    },
+    {
+      "test": "Overlapping Controls",
+      "severity": "correctness",
+      "count": 5,
+      "vi_count": 5
+    },
+    {
+      "test": "Tunnel Position",
+      "severity": "style",
+      "count": 5,
+      "vi_count": 3
+    },
+    {
+      "test": "Value Property Usage",
+      "severity": "performance",
+      "count": 5,
+      "vi_count": 1
+    },
+    {
+      "test": "Arrays and Strings in Loops",
+      "severity": "performance",
+      "count": 4,
+      "vi_count": 3
+    },
+    {
+      "test": "Case Structure with String Range",
+      "severity": "style",
+      "count": 4,
+      "vi_count": 3
+    },
+    {
+      "test": "Control VI Type",
+      "severity": "style",
+      "count": 3,
+      "vi_count": 3
+    },
+    {
+      "test": "Property Reads and Writes",
+      "severity": "style",
+      "count": 3,
+      "vi_count": 3
+    },
+    {
+      "test": "Globals and Locals",
+      "severity": "style",
+      "count": 2,
+      "vi_count": 1
+    },
+    {
+      "test": "Inlinable VIs",
+      "severity": "performance",
+      "count": 2,
+      "vi_count": 2
+    },
+    {
+      "test": "Node Count",
+      "severity": "style",
+      "count": 2,
+      "vi_count": 2
+    },
+    {
+      "test": "String Constant Style",
+      "severity": "style",
+      "count": 2,
+      "vi_count": 1
+    },
+    {
+      "test": "VI Size",
+      "severity": "style",
+      "count": 2,
+      "vi_count": 2
+    },
+    {
+      "test": "Array Constant Style",
+      "severity": "style",
+      "count": 1,
+      "vi_count": 1
+    },
+    {
+      "test": "Coercion Dots",
+      "severity": "performance",
+      "count": 1,
+      "vi_count": 1
+    },
+    {
+      "test": "Comment Usage",
+      "severity": "documentation",
+      "count": 1,
+      "vi_count": 1
+    },
+    {
+      "test": "Default Icon",
+      "severity": "style",
+      "count": 1,
+      "vi_count": 1
+    },
+    {
+      "test": "For Loop Iteration Count",
+      "severity": "style",
+      "count": 1,
+      "vi_count": 1
+    },
+    {
+      "test": "Hidden Tunnels",
+      "severity": "correctness",
+      "count": 1,
+      "vi_count": 1
+    },
+    {
+      "test": "Modularity Index",
+      "severity": "style",
+      "count": 1,
+      "vi_count": 1
+    }
+  ]
+}
