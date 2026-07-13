@@ -1,0 +1,440 @@
+{
+  "schema": 1,
+  "repo": "danielcoons/tsc-pop-up",
+  "sha": "c072c4e49b5729ab34a4716061178f905462e8a9",
+  "revisions": [
+    {
+      "sha": "c072c4e49b5729ab34a4716061178f905462e8a9",
+      "short": "c072c4e",
+      "message": "Add LabVIEW CI pipeline",
+      "author": "Daniel Coons",
+      "date": "2026-07-13T20:07:29Z"
+    },
+    {
+      "sha": "4f3babcb4701d9870c512ceb68f831225b07e5a7",
+      "short": "4f3babc",
+      "message": "Delete .github directory",
+      "author": "Daniel Coons",
+      "date": "2026-07-13T19:58:28Z"
+    },
+    {
+      "sha": "ce28ba0e4b6eb59a6adb656ac85587a51e188977",
+      "short": "ce28ba0",
+      "message": "trying to setup vi analyzer and antidoc to work",
+      "author": "daniel-coons",
+      "date": "2026-07-13T19:07:32Z"
+    },
+    {
+      "sha": "eca6caad1cd0e9630eb817612157855388d4ca16",
+      "short": "eca6caa",
+      "message": "Merge pull request #3 from danielcoons/develop",
+      "author": "Daniel Coons",
+      "date": "2026-07-13T15:41:58Z"
+    },
+    {
+      "sha": "d160afc6add9ee1c80f270142d53003960db3142",
+      "short": "d160afc",
+      "message": "documentation cleanup and VI settings updated to turn off debugging",
+      "author": "daniel-coons",
+      "date": "2026-07-13T02:43:24Z"
+    },
+    {
+      "sha": "400d3ee5ba99f6daac8c7ca67ce99a23229545bb",
+      "short": "400d3ee",
+      "message": "Add 'develop' branch to workflow triggers",
+      "author": "Daniel Coons",
+      "date": "2026-07-11T22:05:14Z"
+    },
+    {
+      "sha": "8e7530810e645c5d624eae20ec4f26b652ad33c5",
+      "short": "8e75308",
+      "message": "delete the default config",
+      "author": "daniel-coons",
+      "date": "2026-07-11T01:22:37Z"
+    },
+    {
+      "sha": "be79c56d9c5368f6114da0e17c1d921f9ae0a87d",
+      "short": "be79c56",
+      "message": "new vi analyzer template",
+      "author": "daniel-coons",
+      "date": "2026-07-11T01:14:41Z"
+    },
+    {
+      "sha": "6c421addf74a456d8e55d7535abf74cfef0224b0",
+      "short": "6c421ad",
+      "message": "updated overall coding style throughout all VIs",
+      "author": "daniel-coons",
+      "date": "2026-07-11T01:14:18Z"
+    },
+    {
+      "sha": "d7fdde7c44de337ca0483d6388ebcf84a6ddc7c5",
+      "short": "d7fdde7",
+      "message": "Merge branch 'main' into develop",
+      "author": "daniel-coons",
+      "date": "2026-07-10T15:07:39Z"
+    },
+    {
+      "sha": "ae335db4b8031bd9271e39b4db59c8cda1bcdbeb",
+      "short": "ae335db",
+      "message": "Add LabVIEW CI pipeline",
+      "author": "Daniel Coons",
+      "date": "2026-07-10T13:06:25Z"
+    },
+    {
+      "sha": "1e6074a20ae24900dc20c617d22202421684df54",
+      "short": "1e6074a",
+      "message": "Merge branch 'develop'",
+      "author": "daniel-coons",
+      "date": "2025-10-16T17:47:18Z"
+    },
+    {
+      "sha": "ef536f943e0e0d03bb15bea17b05ee19d8b1dea0",
+      "short": "ef536f9",
+      "message": "link to vipm",
+      "author": "daniel-coons",
+      "date": "2025-10-16T17:47:02Z"
+    },
+    {
+      "sha": "d58e71090fc7a4b0f0668f67d411a7f0f740c216",
+      "short": "d58e710",
+      "message": "Merge tag 'v4.0.0' into develop",
+      "author": "daniel-coons",
+      "date": "2025-10-16T17:34:05Z"
+    },
+    {
+      "sha": "03fcdb0f4fca853ae68ab278017ab31d436b5bc4",
+      "short": "03fcdb0",
+      "message": "Merge branch 'release/v4.0.0'",
+      "author": "daniel-coons",
+      "date": "2025-10-16T17:34:04Z"
+    },
+    {
+      "sha": "8da7fa2af6d7036611a50abab5b4e19b8ca28db1",
+      "short": "8da7fa2",
+      "message": "missed a VI on the palette",
+      "author": "daniel-coons",
+      "date": "2025-10-16T17:33:05Z"
+    },
+    {
+      "sha": "3cb5807e882e296e52c2d765e88281cd9ae49b45",
+      "short": "3cb5807",
+      "message": "Merge tag 'v4.0.0' into develop",
+      "author": "daniel-coons",
+      "date": "2025-10-16T17:17:25Z"
+    },
+    {
+      "sha": "f67ec060e2093b4f0237a692c148292c9b38e60f",
+      "short": "f67ec06",
+      "message": "Merge branch 'release/v4.0.0'",
+      "author": "daniel-coons",
+      "date": "2025-10-16T17:17:24Z"
+    },
+    {
+      "sha": "df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b",
+      "short": "df6ef8d",
+      "message": "updated documentation and changelog; rebuilt package for release",
+      "author": "daniel-coons",
+      "date": "2025-10-16T17:16:08Z"
+    },
+    {
+      "sha": "d67b737a4e3728d906e8163b9bffabb86c8f1d63",
+      "short": "d67b737",
+      "message": "turns out i couldn't support 2019 with some of what i was using, so min. version updated to 2021 now",
+      "author": "daniel-coons",
+      "date": "2025-10-16T17:06:17Z"
+    },
+    {
+      "sha": "b1e50bb6940788fae44af7a5b704498ddcc86901",
+      "short": "b1e50bb",
+      "message": "updated the vip build",
+      "author": "daniel-coons",
+      "date": "2025-10-15T23:26:29Z"
+    },
+    {
+      "sha": "cc09dfec0897af335ef622eb0a8671b2d98c231d",
+      "short": "cc09dfe",
+      "message": "discovered the markdown strikethrough by accident......",
+      "author": "daniel-coons",
+      "date": "2025-10-15T19:33:18Z"
+    },
+    {
+      "sha": "bbd165f2105e448232e369d7ec8c2f844c158bde",
+      "short": "bbd165f",
+      "message": "added additional readme content and images of dialogs",
+      "author": "daniel-coons",
+      "date": "2025-10-15T19:32:21Z"
+    },
+    {
+      "sha": "2c71e3bb0d286d598983e8364eb304249f2e4f49",
+      "short": "2c71e3b",
+      "message": "separating the GIF and SVG pop-ups since they have an external dependency and will be less common; updating the readme and adding some instructions",
+      "author": "daniel-coons",
+      "date": "2025-10-15T18:44:18Z"
+    },
+    {
+      "sha": "215f606e6268a0b156327c7fb2082521c6045433",
+      "short": "215f606",
+      "message": "compiled for 2019 now and updated documentation throughout; cleaned up usage of malleable VIs and fixed a bug in the theme definer UI",
+      "author": "daniel-coons",
+      "date": "2025-10-13T19:00:02Z"
+    },
+    {
+      "sha": "58c08e3ee046ed06fe62a6072bfa9c176f1412c6",
+      "short": "58c08e3",
+      "message": "baseline from internal private repo",
+      "author": "daniel-coons",
+      "date": "2025-10-13T15:29:59Z"
+    },
+    {
+      "sha": "1f5627a23092d4cb2a8a8a07cb8ce7a26d8fd403",
+      "short": "1f5627a",
+      "message": "readme initial version",
+      "author": "daniel-coons",
+      "date": "2025-10-13T12:37:15Z"
+    },
+    {
+      "sha": "5e0eaab1ad7211bff0f3a3132ee4b2a1a1040012",
+      "short": "5e0eaab",
+      "message": "gitignore file",
+      "author": "daniel-coons",
+      "date": "2025-10-13T12:34:18Z"
+    },
+    {
+      "sha": "158a49f2b5a5cf687adcc00d5af45bd6ca37dbfa",
+      "short": "158a49f",
+      "message": "Update LICENSE",
+      "author": "Daniel Coons",
+      "date": "2025-10-13T12:18:11Z"
+    },
+    {
+      "sha": "e6541c97e5881b01ca1fbd36ffd7f24e4ae9e279",
+      "short": "e6541c9",
+      "message": "Initial commit",
+      "author": "Daniel Coons",
+      "date": "2025-10-13T12:17:23Z"
+    }
+  ],
+  "config": {
+    "use": "",
+    "actions": {},
+    "vipc": [],
+    "dragon": [],
+    "hasVipcList": false,
+    "hasDragonList": false
+  },
+  "vipc": [
+    {
+      "path": ".github/labview/antidoc/antidoc.vipc",
+      "role": "capability",
+      "capability": "antidoc",
+      "tooling": false,
+      "configured": true,
+      "monitored": true,
+      "locked": false,
+      "packages": [
+        "wovalab_lib_antidoc_cli-3.3.0.117"
+      ],
+      "error": ""
+    },
+    {
+      "path": ".github/labview/vipm/ci-tooling.vipc",
+      "role": "core",
+      "capability": "",
+      "tooling": true,
+      "configured": true,
+      "monitored": true,
+      "locked": true,
+      "packages": [
+        "astemes_lib_lunit-2.0.13.6",
+        "astemes_lib_lunit_cli-1.6.1.23",
+        "dataflow_g_lib_g_image-0.5.0.1",
+        "jki_labs_tool_vi_tester-3.0.2.294-1",
+        "jki_lib_caraya-1.4.4.148",
+        "jki_lib_state_machine-2024.0.3.23",
+        "jki_rsc_toolkits_palette-1.1-1",
+        "labview_open_source_lib_epoch_datetime-1.3.0.8",
+        "labview_open_source_project_lib_labview_open_source_palette-1.0.2.7",
+        "ni_lib_junit_results_api-1.0.1.6",
+        "ni_lib_simple_xml-1.0.0.4",
+        "ni_lib_utf_junit_report-1.0.1.43",
+        "oglib_array-6.0.1.20",
+        "oglib_error-6.0.0.26",
+        "oglib_file-6.0.2.28",
+        "oglib_lvdata-6.0.0.45",
+        "oglib_string-6.0.2.35"
+      ],
+      "error": ""
+    },
+    {
+      "path": "_vip/TSC Pop-Up.vipc",
+      "role": "project",
+      "capability": "",
+      "tooling": false,
+      "configured": true,
+      "monitored": true,
+      "locked": false,
+      "packages": [],
+      "error": ""
+    }
+  ],
+  "nipm": [
+    {
+      "name": "LabVIEW",
+      "source": "NI Package Manager",
+      "labview": true,
+      "platforms": [
+        "windows",
+        "linux"
+      ],
+      "details": "LabVIEW runtime and development packages from the NI feeds."
+    },
+    {
+      "name": "VI Analyzer support",
+      "source": "NI Package Manager",
+      "packages": {
+        "windows": [
+          "ni-viawin-labview-support"
+        ],
+        "linux": [
+          "ni-vialin-labview-support"
+        ]
+      },
+      "platforms": [
+        "windows",
+        "linux"
+      ],
+      "details": "NI VI Analyzer support package used by the analyzer runners."
+    },
+    {
+      "name": "NI Unit Test Framework",
+      "source": "NI Package Manager",
+      "packages": {
+        "windows": [
+          "ni-utf-labview-support"
+        ]
+      },
+      "platforms": [
+        "windows"
+      ],
+      "details": "NI UTF support package used by the Windows unit-test runner."
+    },
+    {
+      "name": "JKI Dragon",
+      "source": "NI Package Manager",
+      "packages": {
+        "windows": [
+          "jki-dragon"
+        ]
+      },
+      "platforms": [
+        "windows"
+      ],
+      "details": "JKI Dragon dependency-management tooling installed from the LabVIEW 2026 NI Package Manager feed."
+    },
+    {
+      "name": "VI Package Manager",
+      "source": "NI Package Manager",
+      "packages": {
+        "windows": [
+          "ni-vipm"
+        ]
+      },
+      "platforms": [
+        "windows"
+      ],
+      "details": "NI-published Windows VIPM package that enables VIPC application during worker builds. Linux installs VIPM from the native Debian package during its worker build."
+    }
+  ],
+  "dragon": {
+    "available": false,
+    "column": "winExp",
+    "ready": false,
+    "health": "",
+    "manifest_version": "",
+    "files": [],
+    "install_set": [],
+    "conflicts": []
+  },
+  "system": [
+    {
+      "name": "VI Browser 2.0 toimages runner",
+      "source": "Repository Go code",
+      "path": ".github/labview/toimages/main.go",
+      "details": "Batch runner compiled from repo Go source; Linux uses the toimages GHCR image and Windows builds runner.exe in the workflow.",
+      "platforms": {
+        "windows": {
+          "present": true,
+          "label": "workflow-built"
+        },
+        "linux": {
+          "present": true,
+          "label": "toimages image"
+        }
+      }
+    },
+    {
+      "name": "lvctl render engine",
+      "source": "Repository Go code + embedded VIs",
+      "path": ".github/labview/toimages/_ni/labview/lvctl",
+      "details": "Renderer used by VI Browser 2.0 to drive LabVIEW and emit position-aware frame JSON.",
+      "platforms": {
+        "windows": {
+          "present": true,
+          "label": "workflow-built"
+        },
+        "linux": {
+          "present": true,
+          "label": "toimages image"
+        }
+      }
+    }
+  ],
+  "columns": [
+    {
+      "key": "windows",
+      "label": "Windows",
+      "platform": "windows",
+      "defaultTag": "latest",
+      "tag": "latest",
+      "ready": true,
+      "packages": [
+        "astemes_lib_lunit-2.0.13.6",
+        "astemes_lib_lunit_cli-1.6.1.23",
+        "dataflow_g_lib_g_image-0.5.0.1",
+        "jki_labs_tool_vi_tester-3.0.2.294-1",
+        "jki_lib_caraya-1.4.4.148",
+        "jki_lib_state_machine-2024.0.3.23",
+        "jki_rsc_toolkits_palette-1.1-1",
+        "labview_open_source_lib_epoch_datetime-1.3.0.8",
+        "labview_open_source_project_lib_labview_open_source_palette-1.0.2.7",
+        "ni_lib_junit_results_api-1.0.1.6",
+        "ni_lib_simple_xml-1.0.0.4",
+        "ni_lib_utf_junit_report-1.0.1.43",
+        "oglib_array-6.0.1.20",
+        "oglib_error-6.0.0.26",
+        "oglib_file-6.0.2.28",
+        "oglib_lvdata-6.0.0.45",
+        "oglib_string-6.0.2.35"
+      ],
+      "failed_packages": [],
+      "nipkg_ready": true,
+      "nipkg_packages": [],
+      "labview_version": "2026",
+      "version": "win-979eeecc9f8e"
+    },
+    {
+      "key": "linux",
+      "label": "Linux",
+      "platform": "linux",
+      "defaultTag": "latest",
+      "tag": "latest",
+      "ready": true,
+      "packages": [],
+      "failed_packages": [],
+      "nipkg_ready": true,
+      "nipkg_packages": [],
+      "labview_version": "2026",
+      "version": "linux-99f1e44e3d51"
+    }
+  ]
+}
