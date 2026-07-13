@@ -1,8 +1,15 @@
 {
   "schema": 1,
   "repo": "danielcoons/tsc-pop-up",
-  "sha": "90c6cbbfa2ae6bfb3355c7e40bd92c5d43849574",
+  "sha": "87bde951dbdc3cf136daa2e8caabd40b425e8f5d",
   "revisions": [
+    {
+      "sha": "87bde951dbdc3cf136daa2e8caabd40b425e8f5d",
+      "short": "87bde95",
+      "message": "updated antidoc vipc",
+      "author": "daniel-coons",
+      "date": "2026-07-13T20:21:55Z"
+    },
     {
       "sha": "90c6cbbfa2ae6bfb3355c7e40bd92c5d43849574",
       "short": "90c6cbb",
@@ -253,7 +260,12 @@
       "monitored": true,
       "locked": false,
       "packages": [
-        "wovalab_lib_antidoc_cli-3.3.0.117"
+        "graphbuilder-2.3.0.7",
+        "wiresmith_technology_lib_g_cli-3.0.1.98",
+        "wovalab_lib_antidoc-3.3.0.870",
+        "wovalab_lib_antidoc_add_on_labview_project_documentation-3.2.0.358",
+        "wovalab_lib_antidoc_cli-3.4.0.126",
+        "wovalab_lib_asciidoc_for_labview-1.12.0.485"
       ],
       "error": ""
     },
