@@ -23,34 +23,6 @@ RUN if (-not (Get-Command nipkg -ErrorAction SilentlyContinue)) { throw 'nipkg w
       Remove-Item -Path 'C:\ProgramData\National Instruments\NI Package Manager\cache\*' -Force -Recurse -ErrorAction SilentlyContinue `
     }
 
-ARG UTF_FEED_NAME=LVUTF
-ARG UTF_FEED_URL=https://download.ni.com/support/nipkg/products/ni-l/ni-labview-unit-test-framework-toolkit/25.1/released
-ARG UTF_FEED_CRITICAL_NAME=LVUTFcritical
-ARG UTF_FEED_CRITICAL_URL=https://download.ni.com/support/nipkg/products/ni-l/ni-labview-unit-test-framework-toolkit/25.1/released-critical
-ARG UTF_SUPPORT_PACKAGE=ni-utf-labview-support
-ARG UTF_PACKAGE=
-RUN $ErrorActionPreference = 'Continue'; `
-    Write-Host "Adding NI Unit Test Framework toolkit feed: $env:UTF_FEED_URL"; `
-    nipkg feed-add --name=$env:UTF_FEED_NAME $env:UTF_FEED_URL; `
-    if ($env:UTF_FEED_CRITICAL_URL) { `
-      Write-Host "Adding NI Unit Test Framework toolkit feed (critical): $env:UTF_FEED_CRITICAL_URL"; `
-      nipkg feed-add --name=$env:UTF_FEED_CRITICAL_NAME $env:UTF_FEED_CRITICAL_URL `
-    }; `
-    nipkg update; `
-    $pkg = if ($env:UTF_PACKAGE) { $env:UTF_PACKAGE } else { $env:UTF_SUPPORT_PACKAGE }; `
-    Write-Host "Installing NI Unit Test Framework package: $pkg"; `
-    nipkg install --accept-eulas -y $pkg; `
-    if ($LASTEXITCODE -ne 0) { `
-      Write-Host "::warning::UTF package '$pkg' did not install (exit $LASTEXITCODE); searching the feed for an alternative."; `
-      $alt = @(nipkg list-available 2>$null) | Where-Object { $_ -match '(?i)(utf-labview-support|unit.?test.?framework)' } | ForEach-Object { (([string]$_).Trim() -split '\s+')[0] } | Select-Object -First 1; `
-      if ($alt) { Write-Host "Retrying with discovered package: $alt"; nipkg install --accept-eulas -y $alt } `
-    }; `
-    if ($LASTEXITCODE -ne 0) { `
-      Write-Host "::warning::NI Unit Test Framework could not be installed; the unit-test runner will report 'no tests found'. Pin the name with the UTF_PACKAGE build-arg and rebuild." `
-    } elseif (Test-Path 'C:\ProgramData\National Instruments\NI Package Manager\cache') { `
-      Remove-Item -Path 'C:\ProgramData\National Instruments\NI Package Manager\cache\*' -Force -Recurse -ErrorAction SilentlyContinue `
-    }
-
 ARG VIPM_INSTALLER_URL=https://traffic.libsyn.com/secure/jkinc/vipm-26.3.3954-windows-setup.exe
 RUN $ErrorActionPreference = 'Continue'; `
     $vipmSetup = Join-Path $env:TEMP 'vipm-setup.exe'; `

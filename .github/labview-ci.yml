@@ -16,4 +16,4 @@ activities:
   - snapshots
   - custom-image
   - snapshots-2
-  - unit-tests
+  - antidoc

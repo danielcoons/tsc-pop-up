@@ -1,0 +1,190 @@
+name: Unit Tests Backfill — Windows Container
+run-name: Unit Tests Windows backfill - ${{ github.event_name == 'workflow_dispatch' && 'manual run' || github.sha }}
+
+# Warm-container "batch" counterpart of unit-tests-windows-container.yml. Runs the
+# test suite over a set of revisions inside ONE long-lived container (docker exec
+# per revision), so the image pull + LabVIEW cold-start are paid once for the whole
+# batch instead of once per revision. Opt-in only — the dashboard's "keep one
+# container warm across revisions" option dispatches this. Resumable and incremental.
+
+on:
+  workflow_dispatch:
+    inputs:
+      shas:
+        description: 'Revisions to test (space/comma separated SHAs). Blank = all project-touching commits.'
+        required: false
+        default: ''
+      force:
+        description: 'Re-test even revisions that already have a report (true/false)'
+        required: false
+        default: 'false'
+      max_commits:
+        description: 'When shas is blank, cap to the most recent N commits (0 = all)'
+        required: false
+        default: '0'
+      time_budget_minutes:
+        description: 'Stop launching new test runs after N minutes (resume next run)'
+        required: false
+        default: '300'
+
+concurrency:
+  group: unit-tests-backfill-windows
+  cancel-in-progress: false
+
+env:
+  LABVIEW_CONTAINER_IMAGE: ''
+  PAGES_URL: ${{ vars.PAGES_URL || format('https://{0}.github.io/{1}', github.repository_owner, github.event.repository.name) }}
+
+permissions:
+  contents: write
+  pages: write
+  packages: read
+  actions: read   # so wait-for-worker-image.sh can read the worker-image build runs
+
+jobs:
+  unit-tests-backfill-windows:
+    runs-on: windows-2022   # windows-latest = Server 2025, broken Docker daemon
+    timeout-minutes: 350
+
+    steps:
+      - name: Enable long paths (Windows MAX_PATH workaround)
+        shell: powershell
+        run: |
+          git config --system core.longpaths true
+          New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' `
+            -Name 'LongPathsEnabled' -Value 1 -PropertyType DWORD -Force | Out-Null
+
+      - name: Checkout repository (full history)
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: List already-done reports (for incremental skip)
+        id: done
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p _skip
+          gh api "repos/${{ github.repository }}/git/trees/gh-pages?recursive=1" \
+            --jq '.tree[].path | select(test("^unit-tests/[0-9a-f]+/results.json$"))' \
+            > _skip/done.txt 2>/dev/null || true
+          echo "Already-done reports: $(wc -l < _skip/done.txt | tr -d ' ')"
+
+      # Resolve the worker image exactly like the per-commit Unit Tests workflow:
+      # config.container.actions.unit-tests wins, then config.container.use, then
+      # the project's shared custom worker image at :latest. GHCR names lowercase.
+      - name: Resolve container image name
+        shell: bash
+        env:
+          IMAGE_OVERRIDE: ${{ vars.LABVIEW_IMAGE_NAME }}
+          BASE_IMAGE: nationalinstruments/labview:latest-windows
+        run: |
+          owner=$(printf '%s' "${GITHUB_REPOSITORY%%/*}" | tr '[:upper:]' '[:lower:]')
+          name="${IMAGE_OVERRIDE:-${GITHUB_REPOSITORY##*/}-labview}"
+          name=$(printf '%s' "$name" | tr '[:upper:]' '[:lower:]')
+          custom="ghcr.io/${owner}/${name}"
+          ACTION_ID="unit-tests"
+          CFG=.github/labview-ci.yml
+          sel=""
+          if [ -f "$CFG" ]; then
+            sel=$(awk -v act="$ACTION_ID" '
+              /^[[:space:]]*container:[[:space:]]*$/ {inc=1; ina=0; next}
+              inc && /^    actions:[[:space:]]*$/ {ina=1; next}
+              ina && /^      [A-Za-z0-9_.-]+:/ {
+                k=$1; sub(/:.*/,"",k);
+                v=$0; sub(/^[[:space:]]*[A-Za-z0-9_.-]+:[[:space:]]*/,"",v); gsub(/"/,"",v); gsub(/[[:space:]]/,"",v);
+                if (k==act) {print v; exit}
+                next
+              }
+              ina && /^    [A-Za-z]/ {ina=0}
+              inc && /^[^[:space:]]/ {inc=0; ina=0}
+            ' "$CFG" | tr -d '[:space:]')
+            if [ -z "$sel" ]; then
+              sel=$(awk '
+                /^[[:space:]]*container:[[:space:]]*$/ {inc=1; next}
+                inc && /^    use:/ {sub(/^[[:space:]]*use:[[:space:]]*/,""); gsub(/"/,""); print; exit}
+                inc && /^[^[:space:]]/ {inc=0}
+              ' "$CFG" | tr -d '[:space:]')
+            fi
+          fi
+          if [ -z "$sel" ]; then
+            img="${custom}:latest"
+          elif [ "$sel" = "base" ] || [ "$sel" = "none" ]; then
+            img="${BASE_IMAGE}"
+          elif [ "$sel" = "latest" ]; then
+            img="${custom}:latest"
+          else
+            img="${custom}:${sel}"
+          fi
+          echo "LABVIEW_CONTAINER_IMAGE=${img}" >> "$GITHUB_ENV"
+          echo "Resolved container image: ${img}"
+
+      - name: Ensure Docker daemon is running
+        shell: powershell
+        run: ./.github/labview/ensure-docker.ps1
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Wait for worker image build
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          bash .github/labview/wait-for-worker-image.sh "${{ github.sha }}" "${{ github.event.before }}"
+
+      - name: Run Unit Tests backfill (warm Windows container, walks revisions)
+        id: backfill
+        shell: powershell
+        run: |
+          # Use a SHORT output root (C:\o) so deep report paths stay under the
+          # Windows MAX_PATH (260) limit when the host enumerates and deploys them.
+          New-Item -ItemType Directory -Force -Path 'C:\o' | Out-Null
+          $force = [System.Convert]::ToBoolean('${{ github.event.inputs.force || 'false' }}')
+          & .github\labview\unit-tests-backfill.ps1 `
+            -WorkspaceRoot     '${{ github.workspace }}' `
+            -OutRoot           'C:\o' `
+            -Image             "$Env:LABVIEW_CONTAINER_IMAGE" `
+            -Shas              '${{ github.event.inputs.shas }}' `
+            -Force:$force `
+            -MaxCommits        ${{ github.event.inputs.max_commits || '0' }} `
+            -SkipListPath      '${{ github.workspace }}\_skip\done.txt' `
+            -TimeBudgetMinutes ${{ github.event.inputs.time_budget_minutes || '300' }} `
+            -LabVIEWPath       "C:\Program Files\National Instruments\LabVIEW ${{ vars.LABVIEW_VERSION || '2026' }}\LabVIEW.exe" `
+            -Repo              '${{ github.repository }}' `
+            -PagesUrl          '${{ env.PAGES_URL }}' `
+            -LabVIEWVersion    '${{ vars.LABVIEW_VERSION || '2026' }}'
+        continue-on-error: true
+
+      - name: Verify backfill output
+        id: verify
+        shell: powershell
+        run: |
+          $found = Get-ChildItem -Path 'C:\o' -Recurse -Filter 'results.json' -ErrorAction SilentlyContinue
+          if ($found) {
+            "ok=true" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding ascii -Append
+            Write-Host "Generated $($found.Count) report(s):"
+            $found | ForEach-Object { Write-Host "  $($_.FullName)" }
+          } else {
+            "ok=false" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding ascii -Append
+            Write-Host "No new reports generated (all requested revisions may already be done)."
+          }
+
+      - name: Enable Git long paths (Windows MAX_PATH workaround)
+        if: steps.verify.outputs.ok == 'true'
+        shell: bash
+        run: |
+          git config --global core.longpaths true
+          git config --system core.longpaths true || true
+
+      - name: Deploy Unit Tests reports to GitHub Pages
+        if: steps.verify.outputs.ok == 'true'
+        uses: ./.github/actions/publish-gh-pages
+        with:
+          publish_dir: C:\o
+          destination_dir: unit-tests
