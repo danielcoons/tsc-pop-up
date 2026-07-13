@@ -1,0 +1,74 @@
+[
+  {
+    "sha": "ce28ba0e4b6eb59a6adb656ac85587a51e188977",
+    "short": "ce28ba0",
+    "message": "trying to setup vi analyzer and antidoc to work",
+    "author": "daniel-coons",
+    "date": "2026-07-13T15:07:32-04:00",
+    "vi_count": 138
+  },
+  {
+    "sha": "d160afc6add9ee1c80f270142d53003960db3142",
+    "short": "d160afc",
+    "message": "documentation cleanup and VI settings updated to turn off debugging",
+    "author": "daniel-coons",
+    "date": "2026-07-12T22:43:24-04:00",
+    "vi_count": 138
+  },
+  {
+    "sha": "6c421addf74a456d8e55d7535abf74cfef0224b0",
+    "short": "6c421ad",
+    "message": "updated overall coding style throughout all VIs",
+    "author": "daniel-coons",
+    "date": "2026-07-10T21:14:18-04:00",
+    "vi_count": 138
+  },
+  {
+    "sha": "ae335db4b8031bd9271e39b4db59c8cda1bcdbeb",
+    "short": "ae335db",
+    "message": "Add LabVIEW CI pipeline",
+    "author": "Daniel Coons",
+    "date": "2026-07-10T09:06:25-04:00",
+    "vi_count": 138
+  },
+  {
+    "sha": "d67b737a4e3728d906e8163b9bffabb86c8f1d63",
+    "short": "d67b737",
+    "message": "turns out i couldn't support 2019 with some of what i was using, so min. version updated to 2021 now",
+    "author": "daniel-coons",
+    "date": "2025-10-16T13:06:17-04:00",
+    "vi_count": 138
+  },
+  {
+    "sha": "b1e50bb6940788fae44af7a5b704498ddcc86901",
+    "short": "b1e50bb",
+    "message": "updated the vip build",
+    "author": "daniel-coons",
+    "date": "2025-10-15T19:26:29-04:00",
+    "vi_count": 136
+  },
+  {
+    "sha": "2c71e3bb0d286d598983e8364eb304249f2e4f49",
+    "short": "2c71e3b",
+    "message": "separating the GIF and SVG pop-ups since they have an external dependency and will be less common; updating the readme a",
+    "author": "daniel-coons",
+    "date": "2025-10-15T14:44:18-04:00",
+    "vi_count": 136
+  },
+  {
+    "sha": "215f606e6268a0b156327c7fb2082521c6045433",
+    "short": "215f606",
+    "message": "compiled for 2019 now and updated documentation throughout; cleaned up usage of malleable VIs and fixed a bug in the the",
+    "author": "daniel-coons",
+    "date": "2025-10-13T15:00:02-04:00",
+    "vi_count": 176
+  },
+  {
+    "sha": "58c08e3ee046ed06fe62a6072bfa9c176f1412c6",
+    "short": "58c08e3",
+    "message": "baseline from internal private repo",
+    "author": "daniel-coons",
+    "date": "2025-10-13T11:29:59-04:00",
+    "vi_count": 176
+  }
+]
