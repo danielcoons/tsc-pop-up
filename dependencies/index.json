@@ -1,14 +1,35 @@
 {
   "schema": 1,
   "repo": "danielcoons/tsc-pop-up",
-  "sha": "c072c4e49b5729ab34a4716061178f905462e8a9",
+  "sha": "90c6cbbfa2ae6bfb3355c7e40bd92c5d43849574",
   "revisions": [
+    {
+      "sha": "90c6cbbfa2ae6bfb3355c7e40bd92c5d43849574",
+      "short": "90c6cbb",
+      "message": "Merge branch 'ci/install-labview-ci'",
+      "author": "daniel-coons",
+      "date": "2026-07-13T20:12:52Z"
+    },
+    {
+      "sha": "d2b3290c2335ac2d71989d1e2c7e43fc156ac379",
+      "short": "d2b3290",
+      "message": "customized vi analyzer config",
+      "author": "daniel-coons",
+      "date": "2026-07-13T20:12:19Z"
+    },
     {
       "sha": "c072c4e49b5729ab34a4716061178f905462e8a9",
       "short": "c072c4e",
       "message": "Add LabVIEW CI pipeline",
       "author": "Daniel Coons",
       "date": "2026-07-13T20:07:29Z"
+    },
+    {
+      "sha": "22a56b42fcd94a8c700aa624f409596a9962c352",
+      "short": "22a56b4",
+      "message": "ci: install LabVIEW CI pipeline (dashboard, vi-analyzer, vidiff, snapshots, custom-image, snapshots-2, antidoc)",
+      "author": "Daniel Coons",
+      "date": "2026-07-13T20:07:23Z"
     },
     {
       "sha": "4f3babcb4701d9870c512ceb68f831225b07e5a7",
