@@ -231,7 +231,7 @@
     // the install/Configure iframe and its in-flight work. When a refresh comes due
     // with a dialog open, keep re-checking and reload only once it is closed.
     (function () {
-      var REFRESH_MS = 60 * 1000;
+      var REFRESH_MS = 900 * 1000;
       if (!(REFRESH_MS > 0)) return;
       function tick() {
         if (lvciModalOpen()) { setTimeout(tick, 5000); return; }
@@ -271,7 +271,7 @@
   <script>
   (function(){
     var RT = {"vi-analyzer": {"label": "VI Analyzer", "platforms": {"windows": {"wf": "run-vi-analyzer-windows-container.yml", "inputs": {"commit_sha": "{sha}"}}}}, "vidiff": {"label": "VIDiff", "platforms": {"windows": {"wf": "vidiff-windows-container.yml", "inputs": {"head_sha": "{sha}", "base_sha": "{parent}"}}, "linux": {"wf": "vidiff-linux-container.yml", "inputs": {"head_sha": "{sha}", "base_sha": "{parent}"}}}}, "snapshots": {"label": "VI Snapshots", "platforms": {"all": {"wf": "vi-snapshots.yml", "inputs": {"mode": "backfill"}}}}, "snapshots2": {"label": "VI Browser 2.0 Snapshots", "platforms": {"windows": {"wf": "vi-snapshots-json-windows.yml", "inputs": {"target_sha": "{sha}"}}, "linux": {"wf": "vi-snapshots-json.yml", "inputs": {"mode": "head", "target_sha": "{sha}"}}}}, "antidoc": {"label": "Antidoc", "platforms": {"windows": {"wf": "run-antidoc-windows-container.yml", "inputs": {"commit_sha": "{sha}"}}}}};
-    var RT_TIMING = {"vi-analyzer": {"windows": {"total": 1410.0, "work": null}}, "vidiff": {"windows": {"total": 1242.0, "work": null}, "linux": {"total": null, "work": null}}, "snapshots2": {"windows": {"total": 1705.0, "work": null}, "linux": {"total": 62.0, "work": null}}, "antidoc": {"windows": {"total": 835.0, "work": null}}};
+    var RT_TIMING = {"vi-analyzer": {"windows": {"total": 1410.0, "work": null}}, "vidiff": {"windows": {"total": 1242.0, "work": null}, "linux": {"total": null, "work": null}}, "snapshots2": {"windows": {"total": 1705.0, "work": null}, "linux": {"total": 62.0, "work": null}}, "antidoc": {"windows": {"total": 826.0, "work": null}}};
     var REPO = "danielcoons/tsc-pop-up";
     var BRANCH = "main";
     var TOK_KEY = "lvci_dispatch_token";
@@ -1666,7 +1666,7 @@
   </script>
   <main class="lvci-main">
   <h1>CI Dashboard — tsc-pop-up</h1>
-  <div class="sub">Last updated: 2026-07-13 22:01 UTC &nbsp;|&nbsp; Live — refreshing every 60 s while CI runs</div>
+  <div class="sub">Last updated: 2026-07-13 23:58 UTC &nbsp;|&nbsp; Auto-refreshes every 15 min</div>
   <div class="nav">
     <a href="https://github.com/danielcoons/tsc-pop-up">GitHub</a>
     <a href="https://github.com/danielcoons/tsc-pop-up/actions">Actions</a>
@@ -1869,7 +1869,7 @@
       <td style="text-align:center" class="cidash-cap-cell" data-cap="vidiff" data-sha="eca6caad1cd0e9630eb817612157855388d4ca16" data-parent="400d3ee5ba99f6daac8c7ca67ce99a23229545bb" data-short="eca6caa" data-ts="2026-07-13T20:05:32Z"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=eca6caad1cd0e9630eb817612157855388d4ca16&changed=1" class="cidash-diffstat" title="VIs changed in this revision: 129 different · 0 new · 0 deleted — click to view the diffs"><span class="ds-mod">129</span><span class="ds-sep">/</span><span class="ds-add ds-zero">0</span><span class="ds-sep">/</span><span class="ds-del ds-zero">0</span></a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="eca6caad1cd0e9630eb817612157855388d4ca16" data-parent="400d3ee5ba99f6daac8c7ca67ce99a23229545bb" data-short="eca6caa" data-ts="2026-07-13T16:05:18Z" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=eca6caad1cd0e9630eb817612157855388d4ca16" style="color:inherit">138</a></span></td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
-      <td style="text-align:center" class="cidash-active-cell" data-cap="antidoc" data-sha="eca6caad1cd0e9630eb817612157855388d4ca16" data-parent="400d3ee5ba99f6daac8c7ca67ce99a23229545bb" data-short="eca6caa" data-active="true"><span class="run-badge" title="Running — click to view progress"><a href="https://github.com/danielcoons/tsc-pop-up/actions/runs/29288441705" style="color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:5px"><span class="run-spin"></span>docs</a></span></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="antidoc" data-sha="eca6caad1cd0e9630eb817612157855388d4ca16" data-parent="400d3ee5ba99f6daac8c7ca67ce99a23229545bb" data-short="eca6caa" data-ts="2026-07-13T22:14:34Z"><span class="cidash-chip cc-fail"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.75.75 0 1 1 1.06 1.06L9.06 8l3.22 3.22a.75.75 0 1 1-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 0 1-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"/></svg><a href="https://danielcoons.github.io/tsc-pop-up/report/index.html?type=antidoc-report&sha=eca6caad1cd0e9630eb817612157855388d4ca16&short=eca6caa&src=..%2Fantidoc%2Feca6caad1cd0e9630eb817612157855388d4ca16%2Findex.html&title=Antidoc%20%C2%B7%20eca6caa" style="color:inherit">docs</a></span></td>
     </tr>
 
     <tr data-project="true" data-deponly="false">
