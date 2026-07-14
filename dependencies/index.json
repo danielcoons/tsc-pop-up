@@ -1,14 +1,35 @@
 {
   "schema": 1,
   "repo": "danielcoons/tsc-pop-up",
-  "sha": "af297c93c9a615d3e0f942d8031d83952d645c37",
+  "sha": "634cea975f0b0605e3538501f3147c361287f4de",
   "revisions": [
+    {
+      "sha": "634cea975f0b0605e3538501f3147c361287f4de",
+      "short": "634cea9",
+      "message": "Merge pull request #7 from danielcoons/labview-ci/reconfigure-29351846978",
+      "author": "Daniel Coons",
+      "date": "2026-07-14T17:02:23Z"
+    },
+    {
+      "sha": "3c815e5b987a294325d14ce1baca0c57646b11e6",
+      "short": "3c815e5",
+      "message": "Merge branch 'main' into labview-ci/reconfigure-29351846978",
+      "author": "Daniel Coons",
+      "date": "2026-07-14T17:02:13Z"
+    },
     {
       "sha": "af297c93c9a615d3e0f942d8031d83952d645c37",
       "short": "af297c9",
       "message": "Merge pull request #6 from danielcoons/labview-ci/reconfigure-29349909864",
       "author": "Daniel Coons",
       "date": "2026-07-14T17:00:34Z"
+    },
+    {
+      "sha": "63635cfbc4901d5994b52b1cbcb7c7c1e38809fd",
+      "short": "63635cf",
+      "message": "ci: reconfigure LabVIEW CI settings",
+      "author": "github-actions[bot]",
+      "date": "2026-07-14T16:59:03Z"
     },
     {
       "sha": "624f75cce1b3b20e05c9288cab96beaa75350eb9",
