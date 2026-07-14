@@ -1,8 +1,15 @@
 {
   "schema": 1,
   "repo": "danielcoons/tsc-pop-up",
-  "sha": "b16947476f664a7c93e4dbc695ae7b49679033a7",
+  "sha": "5ffc526489128e0ff7b5c3ffe295fab87ab5f0da",
   "revisions": [
+    {
+      "sha": "5ffc526489128e0ff7b5c3ffe295fab87ab5f0da",
+      "short": "5ffc526",
+      "message": "ci: adopt LabVIEW CI tooling v4.4.7 (full update)",
+      "author": "github-actions[bot]",
+      "date": "2026-07-14T02:22:02Z"
+    },
     {
       "sha": "b16947476f664a7c93e4dbc695ae7b49679033a7",
       "short": "b169474",
@@ -267,12 +274,7 @@
       "monitored": true,
       "locked": false,
       "packages": [
-        "graphbuilder-2.3.0.7",
-        "wiresmith_technology_lib_g_cli-3.0.1.98",
-        "wovalab_lib_antidoc-3.3.0.870",
-        "wovalab_lib_antidoc_add_on_labview_project_documentation-3.2.0.358",
-        "wovalab_lib_antidoc_cli-3.4.0.126",
-        "wovalab_lib_asciidoc_for_labview-1.12.0.485"
+        "wovalab_lib_antidoc_cli-3.3.0.117"
       ],
       "error": ""
     },

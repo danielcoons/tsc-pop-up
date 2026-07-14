@@ -270,8 +270,8 @@
   </div>
   <script>
   (function(){
-    var RT = {"vi-analyzer": {"label": "VI Analyzer", "platforms": {"windows": {"wf": "run-vi-analyzer-windows-container.yml", "inputs": {"commit_sha": "{sha}"}}}}, "vidiff": {"label": "VIDiff", "platforms": {"windows": {"wf": "vidiff-windows-container.yml", "inputs": {"head_sha": "{sha}", "base_sha": "{parent}"}}, "linux": {"wf": "vidiff-linux-container.yml", "inputs": {"head_sha": "{sha}", "base_sha": "{parent}"}}}}, "snapshots": {"label": "VI Snapshots", "platforms": {"all": {"wf": "vi-snapshots.yml", "inputs": {"mode": "backfill"}}}}, "snapshots2": {"label": "VI Browser 2.0 Snapshots", "platforms": {"windows": {"wf": "vi-snapshots-json-windows.yml", "inputs": {"target_sha": "{sha}"}}, "linux": {"wf": "vi-snapshots-json.yml", "inputs": {"mode": "head", "target_sha": "{sha}"}}}}, "antidoc": {"label": "Antidoc", "platforms": {"windows": {"wf": "run-antidoc-windows-container.yml", "inputs": {"commit_sha": "{sha}"}}}}};
-    var RT_TIMING = {"vi-analyzer": {"windows": {"total": 1410.0, "work": null}}, "vidiff": {"windows": {"total": 1242.0, "work": null}, "linux": {"total": null, "work": null}}, "snapshots2": {"windows": {"total": 1705.0, "work": null}, "linux": {"total": 62.0, "work": null}}, "antidoc": {"windows": {"total": 826.0, "work": null}}};
+    var RT = {"masscompile": {"label": "Mass Compile", "platforms": {"windows": {"wf": "masscompile-windows-container.yml", "inputs": {"commit_sha": "{sha}"}}, "linux": {"wf": "masscompile-linux-container.yml", "inputs": {"commit_sha": "{sha}"}}}}, "vi-analyzer": {"label": "VI Analyzer", "platforms": {"windows": {"wf": "run-vi-analyzer-windows-container.yml", "inputs": {"commit_sha": "{sha}"}}}}, "vidiff": {"label": "VIDiff", "platforms": {"windows": {"wf": "vidiff-windows-container.yml", "inputs": {"head_sha": "{sha}", "base_sha": "{parent}"}}, "linux": {"wf": "vidiff-linux-container.yml", "inputs": {"head_sha": "{sha}", "base_sha": "{parent}"}}}}, "snapshots": {"label": "VI Snapshots", "platforms": {"all": {"wf": "vi-snapshots.yml", "inputs": {"mode": "backfill"}}}}, "snapshots2": {"label": "VI Browser 2.0 Snapshots", "platforms": {"windows": {"wf": "vi-snapshots-json-windows.yml", "inputs": {"target_sha": "{sha}"}}, "linux": {"wf": "vi-snapshots-json.yml", "inputs": {"mode": "head", "target_sha": "{sha}"}}}}, "unit-tests": {"label": "Unit Tests", "platforms": {"windows": {"wf": "unit-tests-windows-container.yml", "inputs": {"commit_sha": "{sha}"}}}}, "antidoc": {"label": "Antidoc", "platforms": {"windows": {"wf": "run-antidoc-windows-container.yml", "inputs": {"commit_sha": "{sha}"}}}}};
+    var RT_TIMING = {"masscompile": {"windows": {"total": null, "work": null}, "linux": {"total": null, "work": null}}, "vi-analyzer": {"windows": {"total": 1410.0, "work": null}}, "vidiff": {"windows": {"total": 1242.0, "work": null}, "linux": {"total": null, "work": null}}, "snapshots2": {"windows": {"total": 1705.0, "work": null}, "linux": {"total": 62.0, "work": null}}, "unit-tests": {"windows": {"total": null, "work": null}}, "antidoc": {"windows": {"total": 826.0, "work": null}}};
     var REPO = "danielcoons/tsc-pop-up";
     var BRANCH = "main";
     var TOK_KEY = "lvci_dispatch_token";
@@ -349,6 +349,16 @@
     var qQueuePos = null, qQueueTotal = 0, qQueueAt = 0;
     function qLoad(){ try{ return JSON.parse(localStorage.getItem(QKEY)||"{}")||{}; }catch(e){ return {}; } }
     function qSave(o){ try{ localStorage.setItem(QKEY, JSON.stringify(o)); }catch(e){} }
+    function resultCell(c, sha){
+      // The cell carrying a re-runnable activity's result OR its in-flight run - both
+      // are valid targets to overlay an optimistic "Queued" spinner onto. A finished
+      // result is a cidash-cap-cell; a queued/running auto-run is a cidash-active-cell
+      // (tagged so the Populate-history dialog can re-run an in-flight activity). Matching
+      // both is what lets a re-run of an in-flight cell show its Queued badge, not just
+      // re-runs of finished ones (the latest revision's activity is usually still in flight).
+      return document.querySelector('td.cidash-cap-cell[data-cap="'+c+'"][data-sha="'+sha+'"]')
+          || document.querySelector('td.cidash-active-cell[data-cap="'+c+'"][data-sha="'+sha+'"]');
+    }
     function qPaint(td, c, sha){
       // Overlay the spinning "Queued" badge onto the cell, replacing its run glyph.
       // The badge is now a BUTTON (not a link): clicking it opens the manage dialog
@@ -453,7 +463,7 @@
           // result cell and remember its original badge so a failed/cancelled dispatch
           // can restore it. Same bridge the report viewer's "Re-run" uses (see qSync),
           // now reachable from the Populate-history dialog's per-activity "Re-run".
-          var rc = document.querySelector('td.cidash-cap-cell[data-cap="'+c+'"][data-sha="'+sha+'"]');
+          var rc = resultCell(c, sha);
           if(rc){
             var oR = qLoad(); var kR = c+'|'+sha;
             if(oR[kR] && !oR[kR].orig){ oR[kR].orig = rc.innerHTML; qSave(oR); }
@@ -682,7 +692,7 @@
         if(!e){ delete o[key]; changed = true; return; }
         var painted = document.querySelector('td.cidash-queued-cell[data-qcap="'+c+'"][data-qsha="'+sha+'"]');
         var a = document.querySelector('a.cidash-run[data-cap="'+c+'"][data-sha="'+sha+'"]');
-        var rc = document.querySelector('td.cidash-cap-cell[data-cap="'+c+'"][data-sha="'+sha+'"]');
+        var rc = resultCell(c, sha);
         if(e.failed){
           if(rc){
             var frts = Date.parse(rc.getAttribute('data-ts')||'') || 0;
@@ -1666,7 +1676,7 @@
   </script>
   <main class="lvci-main">
   <h1>CI Dashboard — tsc-pop-up</h1>
-  <div class="sub">Last updated: 2026-07-13 23:58 UTC &nbsp;|&nbsp; Auto-refreshes every 15 min</div>
+  <div class="sub">Last updated: 2026-07-14 02:22 UTC &nbsp;|&nbsp; Auto-refreshes every 15 min</div>
   <div class="nav">
     <a href="https://github.com/danielcoons/tsc-pop-up">GitHub</a>
     <a href="https://github.com/danielcoons/tsc-pop-up/actions">Actions</a>
@@ -1710,6 +1720,24 @@
       </tr>
     </thead>
     <tbody>
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(150,42%,45%)" title="github-actions[bot]" aria-hidden="true">G</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=5ffc526489128e0ff7b5c3ffe295fab87ab5f0da" class="cidash-rev-msg" title="ci: adopt LabVIEW CI tooling v4.4.7 (full update)">ci: adopt LabVIEW CI tooling v4.4.7 (full update)</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=5ffc526489128e0ff7b5c3ffe295fab87ab5f0da" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">5ffc526</a><span class="cidash-rev-dot">&middot;</span>github-actions[bot]<span class="cidash-rev-dot">&middot;</span>2026-07-14</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
     <tr data-project="false" data-deponly="false">
       <td class="cidash-rev">
         <div class="cidash-rev-wrap">
@@ -1864,11 +1892,11 @@
           </div>
         </div>
       </td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="eca6caad1cd0e9630eb817612157855388d4ca16" data-parent="400d3ee5ba99f6daac8c7ca67ce99a23229545bb" data-short="eca6caa" title="Run Mass Compile for commit eca6caa">&#9655;</a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="vi-analyzer" data-sha="eca6caad1cd0e9630eb817612157855388d4ca16" data-parent="400d3ee5ba99f6daac8c7ca67ce99a23229545bb" data-short="eca6caa" data-ts="2026-07-13T21:03:53Z"><span class="cidash-chip cc-pass"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L1.22 9.28a.75.75 0 1 1 1.06-1.06L6 11.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg><a href="https://danielcoons.github.io/tsc-pop-up/report/index.html?type=vi-analyzer-report&sha=eca6caad1cd0e9630eb817612157855388d4ca16&short=eca6caa&src=..%2Fvi-analyzer%2Feca6caad1cd0e9630eb817612157855388d4ca16%2Findex.html&title=VI%20Analyzer%20%C2%B7%20eca6caa" style="color:inherit">analyze</a></span></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="vidiff" data-sha="eca6caad1cd0e9630eb817612157855388d4ca16" data-parent="400d3ee5ba99f6daac8c7ca67ce99a23229545bb" data-short="eca6caa" data-ts="2026-07-13T20:05:32Z"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=eca6caad1cd0e9630eb817612157855388d4ca16&changed=1" class="cidash-diffstat" title="VIs changed in this revision: 129 different · 0 new · 0 deleted — click to view the diffs"><span class="ds-mod">129</span><span class="ds-sep">/</span><span class="ds-add ds-zero">0</span><span class="ds-sep">/</span><span class="ds-del ds-zero">0</span></a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="eca6caad1cd0e9630eb817612157855388d4ca16" data-parent="400d3ee5ba99f6daac8c7ca67ce99a23229545bb" data-short="eca6caa" data-ts="2026-07-13T16:05:18Z" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=eca6caad1cd0e9630eb817612157855388d4ca16" style="color:inherit">138</a></span></td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="eca6caad1cd0e9630eb817612157855388d4ca16" data-parent="400d3ee5ba99f6daac8c7ca67ce99a23229545bb" data-short="eca6caa" title="Run Unit Tests for commit eca6caa">&#9655;</a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="antidoc" data-sha="eca6caad1cd0e9630eb817612157855388d4ca16" data-parent="400d3ee5ba99f6daac8c7ca67ce99a23229545bb" data-short="eca6caa" data-ts="2026-07-13T22:14:34Z"><span class="cidash-chip cc-fail"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.75.75 0 1 1 1.06 1.06L9.06 8l3.22 3.22a.75.75 0 1 1-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 0 1-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"/></svg><a href="https://danielcoons.github.io/tsc-pop-up/report/index.html?type=antidoc-report&sha=eca6caad1cd0e9630eb817612157855388d4ca16&short=eca6caa&src=..%2Fantidoc%2Feca6caad1cd0e9630eb817612157855388d4ca16%2Findex.html&title=Antidoc%20%C2%B7%20eca6caa" style="color:inherit">docs</a></span></td>
     </tr>
 
@@ -1882,11 +1910,11 @@
           </div>
         </div>
       </td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="d160afc6add9ee1c80f270142d53003960db3142" data-parent="8e7530810e645c5d624eae20ec4f26b652ad33c5" data-short="d160afc" title="Run Mass Compile for commit d160afc">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="d160afc6add9ee1c80f270142d53003960db3142" data-parent="8e7530810e645c5d624eae20ec4f26b652ad33c5" data-short="d160afc" title="Run VI Analyzer for commit d160afc">&#9655;</a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="vidiff" data-sha="d160afc6add9ee1c80f270142d53003960db3142" data-parent="8e7530810e645c5d624eae20ec4f26b652ad33c5" data-short="d160afc" data-ts="2026-07-13T14:27:08Z"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d160afc6add9ee1c80f270142d53003960db3142&changed=1" class="cidash-diffstat" title="VIs changed in this revision: 126 different · 0 new · 0 deleted — click to view the diffs"><span class="ds-mod">126</span><span class="ds-sep">/</span><span class="ds-add ds-zero">0</span><span class="ds-sep">/</span><span class="ds-del ds-zero">0</span></a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="d160afc6add9ee1c80f270142d53003960db3142" data-parent="8e7530810e645c5d624eae20ec4f26b652ad33c5" data-short="d160afc" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d160afc6add9ee1c80f270142d53003960db3142" style="color:inherit">138</a></span></td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="d160afc6add9ee1c80f270142d53003960db3142" data-parent="8e7530810e645c5d624eae20ec4f26b652ad33c5" data-short="d160afc" title="Run Unit Tests for commit d160afc">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="d160afc6add9ee1c80f270142d53003960db3142" data-parent="8e7530810e645c5d624eae20ec4f26b652ad33c5" data-short="d160afc" title="Run Antidoc for commit d160afc">&#9655;</a></td>
     </tr>
 
@@ -1954,11 +1982,11 @@
           </div>
         </div>
       </td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="6c421addf74a456d8e55d7535abf74cfef0224b0" data-parent="d7fdde7c44de337ca0483d6388ebcf84a6ddc7c5" data-short="6c421ad" title="Run Mass Compile for commit 6c421ad">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="6c421addf74a456d8e55d7535abf74cfef0224b0" data-parent="d7fdde7c44de337ca0483d6388ebcf84a6ddc7c5" data-short="6c421ad" title="Run VI Analyzer for commit 6c421ad">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="6c421addf74a456d8e55d7535abf74cfef0224b0" data-parent="d7fdde7c44de337ca0483d6388ebcf84a6ddc7c5" data-short="6c421ad" title="Run VIDiff for commit 6c421ad">&#9655;</a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="6c421addf74a456d8e55d7535abf74cfef0224b0" data-parent="d7fdde7c44de337ca0483d6388ebcf84a6ddc7c5" data-short="6c421ad" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=6c421addf74a456d8e55d7535abf74cfef0224b0" style="color:inherit">138</a></span></td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="6c421addf74a456d8e55d7535abf74cfef0224b0" data-parent="d7fdde7c44de337ca0483d6388ebcf84a6ddc7c5" data-short="6c421ad" title="Run Unit Tests for commit 6c421ad">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="6c421addf74a456d8e55d7535abf74cfef0224b0" data-parent="d7fdde7c44de337ca0483d6388ebcf84a6ddc7c5" data-short="6c421ad" title="Run Antidoc for commit 6c421ad">&#9655;</a></td>
     </tr>
 
@@ -2044,11 +2072,11 @@
           </div>
         </div>
       </td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="d58e71090fc7a4b0f0668f67d411a7f0f740c216" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="d58e710" title="Run Mass Compile for commit d58e710">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="d58e71090fc7a4b0f0668f67d411a7f0f740c216" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="d58e710" title="Run VI Analyzer for commit d58e710">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="d58e71090fc7a4b0f0668f67d411a7f0f740c216" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="d58e710" title="Run VIDiff for commit d58e710">&#9655;</a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="d58e71090fc7a4b0f0668f67d411a7f0f740c216" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="d58e710" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d58e71090fc7a4b0f0668f67d411a7f0f740c216" style="color:inherit">138</a></span></td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="d58e71090fc7a4b0f0668f67d411a7f0f740c216" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="d58e710" title="Run Unit Tests for commit d58e710">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="d58e71090fc7a4b0f0668f67d411a7f0f740c216" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="d58e710" title="Run Antidoc for commit d58e710">&#9655;</a></td>
     </tr>
 
@@ -2062,11 +2090,11 @@
           </div>
         </div>
       </td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="03fcdb0f4fca853ae68ab278017ab31d436b5bc4" data-parent="f67ec060e2093b4f0237a692c148292c9b38e60f" data-short="03fcdb0" title="Run Mass Compile for commit 03fcdb0">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="03fcdb0f4fca853ae68ab278017ab31d436b5bc4" data-parent="f67ec060e2093b4f0237a692c148292c9b38e60f" data-short="03fcdb0" title="Run VI Analyzer for commit 03fcdb0">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="03fcdb0f4fca853ae68ab278017ab31d436b5bc4" data-parent="f67ec060e2093b4f0237a692c148292c9b38e60f" data-short="03fcdb0" title="Run VIDiff for commit 03fcdb0">&#9655;</a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="03fcdb0f4fca853ae68ab278017ab31d436b5bc4" data-parent="f67ec060e2093b4f0237a692c148292c9b38e60f" data-short="03fcdb0" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=03fcdb0f4fca853ae68ab278017ab31d436b5bc4" style="color:inherit">138</a></span></td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="03fcdb0f4fca853ae68ab278017ab31d436b5bc4" data-parent="f67ec060e2093b4f0237a692c148292c9b38e60f" data-short="03fcdb0" title="Run Unit Tests for commit 03fcdb0">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="03fcdb0f4fca853ae68ab278017ab31d436b5bc4" data-parent="f67ec060e2093b4f0237a692c148292c9b38e60f" data-short="03fcdb0" title="Run Antidoc for commit 03fcdb0">&#9655;</a></td>
     </tr>
 
@@ -2080,11 +2108,11 @@
           </div>
         </div>
       </td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="8da7fa2af6d7036611a50abab5b4e19b8ca28db1" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="8da7fa2" title="Run Mass Compile for commit 8da7fa2">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="8da7fa2af6d7036611a50abab5b4e19b8ca28db1" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="8da7fa2" title="Run VI Analyzer for commit 8da7fa2">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="8da7fa2af6d7036611a50abab5b4e19b8ca28db1" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="8da7fa2" title="Run VIDiff for commit 8da7fa2">&#9655;</a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="8da7fa2af6d7036611a50abab5b4e19b8ca28db1" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="8da7fa2" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=8da7fa2af6d7036611a50abab5b4e19b8ca28db1" style="color:inherit">138</a></span></td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="8da7fa2af6d7036611a50abab5b4e19b8ca28db1" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="8da7fa2" title="Run Unit Tests for commit 8da7fa2">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="8da7fa2af6d7036611a50abab5b4e19b8ca28db1" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="8da7fa2" title="Run Antidoc for commit 8da7fa2">&#9655;</a></td>
     </tr>
 
@@ -2098,11 +2126,11 @@
           </div>
         </div>
       </td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="3cb5807" title="Run Mass Compile for commit 3cb5807">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="3cb5807" title="Run VI Analyzer for commit 3cb5807">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="3cb5807" title="Run VIDiff for commit 3cb5807">&#9655;</a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="3cb5807" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=3cb5807e882e296e52c2d765e88281cd9ae49b45" style="color:inherit">138</a></span></td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="3cb5807" title="Run Unit Tests for commit 3cb5807">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="3cb5807" title="Run Antidoc for commit 3cb5807">&#9655;</a></td>
     </tr>
 
@@ -2116,11 +2144,11 @@
           </div>
         </div>
       </td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="f67ec060e2093b4f0237a692c148292c9b38e60f" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="f67ec06" title="Run Mass Compile for commit f67ec06">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="f67ec060e2093b4f0237a692c148292c9b38e60f" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="f67ec06" title="Run VI Analyzer for commit f67ec06">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="f67ec060e2093b4f0237a692c148292c9b38e60f" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="f67ec06" title="Run VIDiff for commit f67ec06">&#9655;</a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="f67ec060e2093b4f0237a692c148292c9b38e60f" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="f67ec06" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=f67ec060e2093b4f0237a692c148292c9b38e60f" style="color:inherit">138</a></span></td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="f67ec060e2093b4f0237a692c148292c9b38e60f" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="f67ec06" title="Run Unit Tests for commit f67ec06">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="f67ec060e2093b4f0237a692c148292c9b38e60f" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="f67ec06" title="Run Antidoc for commit f67ec06">&#9655;</a></td>
     </tr>
 
@@ -2134,11 +2162,11 @@
           </div>
         </div>
       </td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="df6ef8d" title="Run Mass Compile for commit df6ef8d">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="df6ef8d" title="Run VI Analyzer for commit df6ef8d">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="df6ef8d" title="Run VIDiff for commit df6ef8d">&#9655;</a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="df6ef8d" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b" style="color:inherit">138</a></span></td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="df6ef8d" title="Run Unit Tests for commit df6ef8d">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="df6ef8d" title="Run Antidoc for commit df6ef8d">&#9655;</a></td>
     </tr>
 
@@ -2152,11 +2180,11 @@
           </div>
         </div>
       </td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-parent="b1e50bb6940788fae44af7a5b704498ddcc86901" data-short="d67b737" title="Run Mass Compile for commit d67b737">&#9655;</a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="vi-analyzer" data-sha="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-parent="b1e50bb6940788fae44af7a5b704498ddcc86901" data-short="d67b737" data-ts="2026-07-10T14:28:18Z"><span class="cidash-chip cc-pass"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L1.22 9.28a.75.75 0 1 1 1.06-1.06L6 11.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg><a href="https://danielcoons.github.io/tsc-pop-up/report/index.html?type=vi-analyzer-report&sha=d67b737a4e3728d906e8163b9bffabb86c8f1d63&short=d67b737&src=..%2Fvi-analyzer%2Fd67b737a4e3728d906e8163b9bffabb86c8f1d63%2Findex.html&title=VI%20Analyzer%20%C2%B7%20d67b737" style="color:inherit">analyze</a></span></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-parent="b1e50bb6940788fae44af7a5b704498ddcc86901" data-short="d67b737" title="Run VIDiff for commit d67b737">&#9655;</a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-parent="b1e50bb6940788fae44af7a5b704498ddcc86901" data-short="d67b737" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d67b737a4e3728d906e8163b9bffabb86c8f1d63" style="color:inherit">138</a></span></td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-parent="b1e50bb6940788fae44af7a5b704498ddcc86901" data-short="d67b737" title="Run Unit Tests for commit d67b737">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-parent="b1e50bb6940788fae44af7a5b704498ddcc86901" data-short="d67b737" title="Run Antidoc for commit d67b737">&#9655;</a></td>
     </tr>
 
@@ -2170,11 +2198,11 @@
           </div>
         </div>
       </td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="b1e50bb6940788fae44af7a5b704498ddcc86901" data-parent="cc09dfec0897af335ef622eb0a8671b2d98c231d" data-short="b1e50bb" title="Run Mass Compile for commit b1e50bb">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="b1e50bb6940788fae44af7a5b704498ddcc86901" data-parent="cc09dfec0897af335ef622eb0a8671b2d98c231d" data-short="b1e50bb" title="Run VI Analyzer for commit b1e50bb">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="b1e50bb6940788fae44af7a5b704498ddcc86901" data-parent="cc09dfec0897af335ef622eb0a8671b2d98c231d" data-short="b1e50bb" title="Run VIDiff for commit b1e50bb">&#9655;</a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="b1e50bb6940788fae44af7a5b704498ddcc86901" data-parent="cc09dfec0897af335ef622eb0a8671b2d98c231d" data-short="b1e50bb" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 136 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=b1e50bb6940788fae44af7a5b704498ddcc86901" style="color:inherit">136</a></span></td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="b1e50bb6940788fae44af7a5b704498ddcc86901" data-parent="cc09dfec0897af335ef622eb0a8671b2d98c231d" data-short="b1e50bb" title="Run Unit Tests for commit b1e50bb">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="b1e50bb6940788fae44af7a5b704498ddcc86901" data-parent="cc09dfec0897af335ef622eb0a8671b2d98c231d" data-short="b1e50bb" title="Run Antidoc for commit b1e50bb">&#9655;</a></td>
     </tr>
 
@@ -2224,11 +2252,11 @@
           </div>
         </div>
       </td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="2c71e3bb0d286d598983e8364eb304249f2e4f49" data-parent="215f606e6268a0b156327c7fb2082521c6045433" data-short="2c71e3b" title="Run Mass Compile for commit 2c71e3b">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="2c71e3bb0d286d598983e8364eb304249f2e4f49" data-parent="215f606e6268a0b156327c7fb2082521c6045433" data-short="2c71e3b" title="Run VI Analyzer for commit 2c71e3b">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="2c71e3bb0d286d598983e8364eb304249f2e4f49" data-parent="215f606e6268a0b156327c7fb2082521c6045433" data-short="2c71e3b" title="Run VIDiff for commit 2c71e3b">&#9655;</a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="2c71e3bb0d286d598983e8364eb304249f2e4f49" data-parent="215f606e6268a0b156327c7fb2082521c6045433" data-short="2c71e3b" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 136 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=2c71e3bb0d286d598983e8364eb304249f2e4f49" style="color:inherit">136</a></span></td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="2c71e3bb0d286d598983e8364eb304249f2e4f49" data-parent="215f606e6268a0b156327c7fb2082521c6045433" data-short="2c71e3b" title="Run Unit Tests for commit 2c71e3b">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="2c71e3bb0d286d598983e8364eb304249f2e4f49" data-parent="215f606e6268a0b156327c7fb2082521c6045433" data-short="2c71e3b" title="Run Antidoc for commit 2c71e3b">&#9655;</a></td>
     </tr>
 
@@ -2242,11 +2270,11 @@
           </div>
         </div>
       </td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="215f606e6268a0b156327c7fb2082521c6045433" data-parent="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-short="215f606" title="Run Mass Compile for commit 215f606">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="215f606e6268a0b156327c7fb2082521c6045433" data-parent="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-short="215f606" title="Run VI Analyzer for commit 215f606">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="215f606e6268a0b156327c7fb2082521c6045433" data-parent="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-short="215f606" title="Run VIDiff for commit 215f606">&#9655;</a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="215f606e6268a0b156327c7fb2082521c6045433" data-parent="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-short="215f606" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 176 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=215f606e6268a0b156327c7fb2082521c6045433" style="color:inherit">176</a></span></td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="215f606e6268a0b156327c7fb2082521c6045433" data-parent="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-short="215f606" title="Run Unit Tests for commit 215f606">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="215f606e6268a0b156327c7fb2082521c6045433" data-parent="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-short="215f606" title="Run Antidoc for commit 215f606">&#9655;</a></td>
     </tr>
 
@@ -2260,11 +2288,11 @@
           </div>
         </div>
       </td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-parent="1f5627a23092d4cb2a8a8a07cb8ce7a26d8fd403" data-short="58c08e3" title="Run Mass Compile for commit 58c08e3">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-parent="1f5627a23092d4cb2a8a8a07cb8ce7a26d8fd403" data-short="58c08e3" title="Run VI Analyzer for commit 58c08e3">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-parent="1f5627a23092d4cb2a8a8a07cb8ce7a26d8fd403" data-short="58c08e3" title="Run VIDiff for commit 58c08e3">&#9655;</a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-parent="1f5627a23092d4cb2a8a8a07cb8ce7a26d8fd403" data-short="58c08e3" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 176 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=58c08e3ee046ed06fe62a6072bfa9c176f1412c6" style="color:inherit">176</a></span></td>
-      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-parent="1f5627a23092d4cb2a8a8a07cb8ce7a26d8fd403" data-short="58c08e3" title="Run Unit Tests for commit 58c08e3">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-parent="1f5627a23092d4cb2a8a8a07cb8ce7a26d8fd403" data-short="58c08e3" title="Run Antidoc for commit 58c08e3">&#9655;</a></td>
     </tr>
 
