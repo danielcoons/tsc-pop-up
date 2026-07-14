@@ -1,0 +1,40 @@
+{
+  "meta": {
+    "sha": "634cea975f0b0605e3538501f3147c361287f4de",
+    "short": "634cea9",
+    "platform": "windows",
+    "repo": "danielcoons/tsc-pop-up",
+    "pages_url": "https://danielcoons.github.io/tsc-pop-up",
+    "pages_base": "../..",
+    "commit": {
+      "message": "Merge pull request #7 from danielcoons/labview-ci/reconfigure-29351846978",
+      "author": "Daniel Coons",
+      "date": "2026-07-14T13:02:23-04:00"
+    },
+    "generated_utc": "2026-07-14 21:15 UTC",
+    "analysis_date": "Tuesday, July 14, 2026 9:15:28 PM",
+    "duration": "00:00:18.63",
+    "configs": [
+      {
+        "label": "assets/via/via-config-tsc.viancfg",
+        "scope": "all other VIs"
+      }
+    ]
+  },
+  "summary": {
+    "vis_analyzed": 1,
+    "tests_run": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "findings": 0,
+    "vis_with_findings": 0
+  },
+  "errors": {
+    "vi_not_loadable": 0,
+    "test_not_loadable": 0,
+    "test_not_runnable": 0,
+    "test_error_out": 0
+  },
+  "rule_counts": []
+}
