@@ -1,8 +1,22 @@
 {
   "schema": 1,
   "repo": "danielcoons/tsc-pop-up",
-  "sha": "a4b13e58d90ac3e6b85329d81c843ca92d12856f",
+  "sha": "af297c93c9a615d3e0f942d8031d83952d645c37",
   "revisions": [
+    {
+      "sha": "af297c93c9a615d3e0f942d8031d83952d645c37",
+      "short": "af297c9",
+      "message": "Merge pull request #6 from danielcoons/labview-ci/reconfigure-29349909864",
+      "author": "Daniel Coons",
+      "date": "2026-07-14T17:00:34Z"
+    },
+    {
+      "sha": "624f75cce1b3b20e05c9288cab96beaa75350eb9",
+      "short": "624f75c",
+      "message": "ci: reconfigure LabVIEW CI settings",
+      "author": "github-actions[bot]",
+      "date": "2026-07-14T16:30:27Z"
+    },
     {
       "sha": "a4b13e58d90ac3e6b85329d81c843ca92d12856f",
       "short": "a4b13e5",
@@ -292,7 +306,7 @@
     }
   ],
   "config": {
-    "use": "",
+    "use": "latest",
     "actions": {},
     "vipc": [],
     "dragon": [],
