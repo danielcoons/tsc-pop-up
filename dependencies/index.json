@@ -1,8 +1,15 @@
 {
   "schema": 1,
   "repo": "danielcoons/tsc-pop-up",
-  "sha": "d1a925a8f295206962b4631cda31ba828c40e6ee",
+  "sha": "a4b13e58d90ac3e6b85329d81c843ca92d12856f",
   "revisions": [
+    {
+      "sha": "a4b13e58d90ac3e6b85329d81c843ca92d12856f",
+      "short": "a4b13e5",
+      "message": "keeping my own version in a new directory",
+      "author": "daniel-coons",
+      "date": "2026-07-14T16:29:18Z"
+    },
     {
       "sha": "d1a925a8f295206962b4631cda31ba828c40e6ee",
       "short": "d1a925a",
