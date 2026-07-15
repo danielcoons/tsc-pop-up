@@ -1,0 +1,71 @@
+{
+ "meta": {
+  "sha": "9bfd002369b3bd10b80f4aeaedbbc819ddbd364c",
+  "short": "9bfd002",
+  "platform": "windows",
+  "repo": "danielcoons/tsc-pop-up",
+  "pages_url": "https://danielcoons.github.io/tsc-pop-up",
+  "snap_base": "https://danielcoons.github.io/tsc-pop-up/vi-snapshots/",
+  "dash_url": "https://danielcoons.github.io/tsc-pop-up/",
+  "labview_version": "2026",
+  "tools": [],
+  "commit": {
+   "message": "updated paths for the vi analyzer config file and edited a vi to hopefully trigger the ci",
+   "author": "daniel-coons",
+   "date": "2026-07-14T22:08:35-04:00"
+  },
+  "generated_utc": "2026-07-15 02:21 UTC"
+ },
+ "summary": {
+  "tests": 0,
+  "passed": 0,
+  "failed": 0,
+  "errored": 0,
+  "skipped": 0,
+  "percent": 0,
+  "status": "empty",
+  "duration": 0.0
+ },
+ "status_order": [
+  "failed",
+  "error",
+  "skipped",
+  "passed"
+ ],
+ "status_meta": {
+  "failed": {
+   "label": "Failed",
+   "color": "#da3633",
+   "blurb": "An assertion failed."
+  },
+  "error": {
+   "label": "Errored",
+   "color": "#bb8009",
+   "blurb": "The test raised an unexpected error."
+  },
+  "skipped": {
+   "label": "Skipped",
+   "color": "#6e7681",
+   "blurb": "The test was skipped."
+  },
+  "passed": {
+   "label": "Passed",
+   "color": "#2ea043",
+   "blurb": "The test passed."
+  }
+ },
+ "platforms": [
+  {
+   "id": "windows",
+   "url": null
+  },
+  {
+   "id": "linux",
+   "url": "linux/results.json"
+  }
+ ],
+ "suites": [],
+ "tooling": {
+  "missing": []
+ }
+}
