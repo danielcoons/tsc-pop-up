@@ -1,8 +1,15 @@
 {
   "schema": 1,
   "repo": "danielcoons/tsc-pop-up",
-  "sha": "a88d27d9c6de3c1bbf71cdf6c57c4af8d78e2715",
+  "sha": "97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19",
   "revisions": [
+    {
+      "sha": "97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19",
+      "short": "97cd03e",
+      "message": "let's see if this helps the adoc process",
+      "author": "daniel-coons",
+      "date": "2026-07-15T21:17:11Z"
+    },
     {
       "sha": "a88d27d9c6de3c1bbf71cdf6c57c4af8d78e2715",
       "short": "a88d27d",
@@ -388,6 +395,22 @@
         "oglib_file-6.0.2.28",
         "oglib_lvdata-6.0.0.45",
         "oglib_string-6.0.2.35"
+      ],
+      "error": ""
+    },
+    {
+      "path": "_vip/antidoc-missing-stuff.vipc",
+      "role": "project",
+      "capability": "",
+      "tooling": false,
+      "configured": true,
+      "monitored": true,
+      "locked": false,
+      "packages": [
+        "wiresmith_technology_lib_g_cli-3.0.1.98",
+        "wovalab_lib_antidoc-3.3.1.879",
+        "wovalab_lib_antidoc_cli-3.4.0.126",
+        "wovalab_lib_asciidoc_for_labview-1.12.1.492"
       ],
       "error": ""
     },
