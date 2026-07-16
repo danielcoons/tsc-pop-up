@@ -1,8 +1,22 @@
 {
   "schema": 1,
   "repo": "danielcoons/tsc-pop-up",
-  "sha": "97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19",
+  "sha": "1ab866e010526b84726e864c189584739166b891",
   "revisions": [
+    {
+      "sha": "1ab866e010526b84726e864c189584739166b891",
+      "short": "1ab866e",
+      "message": "Merge pull request #8 from danielcoons/labview-ci/reconfigure-29460654438",
+      "author": "Daniel Coons",
+      "date": "2026-07-16T00:12:42Z"
+    },
+    {
+      "sha": "ed417f218929a0d4183ddaf226f224d918679a09",
+      "short": "ed417f2",
+      "message": "ci: reconfigure LabVIEW CI settings",
+      "author": "github-actions[bot]",
+      "date": "2026-07-16T00:09:56Z"
+    },
     {
       "sha": "97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19",
       "short": "97cd03e",
@@ -348,11 +362,28 @@
     }
   ],
   "config": {
-    "use": "",
+    "use": "latest",
     "actions": {},
-    "vipc": [],
+    "vipc": [
+      {
+        "path": ".github/labview/antidoc/antidoc.vipc",
+        "monitor": false
+      },
+      {
+        "path": ".github/labview/vipm/ci-tooling.vipc",
+        "monitor": true
+      },
+      {
+        "path": "_vip/antidoc-missing-stuff.vipc",
+        "monitor": true
+      },
+      {
+        "path": "_vip/TSC Pop-Up.vipc",
+        "monitor": true
+      }
+    ],
     "dragon": [],
-    "hasVipcList": false,
+    "hasVipcList": true,
     "hasDragonList": false
   },
   "vipc": [
