@@ -1,8 +1,22 @@
 {
   "schema": 1,
   "repo": "danielcoons/tsc-pop-up",
-  "sha": "1ab866e010526b84726e864c189584739166b891",
+  "sha": "eb6030835a139dc36408b40e49cf3435642e7fc3",
   "revisions": [
+    {
+      "sha": "eb6030835a139dc36408b40e49cf3435642e7fc3",
+      "short": "eb60308",
+      "message": "ci: adopt LabVIEW CI tooling v4.4.12 (full update)",
+      "author": "github-actions[bot]",
+      "date": "2026-07-16T01:13:09Z"
+    },
+    {
+      "sha": "4158cba013056aca5ddc8721b17013174cbf1158",
+      "short": "4158cba",
+      "message": "removing anti-doc cli and applying the rest of the packages and removing the vipc file i had before that has nothing in it",
+      "author": "daniel-coons",
+      "date": "2026-07-16T01:12:29Z"
+    },
     {
       "sha": "1ab866e010526b84726e864c189584739166b891",
       "short": "1ab866e",
@@ -362,28 +376,11 @@
     }
   ],
   "config": {
-    "use": "latest",
+    "use": "",
     "actions": {},
-    "vipc": [
-      {
-        "path": ".github/labview/antidoc/antidoc.vipc",
-        "monitor": false
-      },
-      {
-        "path": ".github/labview/vipm/ci-tooling.vipc",
-        "monitor": true
-      },
-      {
-        "path": "_vip/antidoc-missing-stuff.vipc",
-        "monitor": true
-      },
-      {
-        "path": "_vip/TSC Pop-Up.vipc",
-        "monitor": true
-      }
-    ],
+    "vipc": [],
     "dragon": [],
-    "hasVipcList": true,
+    "hasVipcList": false,
     "hasDragonList": false
   },
   "vipc": [
@@ -440,20 +437,8 @@
       "packages": [
         "wiresmith_technology_lib_g_cli-3.0.1.98",
         "wovalab_lib_antidoc-3.3.1.879",
-        "wovalab_lib_antidoc_cli-3.4.0.126",
         "wovalab_lib_asciidoc_for_labview-1.12.1.492"
       ],
-      "error": ""
-    },
-    {
-      "path": "_vip/TSC Pop-Up.vipc",
-      "role": "project",
-      "capability": "",
-      "tooling": false,
-      "configured": true,
-      "monitored": true,
-      "locked": false,
-      "packages": [],
       "error": ""
     }
   ],
