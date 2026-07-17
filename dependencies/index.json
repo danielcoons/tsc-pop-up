@@ -2,7 +2,393 @@
   "schema": 1,
   "repo": "danielcoons/tsc-pop-up",
   "sha": "483cf37b4c5c97f764aac88dd5ee5fe00e52fe0c",
-  "revisions": [],
+  "revisions": [
+    {
+      "sha": "483cf37b4c5c97f764aac88dd5ee5fe00e52fe0c",
+      "short": "483cf37",
+      "message": "Merge pull request #9 from danielcoons/labview-ci/reconfigure-29463681252",
+      "author": "Daniel Coons",
+      "date": "2026-07-16T01:16:30Z"
+    },
+    {
+      "sha": "cf5b506392136467ef6b1b0944a4298c94e10416",
+      "short": "cf5b506",
+      "message": "ci: reconfigure LabVIEW CI settings",
+      "author": "github-actions[bot]",
+      "date": "2026-07-16T01:16:03Z"
+    },
+    {
+      "sha": "eb6030835a139dc36408b40e49cf3435642e7fc3",
+      "short": "eb60308",
+      "message": "ci: adopt LabVIEW CI tooling v4.4.12 (full update)",
+      "author": "github-actions[bot]",
+      "date": "2026-07-16T01:13:09Z"
+    },
+    {
+      "sha": "4158cba013056aca5ddc8721b17013174cbf1158",
+      "short": "4158cba",
+      "message": "removing anti-doc cli and applying the rest of the packages and removing the vipc file i had before that has nothing in it",
+      "author": "daniel-coons",
+      "date": "2026-07-16T01:12:29Z"
+    },
+    {
+      "sha": "1ab866e010526b84726e864c189584739166b891",
+      "short": "1ab866e",
+      "message": "Merge pull request #8 from danielcoons/labview-ci/reconfigure-29460654438",
+      "author": "Daniel Coons",
+      "date": "2026-07-16T00:12:42Z"
+    },
+    {
+      "sha": "ed417f218929a0d4183ddaf226f224d918679a09",
+      "short": "ed417f2",
+      "message": "ci: reconfigure LabVIEW CI settings",
+      "author": "github-actions[bot]",
+      "date": "2026-07-16T00:09:56Z"
+    },
+    {
+      "sha": "97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19",
+      "short": "97cd03e",
+      "message": "let's see if this helps the adoc process",
+      "author": "daniel-coons",
+      "date": "2026-07-15T21:17:11Z"
+    },
+    {
+      "sha": "a88d27d9c6de3c1bbf71cdf6c57c4af8d78e2715",
+      "short": "a88d27d",
+      "message": "ci: adopt LabVIEW CI tooling v4.4.10 (full update)",
+      "author": "github-actions[bot]",
+      "date": "2026-07-15T20:45:44Z"
+    },
+    {
+      "sha": "9bfd002369b3bd10b80f4aeaedbbc819ddbd364c",
+      "short": "9bfd002",
+      "message": "updated paths for the vi analyzer config file and edited a vi to hopefully trigger the ci",
+      "author": "daniel-coons",
+      "date": "2026-07-15T02:08:35Z"
+    },
+    {
+      "sha": "634cea975f0b0605e3538501f3147c361287f4de",
+      "short": "634cea9",
+      "message": "Merge pull request #7 from danielcoons/labview-ci/reconfigure-29351846978",
+      "author": "Daniel Coons",
+      "date": "2026-07-14T17:02:23Z"
+    },
+    {
+      "sha": "3c815e5b987a294325d14ce1baca0c57646b11e6",
+      "short": "3c815e5",
+      "message": "Merge branch 'main' into labview-ci/reconfigure-29351846978",
+      "author": "Daniel Coons",
+      "date": "2026-07-14T17:02:13Z"
+    },
+    {
+      "sha": "af297c93c9a615d3e0f942d8031d83952d645c37",
+      "short": "af297c9",
+      "message": "Merge pull request #6 from danielcoons/labview-ci/reconfigure-29349909864",
+      "author": "Daniel Coons",
+      "date": "2026-07-14T17:00:34Z"
+    },
+    {
+      "sha": "63635cfbc4901d5994b52b1cbcb7c7c1e38809fd",
+      "short": "63635cf",
+      "message": "ci: reconfigure LabVIEW CI settings",
+      "author": "github-actions[bot]",
+      "date": "2026-07-14T16:59:03Z"
+    },
+    {
+      "sha": "624f75cce1b3b20e05c9288cab96beaa75350eb9",
+      "short": "624f75c",
+      "message": "ci: reconfigure LabVIEW CI settings",
+      "author": "github-actions[bot]",
+      "date": "2026-07-14T16:30:27Z"
+    },
+    {
+      "sha": "a4b13e58d90ac3e6b85329d81c843ca92d12856f",
+      "short": "a4b13e5",
+      "message": "keeping my own version in a new directory",
+      "author": "daniel-coons",
+      "date": "2026-07-14T16:29:18Z"
+    },
+    {
+      "sha": "d1a925a8f295206962b4631cda31ba828c40e6ee",
+      "short": "d1a925a",
+      "message": "ci: adopt LabVIEW CI tooling v4.4.9 (full update)",
+      "author": "github-actions[bot]",
+      "date": "2026-07-14T16:14:17Z"
+    },
+    {
+      "sha": "dd065d356fcd44ef38f5c423a213150f94e029ec",
+      "short": "dd065d3",
+      "message": "seeing if adding this with its own name works",
+      "author": "daniel-coons",
+      "date": "2026-07-14T16:12:23Z"
+    },
+    {
+      "sha": "c7353cdf962ddc7b2e9f7b1e8cb1e2c6acc701b9",
+      "short": "c7353cd",
+      "message": "Merge pull request #5 from danielcoons/labview-ci/reconfigure-29301466554",
+      "author": "Daniel Coons",
+      "date": "2026-07-14T14:05:14Z"
+    },
+    {
+      "sha": "0b093cb64ff6f8f4e40db1c05e67c6fc70cc9ddb",
+      "short": "0b093cb",
+      "message": "ci: reconfigure LabVIEW CI settings",
+      "author": "github-actions[bot]",
+      "date": "2026-07-14T02:36:17Z"
+    },
+    {
+      "sha": "5ffc526489128e0ff7b5c3ffe295fab87ab5f0da",
+      "short": "5ffc526",
+      "message": "ci: adopt LabVIEW CI tooling v4.4.7 (full update)",
+      "author": "github-actions[bot]",
+      "date": "2026-07-14T02:22:02Z"
+    },
+    {
+      "sha": "b16947476f664a7c93e4dbc695ae7b49679033a7",
+      "short": "b169474",
+      "message": "updated the antidoc packages json",
+      "author": "daniel-coons",
+      "date": "2026-07-13T22:00:14Z"
+    },
+    {
+      "sha": "87bde951dbdc3cf136daa2e8caabd40b425e8f5d",
+      "short": "87bde95",
+      "message": "updated antidoc vipc",
+      "author": "daniel-coons",
+      "date": "2026-07-13T20:21:55Z"
+    },
+    {
+      "sha": "90c6cbbfa2ae6bfb3355c7e40bd92c5d43849574",
+      "short": "90c6cbb",
+      "message": "Merge branch 'ci/install-labview-ci'",
+      "author": "daniel-coons",
+      "date": "2026-07-13T20:12:52Z"
+    },
+    {
+      "sha": "d2b3290c2335ac2d71989d1e2c7e43fc156ac379",
+      "short": "d2b3290",
+      "message": "customized vi analyzer config",
+      "author": "daniel-coons",
+      "date": "2026-07-13T20:12:19Z"
+    },
+    {
+      "sha": "c072c4e49b5729ab34a4716061178f905462e8a9",
+      "short": "c072c4e",
+      "message": "Add LabVIEW CI pipeline",
+      "author": "Daniel Coons",
+      "date": "2026-07-13T20:07:29Z"
+    },
+    {
+      "sha": "22a56b42fcd94a8c700aa624f409596a9962c352",
+      "short": "22a56b4",
+      "message": "ci: install LabVIEW CI pipeline (dashboard, vi-analyzer, vidiff, snapshots, custom-image, snapshots-2, antidoc)",
+      "author": "Daniel Coons",
+      "date": "2026-07-13T20:07:23Z"
+    },
+    {
+      "sha": "4f3babcb4701d9870c512ceb68f831225b07e5a7",
+      "short": "4f3babc",
+      "message": "Delete .github directory",
+      "author": "Daniel Coons",
+      "date": "2026-07-13T19:58:28Z"
+    },
+    {
+      "sha": "ce28ba0e4b6eb59a6adb656ac85587a51e188977",
+      "short": "ce28ba0",
+      "message": "trying to setup vi analyzer and antidoc to work",
+      "author": "daniel-coons",
+      "date": "2026-07-13T19:07:32Z"
+    },
+    {
+      "sha": "eca6caad1cd0e9630eb817612157855388d4ca16",
+      "short": "eca6caa",
+      "message": "Merge pull request #3 from danielcoons/develop",
+      "author": "Daniel Coons",
+      "date": "2026-07-13T15:41:58Z"
+    },
+    {
+      "sha": "d160afc6add9ee1c80f270142d53003960db3142",
+      "short": "d160afc",
+      "message": "documentation cleanup and VI settings updated to turn off debugging",
+      "author": "daniel-coons",
+      "date": "2026-07-13T02:43:24Z"
+    },
+    {
+      "sha": "400d3ee5ba99f6daac8c7ca67ce99a23229545bb",
+      "short": "400d3ee",
+      "message": "Add 'develop' branch to workflow triggers",
+      "author": "Daniel Coons",
+      "date": "2026-07-11T22:05:14Z"
+    },
+    {
+      "sha": "8e7530810e645c5d624eae20ec4f26b652ad33c5",
+      "short": "8e75308",
+      "message": "delete the default config",
+      "author": "daniel-coons",
+      "date": "2026-07-11T01:22:37Z"
+    },
+    {
+      "sha": "be79c56d9c5368f6114da0e17c1d921f9ae0a87d",
+      "short": "be79c56",
+      "message": "new vi analyzer template",
+      "author": "daniel-coons",
+      "date": "2026-07-11T01:14:41Z"
+    },
+    {
+      "sha": "6c421addf74a456d8e55d7535abf74cfef0224b0",
+      "short": "6c421ad",
+      "message": "updated overall coding style throughout all VIs",
+      "author": "daniel-coons",
+      "date": "2026-07-11T01:14:18Z"
+    },
+    {
+      "sha": "d7fdde7c44de337ca0483d6388ebcf84a6ddc7c5",
+      "short": "d7fdde7",
+      "message": "Merge branch 'main' into develop",
+      "author": "daniel-coons",
+      "date": "2026-07-10T15:07:39Z"
+    },
+    {
+      "sha": "ae335db4b8031bd9271e39b4db59c8cda1bcdbeb",
+      "short": "ae335db",
+      "message": "Add LabVIEW CI pipeline",
+      "author": "Daniel Coons",
+      "date": "2026-07-10T13:06:25Z"
+    },
+    {
+      "sha": "1e6074a20ae24900dc20c617d22202421684df54",
+      "short": "1e6074a",
+      "message": "Merge branch 'develop'",
+      "author": "daniel-coons",
+      "date": "2025-10-16T17:47:18Z"
+    },
+    {
+      "sha": "ef536f943e0e0d03bb15bea17b05ee19d8b1dea0",
+      "short": "ef536f9",
+      "message": "link to vipm",
+      "author": "daniel-coons",
+      "date": "2025-10-16T17:47:02Z"
+    },
+    {
+      "sha": "d58e71090fc7a4b0f0668f67d411a7f0f740c216",
+      "short": "d58e710",
+      "message": "Merge tag 'v4.0.0' into develop",
+      "author": "daniel-coons",
+      "date": "2025-10-16T17:34:05Z"
+    },
+    {
+      "sha": "03fcdb0f4fca853ae68ab278017ab31d436b5bc4",
+      "short": "03fcdb0",
+      "message": "Merge branch 'release/v4.0.0'",
+      "author": "daniel-coons",
+      "date": "2025-10-16T17:34:04Z"
+    },
+    {
+      "sha": "8da7fa2af6d7036611a50abab5b4e19b8ca28db1",
+      "short": "8da7fa2",
+      "message": "missed a VI on the palette",
+      "author": "daniel-coons",
+      "date": "2025-10-16T17:33:05Z"
+    },
+    {
+      "sha": "3cb5807e882e296e52c2d765e88281cd9ae49b45",
+      "short": "3cb5807",
+      "message": "Merge tag 'v4.0.0' into develop",
+      "author": "daniel-coons",
+      "date": "2025-10-16T17:17:25Z"
+    },
+    {
+      "sha": "f67ec060e2093b4f0237a692c148292c9b38e60f",
+      "short": "f67ec06",
+      "message": "Merge branch 'release/v4.0.0'",
+      "author": "daniel-coons",
+      "date": "2025-10-16T17:17:24Z"
+    },
+    {
+      "sha": "df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b",
+      "short": "df6ef8d",
+      "message": "updated documentation and changelog; rebuilt package for release",
+      "author": "daniel-coons",
+      "date": "2025-10-16T17:16:08Z"
+    },
+    {
+      "sha": "d67b737a4e3728d906e8163b9bffabb86c8f1d63",
+      "short": "d67b737",
+      "message": "turns out i couldn't support 2019 with some of what i was using, so min. version updated to 2021 now",
+      "author": "daniel-coons",
+      "date": "2025-10-16T17:06:17Z"
+    },
+    {
+      "sha": "b1e50bb6940788fae44af7a5b704498ddcc86901",
+      "short": "b1e50bb",
+      "message": "updated the vip build",
+      "author": "daniel-coons",
+      "date": "2025-10-15T23:26:29Z"
+    },
+    {
+      "sha": "cc09dfec0897af335ef622eb0a8671b2d98c231d",
+      "short": "cc09dfe",
+      "message": "discovered the markdown strikethrough by accident......",
+      "author": "daniel-coons",
+      "date": "2025-10-15T19:33:18Z"
+    },
+    {
+      "sha": "bbd165f2105e448232e369d7ec8c2f844c158bde",
+      "short": "bbd165f",
+      "message": "added additional readme content and images of dialogs",
+      "author": "daniel-coons",
+      "date": "2025-10-15T19:32:21Z"
+    },
+    {
+      "sha": "2c71e3bb0d286d598983e8364eb304249f2e4f49",
+      "short": "2c71e3b",
+      "message": "separating the GIF and SVG pop-ups since they have an external dependency and will be less common; updating the readme and adding some instructions",
+      "author": "daniel-coons",
+      "date": "2025-10-15T18:44:18Z"
+    },
+    {
+      "sha": "215f606e6268a0b156327c7fb2082521c6045433",
+      "short": "215f606",
+      "message": "compiled for 2019 now and updated documentation throughout; cleaned up usage of malleable VIs and fixed a bug in the theme definer UI",
+      "author": "daniel-coons",
+      "date": "2025-10-13T19:00:02Z"
+    },
+    {
+      "sha": "58c08e3ee046ed06fe62a6072bfa9c176f1412c6",
+      "short": "58c08e3",
+      "message": "baseline from internal private repo",
+      "author": "daniel-coons",
+      "date": "2025-10-13T15:29:59Z"
+    },
+    {
+      "sha": "1f5627a23092d4cb2a8a8a07cb8ce7a26d8fd403",
+      "short": "1f5627a",
+      "message": "readme initial version",
+      "author": "daniel-coons",
+      "date": "2025-10-13T12:37:15Z"
+    },
+    {
+      "sha": "5e0eaab1ad7211bff0f3a3132ee4b2a1a1040012",
+      "short": "5e0eaab",
+      "message": "gitignore file",
+      "author": "daniel-coons",
+      "date": "2025-10-13T12:34:18Z"
+    },
+    {
+      "sha": "158a49f2b5a5cf687adcc00d5af45bd6ca37dbfa",
+      "short": "158a49f",
+      "message": "Update LICENSE",
+      "author": "Daniel Coons",
+      "date": "2025-10-13T12:18:11Z"
+    },
+    {
+      "sha": "e6541c97e5881b01ca1fbd36ffd7f24e4ae9e279",
+      "short": "e6541c9",
+      "message": "Initial commit",
+      "author": "Daniel Coons",
+      "date": "2025-10-13T12:17:23Z"
+    }
+  ],
   "config": {
     "use": "latest",
     "actions": {},

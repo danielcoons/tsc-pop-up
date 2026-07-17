@@ -271,7 +271,7 @@
   <script>
   (function(){
     var RT = {"masscompile": {"label": "Mass Compile", "platforms": {"windows": {"wf": "masscompile-windows-container.yml", "inputs": {"commit_sha": "{sha}"}}, "linux": {"wf": "masscompile-linux-container.yml", "inputs": {"commit_sha": "{sha}"}}}}, "vi-analyzer": {"label": "VI Analyzer", "platforms": {"windows": {"wf": "run-vi-analyzer-windows-container.yml", "inputs": {"commit_sha": "{sha}"}}}}, "vidiff": {"label": "VIDiff", "platforms": {"windows": {"wf": "vidiff-windows-container.yml", "inputs": {"head_sha": "{sha}", "base_sha": "{parent}"}}, "linux": {"wf": "vidiff-linux-container.yml", "inputs": {"head_sha": "{sha}", "base_sha": "{parent}"}}}}, "snapshots": {"label": "VI Snapshots", "platforms": {"all": {"wf": "vi-snapshots.yml", "inputs": {"mode": "backfill"}}}}, "snapshots2": {"label": "VI Browser 2.0 Snapshots", "platforms": {"windows": {"wf": "vi-snapshots-json-windows.yml", "inputs": {"target_sha": "{sha}"}}, "linux": {"wf": "vi-snapshots-json.yml", "inputs": {"mode": "head", "target_sha": "{sha}"}}}}, "unit-tests": {"label": "Unit Tests", "platforms": {"windows": {"wf": "unit-tests-windows-container.yml", "inputs": {"commit_sha": "{sha}"}}}}, "antidoc": {"label": "Antidoc", "platforms": {"windows": {"wf": "run-antidoc-windows-container.yml", "inputs": {"commit_sha": "{sha}"}}}}};
-    var RT_TIMING = {"masscompile": {"windows": {"total": null, "work": null}, "linux": {"total": 109.0, "work": null}}, "vi-analyzer": {"windows": {"total": 1324.0, "work": null}}, "vidiff": {"windows": {"total": 1225.5, "work": null}, "linux": {"total": 91.0, "work": null}}, "snapshots2": {"windows": {"total": 1705.0, "work": null}, "linux": {"total": 60.5, "work": null}}, "unit-tests": {"windows": {"total": 763.0, "work": null}}, "antidoc": {"windows": {"total": 859.0, "work": null}}};
+    var RT_TIMING = {"masscompile": {"windows": {"total": null, "work": 26}, "linux": {"total": 109.0, "work": 26}}, "vi-analyzer": {"windows": {"total": 1324.0, "work": null}}, "vidiff": {"windows": {"total": 1225.5, "work": null}, "linux": {"total": 91.0, "work": null}}, "snapshots2": {"windows": {"total": 1705.0, "work": null}, "linux": {"total": 60.5, "work": null}}, "unit-tests": {"windows": {"total": 763.0, "work": null}}, "antidoc": {"windows": {"total": 859.0, "work": null}}};
     var REPO = "danielcoons/tsc-pop-up";
     var BRANCH = "main";
     var TOK_KEY = "lvci_dispatch_token";
@@ -1166,8 +1166,8 @@
     // activities to queue. Reuses dispatchCells (oldest-first, snapshots as one
     // backfill) + the same token and optimistic-queued bridge as every other
     // dispatch on the dashboard.
-    var HIST = [];                        // [{sha, short, msg}] newest-first (project revisions)
-    var RAN = {};                     // {cap:1} caps with a result/active run somewhere in history
+    var HIST = [{"sha": "4158cba013056aca5ddc8721b17013174cbf1158", "short": "4158cba", "msg": "removing anti-doc cli and applying the rest of the packages and removing the vip", "snapshots2": {"windows": {"have": 0, "total": 128}, "linux": {"have": 0, "total": 128}}}, {"sha": "97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19", "short": "97cd03e", "msg": "let's see if this helps the adoc process", "snapshots2": {"windows": {"have": 0, "total": 128}, "linux": {"have": 0, "total": 128}}}, {"sha": "9bfd002369b3bd10b80f4aeaedbbc819ddbd364c", "short": "9bfd002", "msg": "updated paths for the vi analyzer config file and edited a vi to hopefully trigg", "snapshots2": {"windows": {"have": 0, "total": 128}, "linux": {"have": 0, "total": 128}}}, {"sha": "eca6caad1cd0e9630eb817612157855388d4ca16", "short": "eca6caa", "msg": "Merge pull request #3 from danielcoons/develop", "snapshots2": {"windows": {"have": 0, "total": 128}, "linux": {"have": 0, "total": 128}}}, {"sha": "d160afc6add9ee1c80f270142d53003960db3142", "short": "d160afc", "msg": "documentation cleanup and VI settings updated to turn off debugging", "snapshots2": {"windows": {"have": 0, "total": 128}, "linux": {"have": 0, "total": 128}}}, {"sha": "6c421addf74a456d8e55d7535abf74cfef0224b0", "short": "6c421ad", "msg": "updated overall coding style throughout all VIs", "snapshots2": {"windows": {"have": 0, "total": 128}, "linux": {"have": 0, "total": 128}}}, {"sha": "d58e71090fc7a4b0f0668f67d411a7f0f740c216", "short": "d58e710", "msg": "Merge tag 'v4.0.0' into develop", "snapshots2": {"windows": {"have": 0, "total": 128}, "linux": {"have": 0, "total": 128}}}, {"sha": "03fcdb0f4fca853ae68ab278017ab31d436b5bc4", "short": "03fcdb0", "msg": "Merge branch 'release/v4.0.0'", "snapshots2": {"windows": {"have": 0, "total": 128}, "linux": {"have": 0, "total": 128}}}, {"sha": "8da7fa2af6d7036611a50abab5b4e19b8ca28db1", "short": "8da7fa2", "msg": "missed a VI on the palette", "snapshots2": {"windows": {"have": 0, "total": 128}, "linux": {"have": 0, "total": 128}}}, {"sha": "3cb5807e882e296e52c2d765e88281cd9ae49b45", "short": "3cb5807", "msg": "Merge tag 'v4.0.0' into develop", "snapshots2": {"windows": {"have": 0, "total": 128}, "linux": {"have": 0, "total": 128}}}, {"sha": "f67ec060e2093b4f0237a692c148292c9b38e60f", "short": "f67ec06", "msg": "Merge branch 'release/v4.0.0'", "snapshots2": {"windows": {"have": 0, "total": 128}, "linux": {"have": 0, "total": 128}}}, {"sha": "df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b", "short": "df6ef8d", "msg": "updated documentation and changelog; rebuilt package for release", "snapshots2": {"windows": {"have": 0, "total": 128}, "linux": {"have": 0, "total": 128}}}, {"sha": "d67b737a4e3728d906e8163b9bffabb86c8f1d63", "short": "d67b737", "msg": "turns out i couldn't support 2019 with some of what i was using, so min. version", "snapshots2": {"windows": {"have": 0, "total": 128}, "linux": {"have": 0, "total": 128}}}, {"sha": "b1e50bb6940788fae44af7a5b704498ddcc86901", "short": "b1e50bb", "msg": "updated the vip build", "snapshots2": {"windows": {"have": 0, "total": 126}, "linux": {"have": 0, "total": 126}}}, {"sha": "2c71e3bb0d286d598983e8364eb304249f2e4f49", "short": "2c71e3b", "msg": "separating the GIF and SVG pop-ups since they have an external dependency and wi", "snapshots2": {"windows": {"have": 0, "total": 126}, "linux": {"have": 0, "total": 126}}}, {"sha": "215f606e6268a0b156327c7fb2082521c6045433", "short": "215f606", "msg": "compiled for 2019 now and updated documentation throughout; cleaned up usage of ", "snapshots2": {"windows": {"have": 0, "total": 166}, "linux": {"have": 0, "total": 166}}}, {"sha": "58c08e3ee046ed06fe62a6072bfa9c176f1412c6", "short": "58c08e3", "msg": "baseline from internal private repo", "snapshots2": {"windows": {"have": 0, "total": 166}, "linux": {"have": 0, "total": 166}}}];                        // [{sha, short, msg}] newest-first (project revisions)
+    var RAN = {"antidoc": 1, "masscompile": 1, "snapshots": 1, "unit-tests": 1, "vi-analyzer": 1, "vidiff": 1};                     // {cap:1} caps with a result/active run somewhere in history
     var CAP_META = {                            // label + sub for each known capability
       'snapshots':   ['VI Snapshots', 'Renders every changed VI (classic HTML snapshots)'],
       'snapshots2':  ['VI Browser 2.0 Snapshots', 'Renders position-aware snapshots for the VI Browser 2.0 view'],
@@ -1676,7 +1676,7 @@
   </script>
   <main class="lvci-main">
   <h1>CI Dashboard — tsc-pop-up</h1>
-  <div class="sub">Last updated: 2026-07-16 23:02 UTC &nbsp;|&nbsp; Auto-refreshes every 15 min</div>
+  <div class="sub">Last updated: 2026-07-17 03:21 UTC &nbsp;|&nbsp; Auto-refreshes every 15 min</div>
   <div class="nav">
     <a href="https://github.com/danielcoons/tsc-pop-up">GitHub</a>
     <a href="https://github.com/danielcoons/tsc-pop-up/actions">Actions</a>
@@ -1719,7 +1719,996 @@
         <th style="text-align:center">Antidoc</th>
       </tr>
     </thead>
-    <tbody></tbody>
+    <tbody>
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(55,42%,45%)" title="Daniel Coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=483cf37b4c5c97f764aac88dd5ee5fe00e52fe0c" class="cidash-rev-msg" title="Merge pull request #9 from danielcoons/labview-ci/reconfigure-29463681252">Merge pull request #9 from danielcoons/labview-ci/reconfigure-29463681252</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=483cf37b4c5c97f764aac88dd5ee5fe00e52fe0c" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">483cf37</a><span class="cidash-rev-dot">&middot;</span>Daniel Coons<span class="cidash-rev-dot">&middot;</span>2026-07-16</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(150,42%,45%)" title="github-actions[bot]" aria-hidden="true">G</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=cf5b506392136467ef6b1b0944a4298c94e10416" class="cidash-rev-msg" title="ci: reconfigure LabVIEW CI settings">ci: reconfigure LabVIEW CI settings</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=cf5b506392136467ef6b1b0944a4298c94e10416" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">cf5b506</a><span class="cidash-rev-dot">&middot;</span>github-actions[bot]<span class="cidash-rev-dot">&middot;</span>2026-07-16</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(150,42%,45%)" title="github-actions[bot]" aria-hidden="true">G</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=eb6030835a139dc36408b40e49cf3435642e7fc3" class="cidash-rev-msg" title="ci: adopt LabVIEW CI tooling v4.4.12 (full update)">ci: adopt LabVIEW CI tooling v4.4.12 (full update)</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=eb6030835a139dc36408b40e49cf3435642e7fc3" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">eb60308</a><span class="cidash-rev-dot">&middot;</span>github-actions[bot]<span class="cidash-rev-dot">&middot;</span>2026-07-16</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="true" data-deponly="true">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=4158cba013056aca5ddc8721b17013174cbf1158" class="cidash-rev-msg" title="removing anti-doc cli and applying the rest of the packages and removing the vip">removing anti-doc cli and applying the rest of the packages and removing the vip</a><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=4158cba013056aca5ddc8721b17013174cbf1158" class="snap-glyph" title="Snapshots exist for this revision" aria-label="Snapshots exist for this revision"><svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true" style="vertical-align:text-bottom;flex:0 0 auto"><path d="M1.75 2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h.94l8.5-8.5a.25.25 0 0 1 .354 0l1.756 1.757V2.75a.25.25 0 0 0-.25-.25H1.75ZM14.5 9.232 11.06 5.79 3.852 13h9.898a.25.25 0 0 0 .25-.25V9.232ZM1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75C0 1.784.784 1 1.75 1ZM5.5 6a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg></a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=4158cba013056aca5ddc8721b17013174cbf1158" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">4158cba</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2026-07-16</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="4158cba013056aca5ddc8721b17013174cbf1158" data-parent="1ab866e010526b84726e864c189584739166b891" data-short="4158cba" title="Run Mass Compile for commit 4158cba">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="4158cba013056aca5ddc8721b17013174cbf1158" data-parent="1ab866e010526b84726e864c189584739166b891" data-short="4158cba" title="Run VI Analyzer for commit 4158cba">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="4158cba013056aca5ddc8721b17013174cbf1158" data-parent="1ab866e010526b84726e864c189584739166b891" data-short="4158cba" title="Run VIDiff for commit 4158cba">&#9655;</a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="4158cba013056aca5ddc8721b17013174cbf1158" data-parent="1ab866e010526b84726e864c189584739166b891" data-short="4158cba" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=4158cba013056aca5ddc8721b17013174cbf1158" style="color:inherit">138</a></span></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="4158cba013056aca5ddc8721b17013174cbf1158" data-parent="1ab866e010526b84726e864c189584739166b891" data-short="4158cba" title="Run Unit Tests for commit 4158cba">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="4158cba013056aca5ddc8721b17013174cbf1158" data-parent="1ab866e010526b84726e864c189584739166b891" data-short="4158cba" title="Run Antidoc for commit 4158cba">&#9655;</a></td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(55,42%,45%)" title="Daniel Coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=1ab866e010526b84726e864c189584739166b891" class="cidash-rev-msg" title="Merge pull request #8 from danielcoons/labview-ci/reconfigure-29460654438">Merge pull request #8 from danielcoons/labview-ci/reconfigure-29460654438</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=1ab866e010526b84726e864c189584739166b891" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">1ab866e</a><span class="cidash-rev-dot">&middot;</span>Daniel Coons<span class="cidash-rev-dot">&middot;</span>2026-07-16</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(150,42%,45%)" title="github-actions[bot]" aria-hidden="true">G</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=ed417f218929a0d4183ddaf226f224d918679a09" class="cidash-rev-msg" title="ci: reconfigure LabVIEW CI settings">ci: reconfigure LabVIEW CI settings</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=ed417f218929a0d4183ddaf226f224d918679a09" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">ed417f2</a><span class="cidash-rev-dot">&middot;</span>github-actions[bot]<span class="cidash-rev-dot">&middot;</span>2026-07-16</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="true" data-deponly="true">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19" class="cidash-rev-msg" title="let&#x27;s see if this helps the adoc process">let&#x27;s see if this helps the adoc process</a><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19" class="snap-glyph" title="Snapshots exist for this revision" aria-label="Snapshots exist for this revision"><svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true" style="vertical-align:text-bottom;flex:0 0 auto"><path d="M1.75 2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h.94l8.5-8.5a.25.25 0 0 1 .354 0l1.756 1.757V2.75a.25.25 0 0 0-.25-.25H1.75ZM14.5 9.232 11.06 5.79 3.852 13h9.898a.25.25 0 0 0 .25-.25V9.232ZM1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75C0 1.784.784 1 1.75 1ZM5.5 6a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg></a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">97cd03e</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2026-07-15</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19" data-parent="a88d27d9c6de3c1bbf71cdf6c57c4af8d78e2715" data-short="97cd03e" title="Run Mass Compile for commit 97cd03e">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19" data-parent="a88d27d9c6de3c1bbf71cdf6c57c4af8d78e2715" data-short="97cd03e" title="Run VI Analyzer for commit 97cd03e">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19" data-parent="a88d27d9c6de3c1bbf71cdf6c57c4af8d78e2715" data-short="97cd03e" title="Run VIDiff for commit 97cd03e">&#9655;</a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19" data-parent="a88d27d9c6de3c1bbf71cdf6c57c4af8d78e2715" data-short="97cd03e" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19" style="color:inherit">138</a></span></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19" data-parent="a88d27d9c6de3c1bbf71cdf6c57c4af8d78e2715" data-short="97cd03e" title="Run Unit Tests for commit 97cd03e">&#9655;</a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="antidoc" data-sha="97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19" data-parent="a88d27d9c6de3c1bbf71cdf6c57c4af8d78e2715" data-short="97cd03e" data-ts="2026-07-16T01:04:26Z"><span class="cidash-chip cc-fail"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.75.75 0 1 1 1.06 1.06L9.06 8l3.22 3.22a.75.75 0 1 1-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 0 1-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"/></svg><a href="https://danielcoons.github.io/tsc-pop-up/report/index.html?type=antidoc-report&sha=97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19&short=97cd03e&src=..%2Fantidoc%2F97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19%2Findex.html&title=Antidoc%20%C2%B7%2097cd03e" style="color:inherit">docs</a></span></td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(150,42%,45%)" title="github-actions[bot]" aria-hidden="true">G</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=a88d27d9c6de3c1bbf71cdf6c57c4af8d78e2715" class="cidash-rev-msg" title="ci: adopt LabVIEW CI tooling v4.4.10 (full update)">ci: adopt LabVIEW CI tooling v4.4.10 (full update)</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=a88d27d9c6de3c1bbf71cdf6c57c4af8d78e2715" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">a88d27d</a><span class="cidash-rev-dot">&middot;</span>github-actions[bot]<span class="cidash-rev-dot">&middot;</span>2026-07-15</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="true" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=9bfd002369b3bd10b80f4aeaedbbc819ddbd364c" class="cidash-rev-msg" title="updated paths for the vi analyzer config file and edited a vi to hopefully trigg">updated paths for the vi analyzer config file and edited a vi to hopefully trigg</a><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=9bfd002369b3bd10b80f4aeaedbbc819ddbd364c" class="snap-glyph" title="Snapshots exist for this revision" aria-label="Snapshots exist for this revision"><svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true" style="vertical-align:text-bottom;flex:0 0 auto"><path d="M1.75 2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h.94l8.5-8.5a.25.25 0 0 1 .354 0l1.756 1.757V2.75a.25.25 0 0 0-.25-.25H1.75ZM14.5 9.232 11.06 5.79 3.852 13h9.898a.25.25 0 0 0 .25-.25V9.232ZM1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75C0 1.784.784 1 1.75 1ZM5.5 6a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg></a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=9bfd002369b3bd10b80f4aeaedbbc819ddbd364c" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">9bfd002</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2026-07-15</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="masscompile" data-sha="9bfd002369b3bd10b80f4aeaedbbc819ddbd364c" data-parent="634cea975f0b0605e3538501f3147c361287f4de" data-short="9bfd002" data-ts="2026-07-15T02:10:27Z"><span class="cidash-chip cc-pass" title="Linux: 128/128 project VIs compiled; green >= 95%, yellow >= 80%, red < 80% (a compile failure is solid red)"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L1.22 9.28a.75.75 0 1 1 1.06-1.06L6 11.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg><a href="https://danielcoons.github.io/tsc-pop-up/report/index.html?type=masscompile-report&sha=9bfd002369b3bd10b80f4aeaedbbc819ddbd364c&short=9bfd002&src=..%2Fmasscompile%2F9bfd002369b3bd10b80f4aeaedbbc819ddbd364c%2Findex.html&title=Mass%20Compile%20%C2%B7%209bfd002" style="color:inherit">100%</a></span></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="vi-analyzer" data-sha="9bfd002369b3bd10b80f4aeaedbbc819ddbd364c" data-parent="634cea975f0b0605e3538501f3147c361287f4de" data-short="9bfd002" data-ts="2026-07-15T02:37:14Z"><span class="cidash-chip cc-pass"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L1.22 9.28a.75.75 0 1 1 1.06-1.06L6 11.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg><a href="https://danielcoons.github.io/tsc-pop-up/report/index.html?type=vi-analyzer-report&sha=9bfd002369b3bd10b80f4aeaedbbc819ddbd364c&short=9bfd002&src=..%2Fvi-analyzer%2F9bfd002369b3bd10b80f4aeaedbbc819ddbd364c%2Findex.html&title=VI%20Analyzer%20%C2%B7%209bfd002" style="color:inherit">analyze</a></span></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="vidiff" data-sha="9bfd002369b3bd10b80f4aeaedbbc819ddbd364c" data-parent="634cea975f0b0605e3538501f3147c361287f4de" data-short="9bfd002" data-ts="2026-07-15T02:37:26Z"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=9bfd002369b3bd10b80f4aeaedbbc819ddbd364c&changed=1" class="cidash-diffstat" title="VIs changed in this revision: 1 different · 0 new · 0 deleted — click to view the diffs"><span class="ds-mod">1</span><span class="ds-sep">/</span><span class="ds-add ds-zero">0</span><span class="ds-sep">/</span><span class="ds-del ds-zero">0</span></a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="9bfd002369b3bd10b80f4aeaedbbc819ddbd364c" data-parent="634cea975f0b0605e3538501f3147c361287f4de" data-short="9bfd002" data-ts="2026-07-15T02:23:03Z" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=9bfd002369b3bd10b80f4aeaedbbc819ddbd364c" style="color:inherit">138</a></span></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="unit-tests" data-sha="9bfd002369b3bd10b80f4aeaedbbc819ddbd364c" data-parent="634cea975f0b0605e3538501f3147c361287f4de" data-short="9bfd002" data-ts="2026-07-15T02:21:21Z"><span class="cidash-chip cc-pass" title="No unit tests found; 0% failed."><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L1.22 9.28a.75.75 0 1 1 1.06-1.06L6 11.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg><a href="https://danielcoons.github.io/tsc-pop-up/report/index.html?type=unit-tests-report&sha=9bfd002369b3bd10b80f4aeaedbbc819ddbd364c&short=9bfd002&src=..%2Funit-tests%2F9bfd002369b3bd10b80f4aeaedbbc819ddbd364c%2Findex.html&title=Unit%20Tests%20%C2%B7%209bfd002" style="color:inherit">0% failed</a></span></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="antidoc" data-sha="9bfd002369b3bd10b80f4aeaedbbc819ddbd364c" data-parent="634cea975f0b0605e3538501f3147c361287f4de" data-short="9bfd002" data-ts="2026-07-15T21:34:33Z"><span class="cidash-chip cc-fail"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.75.75 0 1 1 1.06 1.06L9.06 8l3.22 3.22a.75.75 0 1 1-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 0 1-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"/></svg><a href="https://danielcoons.github.io/tsc-pop-up/report/index.html?type=antidoc-report&sha=9bfd002369b3bd10b80f4aeaedbbc819ddbd364c&short=9bfd002&src=..%2Fantidoc%2F9bfd002369b3bd10b80f4aeaedbbc819ddbd364c%2Findex.html&title=Antidoc%20%C2%B7%209bfd002" style="color:inherit">docs</a></span></td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(55,42%,45%)" title="Daniel Coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=634cea975f0b0605e3538501f3147c361287f4de" class="cidash-rev-msg" title="Merge pull request #7 from danielcoons/labview-ci/reconfigure-29351846978">Merge pull request #7 from danielcoons/labview-ci/reconfigure-29351846978</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=634cea975f0b0605e3538501f3147c361287f4de" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">634cea9</a><span class="cidash-rev-dot">&middot;</span>Daniel Coons<span class="cidash-rev-dot">&middot;</span>2026-07-14</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(55,42%,45%)" title="Daniel Coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=3c815e5b987a294325d14ce1baca0c57646b11e6" class="cidash-rev-msg" title="Merge branch &#x27;main&#x27; into labview-ci/reconfigure-29351846978">Merge branch &#x27;main&#x27; into labview-ci/reconfigure-29351846978</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=3c815e5b987a294325d14ce1baca0c57646b11e6" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">3c815e5</a><span class="cidash-rev-dot">&middot;</span>Daniel Coons<span class="cidash-rev-dot">&middot;</span>2026-07-14</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(55,42%,45%)" title="Daniel Coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=af297c93c9a615d3e0f942d8031d83952d645c37" class="cidash-rev-msg" title="Merge pull request #6 from danielcoons/labview-ci/reconfigure-29349909864">Merge pull request #6 from danielcoons/labview-ci/reconfigure-29349909864</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=af297c93c9a615d3e0f942d8031d83952d645c37" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">af297c9</a><span class="cidash-rev-dot">&middot;</span>Daniel Coons<span class="cidash-rev-dot">&middot;</span>2026-07-14</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(150,42%,45%)" title="github-actions[bot]" aria-hidden="true">G</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=63635cfbc4901d5994b52b1cbcb7c7c1e38809fd" class="cidash-rev-msg" title="ci: reconfigure LabVIEW CI settings">ci: reconfigure LabVIEW CI settings</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=63635cfbc4901d5994b52b1cbcb7c7c1e38809fd" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">63635cf</a><span class="cidash-rev-dot">&middot;</span>github-actions[bot]<span class="cidash-rev-dot">&middot;</span>2026-07-14</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(150,42%,45%)" title="github-actions[bot]" aria-hidden="true">G</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=624f75cce1b3b20e05c9288cab96beaa75350eb9" class="cidash-rev-msg" title="ci: reconfigure LabVIEW CI settings">ci: reconfigure LabVIEW CI settings</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=624f75cce1b3b20e05c9288cab96beaa75350eb9" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">624f75c</a><span class="cidash-rev-dot">&middot;</span>github-actions[bot]<span class="cidash-rev-dot">&middot;</span>2026-07-14</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=a4b13e58d90ac3e6b85329d81c843ca92d12856f" class="cidash-rev-msg" title="keeping my own version in a new directory">keeping my own version in a new directory</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=a4b13e58d90ac3e6b85329d81c843ca92d12856f" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">a4b13e5</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2026-07-14</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(150,42%,45%)" title="github-actions[bot]" aria-hidden="true">G</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d1a925a8f295206962b4631cda31ba828c40e6ee" class="cidash-rev-msg" title="ci: adopt LabVIEW CI tooling v4.4.9 (full update)">ci: adopt LabVIEW CI tooling v4.4.9 (full update)</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d1a925a8f295206962b4631cda31ba828c40e6ee" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">d1a925a</a><span class="cidash-rev-dot">&middot;</span>github-actions[bot]<span class="cidash-rev-dot">&middot;</span>2026-07-14</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=dd065d356fcd44ef38f5c423a213150f94e029ec" class="cidash-rev-msg" title="seeing if adding this with its own name works">seeing if adding this with its own name works</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=dd065d356fcd44ef38f5c423a213150f94e029ec" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">dd065d3</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2026-07-14</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(55,42%,45%)" title="Daniel Coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=c7353cdf962ddc7b2e9f7b1e8cb1e2c6acc701b9" class="cidash-rev-msg" title="Merge pull request #5 from danielcoons/labview-ci/reconfigure-29301466554">Merge pull request #5 from danielcoons/labview-ci/reconfigure-29301466554</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=c7353cdf962ddc7b2e9f7b1e8cb1e2c6acc701b9" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">c7353cd</a><span class="cidash-rev-dot">&middot;</span>Daniel Coons<span class="cidash-rev-dot">&middot;</span>2026-07-14</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(150,42%,45%)" title="github-actions[bot]" aria-hidden="true">G</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=0b093cb64ff6f8f4e40db1c05e67c6fc70cc9ddb" class="cidash-rev-msg" title="ci: reconfigure LabVIEW CI settings">ci: reconfigure LabVIEW CI settings</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=0b093cb64ff6f8f4e40db1c05e67c6fc70cc9ddb" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">0b093cb</a><span class="cidash-rev-dot">&middot;</span>github-actions[bot]<span class="cidash-rev-dot">&middot;</span>2026-07-14</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(150,42%,45%)" title="github-actions[bot]" aria-hidden="true">G</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=5ffc526489128e0ff7b5c3ffe295fab87ab5f0da" class="cidash-rev-msg" title="ci: adopt LabVIEW CI tooling v4.4.7 (full update)">ci: adopt LabVIEW CI tooling v4.4.7 (full update)</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=5ffc526489128e0ff7b5c3ffe295fab87ab5f0da" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">5ffc526</a><span class="cidash-rev-dot">&middot;</span>github-actions[bot]<span class="cidash-rev-dot">&middot;</span>2026-07-14</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=b16947476f664a7c93e4dbc695ae7b49679033a7" class="cidash-rev-msg" title="updated the antidoc packages json">updated the antidoc packages json</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=b16947476f664a7c93e4dbc695ae7b49679033a7" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">b169474</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2026-07-13</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=87bde951dbdc3cf136daa2e8caabd40b425e8f5d" class="cidash-rev-msg" title="updated antidoc vipc">updated antidoc vipc</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=87bde951dbdc3cf136daa2e8caabd40b425e8f5d" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">87bde95</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2026-07-13</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=90c6cbbfa2ae6bfb3355c7e40bd92c5d43849574" class="cidash-rev-msg" title="Merge branch &#x27;ci/install-labview-ci&#x27;">Merge branch &#x27;ci/install-labview-ci&#x27;</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=90c6cbbfa2ae6bfb3355c7e40bd92c5d43849574" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">90c6cbb</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2026-07-13</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d2b3290c2335ac2d71989d1e2c7e43fc156ac379" class="cidash-rev-msg" title="customized vi analyzer config">customized vi analyzer config</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d2b3290c2335ac2d71989d1e2c7e43fc156ac379" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">d2b3290</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2026-07-13</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(55,42%,45%)" title="Daniel Coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=c072c4e49b5729ab34a4716061178f905462e8a9" class="cidash-rev-msg" title="Add LabVIEW CI pipeline">Add LabVIEW CI pipeline</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=c072c4e49b5729ab34a4716061178f905462e8a9" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">c072c4e</a><span class="cidash-rev-dot">&middot;</span>Daniel Coons<span class="cidash-rev-dot">&middot;</span>2026-07-13</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(55,42%,45%)" title="Daniel Coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=22a56b42fcd94a8c700aa624f409596a9962c352" class="cidash-rev-msg" title="ci: install LabVIEW CI pipeline (dashboard, vi-analyzer, vidiff, snapshots, cust">ci: install LabVIEW CI pipeline (dashboard, vi-analyzer, vidiff, snapshots, cust</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=22a56b42fcd94a8c700aa624f409596a9962c352" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">22a56b4</a><span class="cidash-rev-dot">&middot;</span>Daniel Coons<span class="cidash-rev-dot">&middot;</span>2026-07-13</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(55,42%,45%)" title="Daniel Coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=4f3babcb4701d9870c512ceb68f831225b07e5a7" class="cidash-rev-msg" title="Delete .github directory">Delete .github directory</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=4f3babcb4701d9870c512ceb68f831225b07e5a7" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">4f3babc</a><span class="cidash-rev-dot">&middot;</span>Daniel Coons<span class="cidash-rev-dot">&middot;</span>2026-07-13</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=ce28ba0e4b6eb59a6adb656ac85587a51e188977" class="cidash-rev-msg" title="trying to setup vi analyzer and antidoc to work">trying to setup vi analyzer and antidoc to work</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=ce28ba0e4b6eb59a6adb656ac85587a51e188977" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">ce28ba0</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2026-07-13</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="true" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(55,42%,45%)" title="Daniel Coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=eca6caad1cd0e9630eb817612157855388d4ca16" class="cidash-rev-msg" title="Merge pull request #3 from danielcoons/develop">Merge pull request #3 from danielcoons/develop</a><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=eca6caad1cd0e9630eb817612157855388d4ca16" class="snap-glyph" title="Snapshots exist for this revision" aria-label="Snapshots exist for this revision"><svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true" style="vertical-align:text-bottom;flex:0 0 auto"><path d="M1.75 2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h.94l8.5-8.5a.25.25 0 0 1 .354 0l1.756 1.757V2.75a.25.25 0 0 0-.25-.25H1.75ZM14.5 9.232 11.06 5.79 3.852 13h9.898a.25.25 0 0 0 .25-.25V9.232ZM1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75C0 1.784.784 1 1.75 1ZM5.5 6a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg></a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=eca6caad1cd0e9630eb817612157855388d4ca16" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">eca6caa</a><span class="cidash-rev-dot">&middot;</span>Daniel Coons<span class="cidash-rev-dot">&middot;</span>2026-07-13</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="eca6caad1cd0e9630eb817612157855388d4ca16" data-parent="400d3ee5ba99f6daac8c7ca67ce99a23229545bb" data-short="eca6caa" title="Run Mass Compile for commit eca6caa">&#9655;</a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="vi-analyzer" data-sha="eca6caad1cd0e9630eb817612157855388d4ca16" data-parent="400d3ee5ba99f6daac8c7ca67ce99a23229545bb" data-short="eca6caa" data-ts="2026-07-14T17:40:49Z"><span class="cidash-chip cc-pass"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L1.22 9.28a.75.75 0 1 1 1.06-1.06L6 11.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg><a href="https://danielcoons.github.io/tsc-pop-up/report/index.html?type=vi-analyzer-report&sha=eca6caad1cd0e9630eb817612157855388d4ca16&short=eca6caa&src=..%2Fvi-analyzer%2Feca6caad1cd0e9630eb817612157855388d4ca16%2Findex.html&title=VI%20Analyzer%20%C2%B7%20eca6caa" style="color:inherit">analyze</a></span></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="vidiff" data-sha="eca6caad1cd0e9630eb817612157855388d4ca16" data-parent="400d3ee5ba99f6daac8c7ca67ce99a23229545bb" data-short="eca6caa" data-ts="2026-07-13T20:05:32Z"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=eca6caad1cd0e9630eb817612157855388d4ca16&changed=1" class="cidash-diffstat" title="VIs changed in this revision: 129 different · 0 new · 0 deleted — click to view the diffs"><span class="ds-mod">129</span><span class="ds-sep">/</span><span class="ds-add ds-zero">0</span><span class="ds-sep">/</span><span class="ds-del ds-zero">0</span></a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="eca6caad1cd0e9630eb817612157855388d4ca16" data-parent="400d3ee5ba99f6daac8c7ca67ce99a23229545bb" data-short="eca6caa" data-ts="2026-07-13T16:05:18Z" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=eca6caad1cd0e9630eb817612157855388d4ca16" style="color:inherit">138</a></span></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="eca6caad1cd0e9630eb817612157855388d4ca16" data-parent="400d3ee5ba99f6daac8c7ca67ce99a23229545bb" data-short="eca6caa" title="Run Unit Tests for commit eca6caa">&#9655;</a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="antidoc" data-sha="eca6caad1cd0e9630eb817612157855388d4ca16" data-parent="400d3ee5ba99f6daac8c7ca67ce99a23229545bb" data-short="eca6caa" data-ts="2026-07-13T22:14:34Z"><span class="cidash-chip cc-fail"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.75.75 0 1 1 1.06 1.06L9.06 8l3.22 3.22a.75.75 0 1 1-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 0 1-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"/></svg><a href="https://danielcoons.github.io/tsc-pop-up/report/index.html?type=antidoc-report&sha=eca6caad1cd0e9630eb817612157855388d4ca16&short=eca6caa&src=..%2Fantidoc%2Feca6caad1cd0e9630eb817612157855388d4ca16%2Findex.html&title=Antidoc%20%C2%B7%20eca6caa" style="color:inherit">docs</a></span></td>
+    </tr>
+
+    <tr data-project="true" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d160afc6add9ee1c80f270142d53003960db3142" class="cidash-rev-msg" title="documentation cleanup and VI settings updated to turn off debugging">documentation cleanup and VI settings updated to turn off debugging</a><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d160afc6add9ee1c80f270142d53003960db3142" class="snap-glyph" title="Snapshots exist for this revision" aria-label="Snapshots exist for this revision"><svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true" style="vertical-align:text-bottom;flex:0 0 auto"><path d="M1.75 2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h.94l8.5-8.5a.25.25 0 0 1 .354 0l1.756 1.757V2.75a.25.25 0 0 0-.25-.25H1.75ZM14.5 9.232 11.06 5.79 3.852 13h9.898a.25.25 0 0 0 .25-.25V9.232ZM1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75C0 1.784.784 1 1.75 1ZM5.5 6a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg></a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d160afc6add9ee1c80f270142d53003960db3142" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">d160afc</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2026-07-13</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="d160afc6add9ee1c80f270142d53003960db3142" data-parent="8e7530810e645c5d624eae20ec4f26b652ad33c5" data-short="d160afc" title="Run Mass Compile for commit d160afc">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="d160afc6add9ee1c80f270142d53003960db3142" data-parent="8e7530810e645c5d624eae20ec4f26b652ad33c5" data-short="d160afc" title="Run VI Analyzer for commit d160afc">&#9655;</a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="vidiff" data-sha="d160afc6add9ee1c80f270142d53003960db3142" data-parent="8e7530810e645c5d624eae20ec4f26b652ad33c5" data-short="d160afc" data-ts="2026-07-13T14:27:08Z"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d160afc6add9ee1c80f270142d53003960db3142&changed=1" class="cidash-diffstat" title="VIs changed in this revision: 126 different · 0 new · 0 deleted — click to view the diffs"><span class="ds-mod">126</span><span class="ds-sep">/</span><span class="ds-add ds-zero">0</span><span class="ds-sep">/</span><span class="ds-del ds-zero">0</span></a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="d160afc6add9ee1c80f270142d53003960db3142" data-parent="8e7530810e645c5d624eae20ec4f26b652ad33c5" data-short="d160afc" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d160afc6add9ee1c80f270142d53003960db3142" style="color:inherit">138</a></span></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="d160afc6add9ee1c80f270142d53003960db3142" data-parent="8e7530810e645c5d624eae20ec4f26b652ad33c5" data-short="d160afc" title="Run Unit Tests for commit d160afc">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="d160afc6add9ee1c80f270142d53003960db3142" data-parent="8e7530810e645c5d624eae20ec4f26b652ad33c5" data-short="d160afc" title="Run Antidoc for commit d160afc">&#9655;</a></td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(55,42%,45%)" title="Daniel Coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=400d3ee5ba99f6daac8c7ca67ce99a23229545bb" class="cidash-rev-msg" title="Add &#x27;develop&#x27; branch to workflow triggers">Add &#x27;develop&#x27; branch to workflow triggers</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=400d3ee5ba99f6daac8c7ca67ce99a23229545bb" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">400d3ee</a><span class="cidash-rev-dot">&middot;</span>Daniel Coons<span class="cidash-rev-dot">&middot;</span>2026-07-11</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=8e7530810e645c5d624eae20ec4f26b652ad33c5" class="cidash-rev-msg" title="delete the default config">delete the default config</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=8e7530810e645c5d624eae20ec4f26b652ad33c5" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">8e75308</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2026-07-11</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=be79c56d9c5368f6114da0e17c1d921f9ae0a87d" class="cidash-rev-msg" title="new vi analyzer template">new vi analyzer template</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=be79c56d9c5368f6114da0e17c1d921f9ae0a87d" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">be79c56</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2026-07-11</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="true" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=6c421addf74a456d8e55d7535abf74cfef0224b0" class="cidash-rev-msg" title="updated overall coding style throughout all VIs">updated overall coding style throughout all VIs</a><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=6c421addf74a456d8e55d7535abf74cfef0224b0" class="snap-glyph" title="Snapshots exist for this revision" aria-label="Snapshots exist for this revision"><svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true" style="vertical-align:text-bottom;flex:0 0 auto"><path d="M1.75 2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h.94l8.5-8.5a.25.25 0 0 1 .354 0l1.756 1.757V2.75a.25.25 0 0 0-.25-.25H1.75ZM14.5 9.232 11.06 5.79 3.852 13h9.898a.25.25 0 0 0 .25-.25V9.232ZM1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75C0 1.784.784 1 1.75 1ZM5.5 6a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg></a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=6c421addf74a456d8e55d7535abf74cfef0224b0" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">6c421ad</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2026-07-11</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="6c421addf74a456d8e55d7535abf74cfef0224b0" data-parent="d7fdde7c44de337ca0483d6388ebcf84a6ddc7c5" data-short="6c421ad" title="Run Mass Compile for commit 6c421ad">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="6c421addf74a456d8e55d7535abf74cfef0224b0" data-parent="d7fdde7c44de337ca0483d6388ebcf84a6ddc7c5" data-short="6c421ad" title="Run VI Analyzer for commit 6c421ad">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="6c421addf74a456d8e55d7535abf74cfef0224b0" data-parent="d7fdde7c44de337ca0483d6388ebcf84a6ddc7c5" data-short="6c421ad" title="Run VIDiff for commit 6c421ad">&#9655;</a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="6c421addf74a456d8e55d7535abf74cfef0224b0" data-parent="d7fdde7c44de337ca0483d6388ebcf84a6ddc7c5" data-short="6c421ad" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=6c421addf74a456d8e55d7535abf74cfef0224b0" style="color:inherit">138</a></span></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="6c421addf74a456d8e55d7535abf74cfef0224b0" data-parent="d7fdde7c44de337ca0483d6388ebcf84a6ddc7c5" data-short="6c421ad" title="Run Unit Tests for commit 6c421ad">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="6c421addf74a456d8e55d7535abf74cfef0224b0" data-parent="d7fdde7c44de337ca0483d6388ebcf84a6ddc7c5" data-short="6c421ad" title="Run Antidoc for commit 6c421ad">&#9655;</a></td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d7fdde7c44de337ca0483d6388ebcf84a6ddc7c5" class="cidash-rev-msg" title="Merge branch &#x27;main&#x27; into develop">Merge branch &#x27;main&#x27; into develop</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d7fdde7c44de337ca0483d6388ebcf84a6ddc7c5" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">d7fdde7</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2026-07-10</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(55,42%,45%)" title="Daniel Coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=ae335db4b8031bd9271e39b4db59c8cda1bcdbeb" class="cidash-rev-msg" title="Add LabVIEW CI pipeline">Add LabVIEW CI pipeline</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=ae335db4b8031bd9271e39b4db59c8cda1bcdbeb" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">ae335db</a><span class="cidash-rev-dot">&middot;</span>Daniel Coons<span class="cidash-rev-dot">&middot;</span>2026-07-10</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=1e6074a20ae24900dc20c617d22202421684df54" class="cidash-rev-msg" title="Merge branch &#x27;develop&#x27;">Merge branch &#x27;develop&#x27;</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=1e6074a20ae24900dc20c617d22202421684df54" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">1e6074a</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2025-10-16</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=ef536f943e0e0d03bb15bea17b05ee19d8b1dea0" class="cidash-rev-msg" title="link to vipm">link to vipm</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=ef536f943e0e0d03bb15bea17b05ee19d8b1dea0" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">ef536f9</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2025-10-16</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="true" data-deponly="true">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d58e71090fc7a4b0f0668f67d411a7f0f740c216" class="cidash-rev-msg" title="Merge tag &#x27;v4.0.0&#x27; into develop">Merge tag &#x27;v4.0.0&#x27; into develop</a><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d58e71090fc7a4b0f0668f67d411a7f0f740c216" class="snap-glyph" title="Snapshots exist for this revision" aria-label="Snapshots exist for this revision"><svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true" style="vertical-align:text-bottom;flex:0 0 auto"><path d="M1.75 2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h.94l8.5-8.5a.25.25 0 0 1 .354 0l1.756 1.757V2.75a.25.25 0 0 0-.25-.25H1.75ZM14.5 9.232 11.06 5.79 3.852 13h9.898a.25.25 0 0 0 .25-.25V9.232ZM1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75C0 1.784.784 1 1.75 1ZM5.5 6a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg></a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d58e71090fc7a4b0f0668f67d411a7f0f740c216" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">d58e710</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2025-10-16</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="d58e71090fc7a4b0f0668f67d411a7f0f740c216" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="d58e710" title="Run Mass Compile for commit d58e710">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="d58e71090fc7a4b0f0668f67d411a7f0f740c216" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="d58e710" title="Run VI Analyzer for commit d58e710">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="d58e71090fc7a4b0f0668f67d411a7f0f740c216" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="d58e710" title="Run VIDiff for commit d58e710">&#9655;</a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="d58e71090fc7a4b0f0668f67d411a7f0f740c216" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="d58e710" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d58e71090fc7a4b0f0668f67d411a7f0f740c216" style="color:inherit">138</a></span></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="d58e71090fc7a4b0f0668f67d411a7f0f740c216" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="d58e710" title="Run Unit Tests for commit d58e710">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="d58e71090fc7a4b0f0668f67d411a7f0f740c216" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="d58e710" title="Run Antidoc for commit d58e710">&#9655;</a></td>
+    </tr>
+
+    <tr data-project="true" data-deponly="true">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=03fcdb0f4fca853ae68ab278017ab31d436b5bc4" class="cidash-rev-msg" title="Merge branch &#x27;release/v4.0.0&#x27;">Merge branch &#x27;release/v4.0.0&#x27;</a><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=03fcdb0f4fca853ae68ab278017ab31d436b5bc4" class="snap-glyph" title="Snapshots exist for this revision" aria-label="Snapshots exist for this revision"><svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true" style="vertical-align:text-bottom;flex:0 0 auto"><path d="M1.75 2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h.94l8.5-8.5a.25.25 0 0 1 .354 0l1.756 1.757V2.75a.25.25 0 0 0-.25-.25H1.75ZM14.5 9.232 11.06 5.79 3.852 13h9.898a.25.25 0 0 0 .25-.25V9.232ZM1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75C0 1.784.784 1 1.75 1ZM5.5 6a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg></a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=03fcdb0f4fca853ae68ab278017ab31d436b5bc4" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">03fcdb0</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2025-10-16</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="03fcdb0f4fca853ae68ab278017ab31d436b5bc4" data-parent="f67ec060e2093b4f0237a692c148292c9b38e60f" data-short="03fcdb0" title="Run Mass Compile for commit 03fcdb0">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="03fcdb0f4fca853ae68ab278017ab31d436b5bc4" data-parent="f67ec060e2093b4f0237a692c148292c9b38e60f" data-short="03fcdb0" title="Run VI Analyzer for commit 03fcdb0">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="03fcdb0f4fca853ae68ab278017ab31d436b5bc4" data-parent="f67ec060e2093b4f0237a692c148292c9b38e60f" data-short="03fcdb0" title="Run VIDiff for commit 03fcdb0">&#9655;</a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="03fcdb0f4fca853ae68ab278017ab31d436b5bc4" data-parent="f67ec060e2093b4f0237a692c148292c9b38e60f" data-short="03fcdb0" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=03fcdb0f4fca853ae68ab278017ab31d436b5bc4" style="color:inherit">138</a></span></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="03fcdb0f4fca853ae68ab278017ab31d436b5bc4" data-parent="f67ec060e2093b4f0237a692c148292c9b38e60f" data-short="03fcdb0" title="Run Unit Tests for commit 03fcdb0">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="03fcdb0f4fca853ae68ab278017ab31d436b5bc4" data-parent="f67ec060e2093b4f0237a692c148292c9b38e60f" data-short="03fcdb0" title="Run Antidoc for commit 03fcdb0">&#9655;</a></td>
+    </tr>
+
+    <tr data-project="true" data-deponly="true">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=8da7fa2af6d7036611a50abab5b4e19b8ca28db1" class="cidash-rev-msg" title="missed a VI on the palette">missed a VI on the palette</a><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=8da7fa2af6d7036611a50abab5b4e19b8ca28db1" class="snap-glyph" title="Snapshots exist for this revision" aria-label="Snapshots exist for this revision"><svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true" style="vertical-align:text-bottom;flex:0 0 auto"><path d="M1.75 2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h.94l8.5-8.5a.25.25 0 0 1 .354 0l1.756 1.757V2.75a.25.25 0 0 0-.25-.25H1.75ZM14.5 9.232 11.06 5.79 3.852 13h9.898a.25.25 0 0 0 .25-.25V9.232ZM1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75C0 1.784.784 1 1.75 1ZM5.5 6a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg></a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=8da7fa2af6d7036611a50abab5b4e19b8ca28db1" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">8da7fa2</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2025-10-16</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="8da7fa2af6d7036611a50abab5b4e19b8ca28db1" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="8da7fa2" title="Run Mass Compile for commit 8da7fa2">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="8da7fa2af6d7036611a50abab5b4e19b8ca28db1" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="8da7fa2" title="Run VI Analyzer for commit 8da7fa2">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="8da7fa2af6d7036611a50abab5b4e19b8ca28db1" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="8da7fa2" title="Run VIDiff for commit 8da7fa2">&#9655;</a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="8da7fa2af6d7036611a50abab5b4e19b8ca28db1" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="8da7fa2" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=8da7fa2af6d7036611a50abab5b4e19b8ca28db1" style="color:inherit">138</a></span></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="8da7fa2af6d7036611a50abab5b4e19b8ca28db1" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="8da7fa2" title="Run Unit Tests for commit 8da7fa2">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="8da7fa2af6d7036611a50abab5b4e19b8ca28db1" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="8da7fa2" title="Run Antidoc for commit 8da7fa2">&#9655;</a></td>
+    </tr>
+
+    <tr data-project="true" data-deponly="true">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=3cb5807e882e296e52c2d765e88281cd9ae49b45" class="cidash-rev-msg" title="Merge tag &#x27;v4.0.0&#x27; into develop">Merge tag &#x27;v4.0.0&#x27; into develop</a><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=3cb5807e882e296e52c2d765e88281cd9ae49b45" class="snap-glyph" title="Snapshots exist for this revision" aria-label="Snapshots exist for this revision"><svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true" style="vertical-align:text-bottom;flex:0 0 auto"><path d="M1.75 2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h.94l8.5-8.5a.25.25 0 0 1 .354 0l1.756 1.757V2.75a.25.25 0 0 0-.25-.25H1.75ZM14.5 9.232 11.06 5.79 3.852 13h9.898a.25.25 0 0 0 .25-.25V9.232ZM1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75C0 1.784.784 1 1.75 1ZM5.5 6a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg></a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=3cb5807e882e296e52c2d765e88281cd9ae49b45" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">3cb5807</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2025-10-16</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="3cb5807" title="Run Mass Compile for commit 3cb5807">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="3cb5807" title="Run VI Analyzer for commit 3cb5807">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="3cb5807" title="Run VIDiff for commit 3cb5807">&#9655;</a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="3cb5807" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=3cb5807e882e296e52c2d765e88281cd9ae49b45" style="color:inherit">138</a></span></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="3cb5807" title="Run Unit Tests for commit 3cb5807">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="3cb5807" title="Run Antidoc for commit 3cb5807">&#9655;</a></td>
+    </tr>
+
+    <tr data-project="true" data-deponly="true">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=f67ec060e2093b4f0237a692c148292c9b38e60f" class="cidash-rev-msg" title="Merge branch &#x27;release/v4.0.0&#x27;">Merge branch &#x27;release/v4.0.0&#x27;</a><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=f67ec060e2093b4f0237a692c148292c9b38e60f" class="snap-glyph" title="Snapshots exist for this revision" aria-label="Snapshots exist for this revision"><svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true" style="vertical-align:text-bottom;flex:0 0 auto"><path d="M1.75 2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h.94l8.5-8.5a.25.25 0 0 1 .354 0l1.756 1.757V2.75a.25.25 0 0 0-.25-.25H1.75ZM14.5 9.232 11.06 5.79 3.852 13h9.898a.25.25 0 0 0 .25-.25V9.232ZM1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75C0 1.784.784 1 1.75 1ZM5.5 6a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg></a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=f67ec060e2093b4f0237a692c148292c9b38e60f" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">f67ec06</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2025-10-16</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="f67ec060e2093b4f0237a692c148292c9b38e60f" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="f67ec06" title="Run Mass Compile for commit f67ec06">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="f67ec060e2093b4f0237a692c148292c9b38e60f" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="f67ec06" title="Run VI Analyzer for commit f67ec06">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="f67ec060e2093b4f0237a692c148292c9b38e60f" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="f67ec06" title="Run VIDiff for commit f67ec06">&#9655;</a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="f67ec060e2093b4f0237a692c148292c9b38e60f" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="f67ec06" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=f67ec060e2093b4f0237a692c148292c9b38e60f" style="color:inherit">138</a></span></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="f67ec060e2093b4f0237a692c148292c9b38e60f" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="f67ec06" title="Run Unit Tests for commit f67ec06">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="f67ec060e2093b4f0237a692c148292c9b38e60f" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="f67ec06" title="Run Antidoc for commit f67ec06">&#9655;</a></td>
+    </tr>
+
+    <tr data-project="true" data-deponly="true">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b" class="cidash-rev-msg" title="updated documentation and changelog; rebuilt package for release">updated documentation and changelog; rebuilt package for release</a><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b" class="snap-glyph" title="Snapshots exist for this revision" aria-label="Snapshots exist for this revision"><svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true" style="vertical-align:text-bottom;flex:0 0 auto"><path d="M1.75 2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h.94l8.5-8.5a.25.25 0 0 1 .354 0l1.756 1.757V2.75a.25.25 0 0 0-.25-.25H1.75ZM14.5 9.232 11.06 5.79 3.852 13h9.898a.25.25 0 0 0 .25-.25V9.232ZM1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75C0 1.784.784 1 1.75 1ZM5.5 6a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg></a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">df6ef8d</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2025-10-16</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="df6ef8d" title="Run Mass Compile for commit df6ef8d">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="df6ef8d" title="Run VI Analyzer for commit df6ef8d">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="df6ef8d" title="Run VIDiff for commit df6ef8d">&#9655;</a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="df6ef8d" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b" style="color:inherit">138</a></span></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="df6ef8d" title="Run Unit Tests for commit df6ef8d">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="df6ef8d" title="Run Antidoc for commit df6ef8d">&#9655;</a></td>
+    </tr>
+
+    <tr data-project="true" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d67b737a4e3728d906e8163b9bffabb86c8f1d63" class="cidash-rev-msg" title="turns out i couldn&#x27;t support 2019 with some of what i was using, so min. version">turns out i couldn&#x27;t support 2019 with some of what i was using, so min. version</a><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d67b737a4e3728d906e8163b9bffabb86c8f1d63" class="snap-glyph" title="Snapshots exist for this revision" aria-label="Snapshots exist for this revision"><svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true" style="vertical-align:text-bottom;flex:0 0 auto"><path d="M1.75 2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h.94l8.5-8.5a.25.25 0 0 1 .354 0l1.756 1.757V2.75a.25.25 0 0 0-.25-.25H1.75ZM14.5 9.232 11.06 5.79 3.852 13h9.898a.25.25 0 0 0 .25-.25V9.232ZM1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75C0 1.784.784 1 1.75 1ZM5.5 6a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg></a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d67b737a4e3728d906e8163b9bffabb86c8f1d63" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">d67b737</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2025-10-16</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-parent="b1e50bb6940788fae44af7a5b704498ddcc86901" data-short="d67b737" title="Run Mass Compile for commit d67b737">&#9655;</a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="vi-analyzer" data-sha="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-parent="b1e50bb6940788fae44af7a5b704498ddcc86901" data-short="d67b737" data-ts="2026-07-10T14:28:18Z"><span class="cidash-chip cc-pass"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L1.22 9.28a.75.75 0 1 1 1.06-1.06L6 11.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg><a href="https://danielcoons.github.io/tsc-pop-up/report/index.html?type=vi-analyzer-report&sha=d67b737a4e3728d906e8163b9bffabb86c8f1d63&short=d67b737&src=..%2Fvi-analyzer%2Fd67b737a4e3728d906e8163b9bffabb86c8f1d63%2Findex.html&title=VI%20Analyzer%20%C2%B7%20d67b737" style="color:inherit">analyze</a></span></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-parent="b1e50bb6940788fae44af7a5b704498ddcc86901" data-short="d67b737" title="Run VIDiff for commit d67b737">&#9655;</a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-parent="b1e50bb6940788fae44af7a5b704498ddcc86901" data-short="d67b737" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d67b737a4e3728d906e8163b9bffabb86c8f1d63" style="color:inherit">138</a></span></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-parent="b1e50bb6940788fae44af7a5b704498ddcc86901" data-short="d67b737" title="Run Unit Tests for commit d67b737">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-parent="b1e50bb6940788fae44af7a5b704498ddcc86901" data-short="d67b737" title="Run Antidoc for commit d67b737">&#9655;</a></td>
+    </tr>
+
+    <tr data-project="true" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=b1e50bb6940788fae44af7a5b704498ddcc86901" class="cidash-rev-msg" title="updated the vip build">updated the vip build</a><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=b1e50bb6940788fae44af7a5b704498ddcc86901" class="snap-glyph" title="Snapshots exist for this revision" aria-label="Snapshots exist for this revision"><svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true" style="vertical-align:text-bottom;flex:0 0 auto"><path d="M1.75 2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h.94l8.5-8.5a.25.25 0 0 1 .354 0l1.756 1.757V2.75a.25.25 0 0 0-.25-.25H1.75ZM14.5 9.232 11.06 5.79 3.852 13h9.898a.25.25 0 0 0 .25-.25V9.232ZM1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75C0 1.784.784 1 1.75 1ZM5.5 6a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg></a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=b1e50bb6940788fae44af7a5b704498ddcc86901" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">b1e50bb</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2025-10-15</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="b1e50bb6940788fae44af7a5b704498ddcc86901" data-parent="cc09dfec0897af335ef622eb0a8671b2d98c231d" data-short="b1e50bb" title="Run Mass Compile for commit b1e50bb">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="b1e50bb6940788fae44af7a5b704498ddcc86901" data-parent="cc09dfec0897af335ef622eb0a8671b2d98c231d" data-short="b1e50bb" title="Run VI Analyzer for commit b1e50bb">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="b1e50bb6940788fae44af7a5b704498ddcc86901" data-parent="cc09dfec0897af335ef622eb0a8671b2d98c231d" data-short="b1e50bb" title="Run VIDiff for commit b1e50bb">&#9655;</a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="b1e50bb6940788fae44af7a5b704498ddcc86901" data-parent="cc09dfec0897af335ef622eb0a8671b2d98c231d" data-short="b1e50bb" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 136 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=b1e50bb6940788fae44af7a5b704498ddcc86901" style="color:inherit">136</a></span></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="b1e50bb6940788fae44af7a5b704498ddcc86901" data-parent="cc09dfec0897af335ef622eb0a8671b2d98c231d" data-short="b1e50bb" title="Run Unit Tests for commit b1e50bb">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="b1e50bb6940788fae44af7a5b704498ddcc86901" data-parent="cc09dfec0897af335ef622eb0a8671b2d98c231d" data-short="b1e50bb" title="Run Antidoc for commit b1e50bb">&#9655;</a></td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=cc09dfec0897af335ef622eb0a8671b2d98c231d" class="cidash-rev-msg" title="discovered the markdown strikethrough by accident......">discovered the markdown strikethrough by accident......</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=cc09dfec0897af335ef622eb0a8671b2d98c231d" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">cc09dfe</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2025-10-15</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=bbd165f2105e448232e369d7ec8c2f844c158bde" class="cidash-rev-msg" title="added additional readme content and images of dialogs">added additional readme content and images of dialogs</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=bbd165f2105e448232e369d7ec8c2f844c158bde" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">bbd165f</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2025-10-15</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="true" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=2c71e3bb0d286d598983e8364eb304249f2e4f49" class="cidash-rev-msg" title="separating the GIF and SVG pop-ups since they have an external dependency and wi">separating the GIF and SVG pop-ups since they have an external dependency and wi</a><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=2c71e3bb0d286d598983e8364eb304249f2e4f49" class="snap-glyph" title="Snapshots exist for this revision" aria-label="Snapshots exist for this revision"><svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true" style="vertical-align:text-bottom;flex:0 0 auto"><path d="M1.75 2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h.94l8.5-8.5a.25.25 0 0 1 .354 0l1.756 1.757V2.75a.25.25 0 0 0-.25-.25H1.75ZM14.5 9.232 11.06 5.79 3.852 13h9.898a.25.25 0 0 0 .25-.25V9.232ZM1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75C0 1.784.784 1 1.75 1ZM5.5 6a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg></a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=2c71e3bb0d286d598983e8364eb304249f2e4f49" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">2c71e3b</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2025-10-15</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="2c71e3bb0d286d598983e8364eb304249f2e4f49" data-parent="215f606e6268a0b156327c7fb2082521c6045433" data-short="2c71e3b" title="Run Mass Compile for commit 2c71e3b">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="2c71e3bb0d286d598983e8364eb304249f2e4f49" data-parent="215f606e6268a0b156327c7fb2082521c6045433" data-short="2c71e3b" title="Run VI Analyzer for commit 2c71e3b">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="2c71e3bb0d286d598983e8364eb304249f2e4f49" data-parent="215f606e6268a0b156327c7fb2082521c6045433" data-short="2c71e3b" title="Run VIDiff for commit 2c71e3b">&#9655;</a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="2c71e3bb0d286d598983e8364eb304249f2e4f49" data-parent="215f606e6268a0b156327c7fb2082521c6045433" data-short="2c71e3b" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 136 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=2c71e3bb0d286d598983e8364eb304249f2e4f49" style="color:inherit">136</a></span></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="2c71e3bb0d286d598983e8364eb304249f2e4f49" data-parent="215f606e6268a0b156327c7fb2082521c6045433" data-short="2c71e3b" title="Run Unit Tests for commit 2c71e3b">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="2c71e3bb0d286d598983e8364eb304249f2e4f49" data-parent="215f606e6268a0b156327c7fb2082521c6045433" data-short="2c71e3b" title="Run Antidoc for commit 2c71e3b">&#9655;</a></td>
+    </tr>
+
+    <tr data-project="true" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=215f606e6268a0b156327c7fb2082521c6045433" class="cidash-rev-msg" title="compiled for 2019 now and updated documentation throughout; cleaned up usage of ">compiled for 2019 now and updated documentation throughout; cleaned up usage of </a><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=215f606e6268a0b156327c7fb2082521c6045433" class="snap-glyph" title="Snapshots exist for this revision" aria-label="Snapshots exist for this revision"><svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true" style="vertical-align:text-bottom;flex:0 0 auto"><path d="M1.75 2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h.94l8.5-8.5a.25.25 0 0 1 .354 0l1.756 1.757V2.75a.25.25 0 0 0-.25-.25H1.75ZM14.5 9.232 11.06 5.79 3.852 13h9.898a.25.25 0 0 0 .25-.25V9.232ZM1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75C0 1.784.784 1 1.75 1ZM5.5 6a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg></a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=215f606e6268a0b156327c7fb2082521c6045433" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">215f606</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2025-10-13</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="215f606e6268a0b156327c7fb2082521c6045433" data-parent="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-short="215f606" title="Run Mass Compile for commit 215f606">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="215f606e6268a0b156327c7fb2082521c6045433" data-parent="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-short="215f606" title="Run VI Analyzer for commit 215f606">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="215f606e6268a0b156327c7fb2082521c6045433" data-parent="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-short="215f606" title="Run VIDiff for commit 215f606">&#9655;</a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="215f606e6268a0b156327c7fb2082521c6045433" data-parent="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-short="215f606" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 176 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=215f606e6268a0b156327c7fb2082521c6045433" style="color:inherit">176</a></span></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="215f606e6268a0b156327c7fb2082521c6045433" data-parent="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-short="215f606" title="Run Unit Tests for commit 215f606">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="215f606e6268a0b156327c7fb2082521c6045433" data-parent="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-short="215f606" title="Run Antidoc for commit 215f606">&#9655;</a></td>
+    </tr>
+
+    <tr data-project="true" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=58c08e3ee046ed06fe62a6072bfa9c176f1412c6" class="cidash-rev-msg" title="baseline from internal private repo">baseline from internal private repo</a><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=58c08e3ee046ed06fe62a6072bfa9c176f1412c6" class="snap-glyph" title="Snapshots exist for this revision" aria-label="Snapshots exist for this revision"><svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true" style="vertical-align:text-bottom;flex:0 0 auto"><path d="M1.75 2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h.94l8.5-8.5a.25.25 0 0 1 .354 0l1.756 1.757V2.75a.25.25 0 0 0-.25-.25H1.75ZM14.5 9.232 11.06 5.79 3.852 13h9.898a.25.25 0 0 0 .25-.25V9.232ZM1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75C0 1.784.784 1 1.75 1ZM5.5 6a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg></a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=58c08e3ee046ed06fe62a6072bfa9c176f1412c6" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">58c08e3</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2025-10-13</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="masscompile" data-sha="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-parent="1f5627a23092d4cb2a8a8a07cb8ce7a26d8fd403" data-short="58c08e3" title="Run Mass Compile for commit 58c08e3">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vi-analyzer" data-sha="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-parent="1f5627a23092d4cb2a8a8a07cb8ce7a26d8fd403" data-short="58c08e3" title="Run VI Analyzer for commit 58c08e3">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="vidiff" data-sha="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-parent="1f5627a23092d4cb2a8a8a07cb8ce7a26d8fd403" data-short="58c08e3" title="Run VIDiff for commit 58c08e3">&#9655;</a></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-parent="1f5627a23092d4cb2a8a8a07cb8ce7a26d8fd403" data-short="58c08e3" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 176 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=58c08e3ee046ed06fe62a6072bfa9c176f1412c6" style="color:inherit">176</a></span></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-parent="1f5627a23092d4cb2a8a8a07cb8ce7a26d8fd403" data-short="58c08e3" title="Run Unit Tests for commit 58c08e3">&#9655;</a></td>
+      <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-parent="1f5627a23092d4cb2a8a8a07cb8ce7a26d8fd403" data-short="58c08e3" title="Run Antidoc for commit 58c08e3">&#9655;</a></td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=1f5627a23092d4cb2a8a8a07cb8ce7a26d8fd403" class="cidash-rev-msg" title="readme initial version">readme initial version</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=1f5627a23092d4cb2a8a8a07cb8ce7a26d8fd403" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">1f5627a</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2025-10-13</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(132,42%,45%)" title="daniel-coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=5e0eaab1ad7211bff0f3a3132ee4b2a1a1040012" class="cidash-rev-msg" title="gitignore file">gitignore file</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=5e0eaab1ad7211bff0f3a3132ee4b2a1a1040012" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">5e0eaab</a><span class="cidash-rev-dot">&middot;</span>daniel-coons<span class="cidash-rev-dot">&middot;</span>2025-10-13</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(55,42%,45%)" title="Daniel Coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=158a49f2b5a5cf687adcc00d5af45bd6ca37dbfa" class="cidash-rev-msg" title="Update LICENSE">Update LICENSE</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=158a49f2b5a5cf687adcc00d5af45bd6ca37dbfa" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">158a49f</a><span class="cidash-rev-dot">&middot;</span>Daniel Coons<span class="cidash-rev-dot">&middot;</span>2025-10-13</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(55,42%,45%)" title="Daniel Coons" aria-hidden="true">D</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=e6541c97e5881b01ca1fbd36ffd7f24e4ae9e279" class="cidash-rev-msg" title="Initial commit">Initial commit</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=e6541c97e5881b01ca1fbd36ffd7f24e4ae9e279" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">e6541c9</a><span class="cidash-rev-dot">&middot;</span>Daniel Coons<span class="cidash-rev-dot">&middot;</span>2025-10-13</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr></tbody>
   </table>
   </div>
   <div id="empty-state" style="display:none;padding:18px;text-align:center;color:var(--fg-muted);font-size:.9em">
