@@ -6,35 +6,35 @@
 <TargetIndex>0</TargetIndex>
 <ItemsToAnalyze>
 	<Item>
-		<Path>"..\\..\\.."</Path>
+		<Path>"..\\.."</Path>
 		<Removed>FALSE</Removed>
 	</Item>
 	<Item>
-		<Path>"..\\..\\..\\.git"</Path>
+		<Path>"..\\..\\.git"</Path>
 		<Removed>TRUE</Removed>
 	</Item>
 	<Item>
-		<Path>"..\\.."</Path>
+		<Path>"..\\..\\.github"</Path>
 		<Removed>TRUE</Removed>
 	</Item>
 	<Item>
-		<Path>"..\\..\\..\\_graphic source"</Path>
+		<Path>"..\\..\\_graphic source"</Path>
 		<Removed>TRUE</Removed>
 	</Item>
 	<Item>
-		<Path>"..\\..\\..\\_vip"</Path>
+		<Path>"..\\..\\_vip"</Path>
 		<Removed>TRUE</Removed>
 	</Item>
 	<Item>
-		<Path>"..\\..\\..\\assets"</Path>
+		<Path>".."</Path>
 		<Removed>TRUE</Removed>
 	</Item>
 	<Item>
-		<Path>"..\\..\\..\\Test"</Path>
+		<Path>"..\\..\\Test"</Path>
 		<Removed>TRUE</Removed>
 	</Item>
 	<Item>
-		<Path>"..\\..\\..\\Theme Definer UI.vi"</Path>
+		<Path>"..\\..\\Theme Definer UI.vi"</Path>
 		<Removed>TRUE</Removed>
 	</Item>
 </ItemsToAnalyze>
