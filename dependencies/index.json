@@ -1,8 +1,17 @@
 {
   "schema": 1,
   "repo": "danielcoons/tsc-pop-up",
-  "sha": "e6a6c95faea1eda09a9151572bf3b68625753910",
+  "sha": "114e65487a759253892a727fa9e646ba77341cea",
   "revisions": [
+    {
+      "sha": "114e65487a759253892a727fa9e646ba77341cea",
+      "short": "114e654",
+      "message": "ci: adopt LabVIEW CI tooling v4.6.8 (full update)",
+      "author": "github-actions[bot]",
+      "date": "2026-07-21T23:50:14Z",
+      "project": false,
+      "dep_only": false
+    },
     {
       "sha": "e6a6c95faea1eda09a9151572bf3b68625753910",
       "short": "e6a6c95",

@@ -662,7 +662,11 @@ flowchart TD
       <p><code>dashboard.py</code> reads each commit's statuses (keyed by the catalog's
         <code>statusContext</code>), classifies whether a commit touched real LabVIEW source vs. CI tooling,
         aggregates per-activity data from the deployed JSON (e.g. <code>masscompile/&lt;sha&gt;/summary.json</code>,
-        the snapshot <code>by-blob</code> index), and renders one dashboard row per recent commit. It also stages the
+        the snapshot <code>by-blob</code> index), and renders one dashboard row per recent commit. To keep the
+        project's own revisions visible even after many CI/tooling commits have piled up on <code>main</code>, it
+        keeps paging back through history — past the recent window it retains <em>only</em> project revisions —
+        until it has collected the project's revisions or reaches a large safety cap on how many commits it will
+        classify. It also stages the
         bundled tooling pages and writes the VI Browser's <code>files.json</code> index.</p>
       <p>On a fresh install with project revisions but no CI results yet, <code>dashboard.py</code> emits a
         <strong>Populate the dashboard with your history</strong> card above the table. The card opens the Populate
@@ -1305,11 +1309,18 @@ docker run --rm `
       <h3 id="cap-antidoc">16.5 Antidoc <a class="anchor" href="#cap-antidoc">#</a></h3>
       <p>Driver: <code>run-antidoc.ps1</code>; report: <code>build-antidoc-report.py</code>. It drives Wovalab's
         Antidoc CLI through <code>g-cli</code> against the project's <code>.lvproj</code> (auto-detected if not
-        specified), producing AsciiDoc with embedded diagram images. Two implementation details are worth knowing:
+        specified), producing AsciiDoc with embedded diagram images. The CLI is invoked as the g-cli tool
+        <code>antidoc</code> (renamed from the older <code>antidoccli</code>) with <code>-addon lvproj</code>, so the
+        LabVIEW-project documentation add-on (<code>wovalab_lib_antidoc_add_on_labview_project_documentation</code>)
+        must be &mdash; and is &mdash; baked into the worker image alongside the CLI in
+        <code>antidoc.vipc</code>. Three implementation details are worth knowing:
         it <strong>re-reads the Windows registry PATH</strong> and merges it into the process environment so a VIPM
         package installed after the Dockerfile's <code>ENV</code> layer (e.g. <code>g-cli</code>) is visible without
-        an image rebuild; and it <strong>always emits a safety-net report</strong> even on failure, so the dashboard
-        never links to a 404.</p>
+        an image rebuild; it passes a generous <strong>g-cli <code>--timeout</code></strong> (10&nbsp;minutes,
+        overridable via <code>ANTIDOC_CONNECT_TIMEOUT_MS</code>) so a cold container that must launch LabVIEW and
+        load Antidoc's large VI hierarchy before the tool connects back does not trip the launch handshake with
+        &ldquo;No connection established with application&rdquo;; and it <strong>always emits a safety-net
+        report</strong> even on failure, so the dashboard never links to a 404.</p>
       <p>Dependency intent for this capability is the committed
         <code>.github/labview/antidoc/antidoc.vipc</code>. As with <code>ci-tooling.vipc</code>, this file is
         authoritative and must remain VIPM-openable; optional JSON metadata may assist tooling but does not override
@@ -1562,14 +1573,19 @@ flowchart TD
         <code>new</code> publishes a fresh <code>&lt;tag&gt;-deps-&lt;date&gt;</code> tag alongside without moving them).
         (The Linux&nbsp;Beta builds directly on <code>ubuntu-latest</code> with no separate gate; the VI&nbsp;Browser 2.0 render engine is now baked into the Linux worker, so there is no separate render image.)</div>
       <div class="note"><span class="lbl">On-demand updates cover both workers</span>
-        The Dependencies page&rsquo;s &ldquo;Run the container update&rdquo; flow dispatches the worker build for every
-        container it flags as behind: <code>build-labview-image.yml</code> for Windows and
+        The Dependencies page&rsquo;s &ldquo;Run the container update&rdquo; flow lets you rebuild the
+        <strong>Windows</strong> worker, the <strong>Linux</strong> worker, or both: a &ldquo;Containers to rebuild&rdquo;
+        pair of checkboxes is pre-checked from the pending signal but you can select either or both explicitly. It then
+        dispatches <code>build-labview-image.yml</code> for Windows and/or
         <code>build-labview-linux-image.yml</code> for Linux, each with the selected <code>update_mode</code>, and its
-        live progress bar tracks both runs at once. The <code>deps-pending.json</code> contract drives this: the
-        dashboard compares each project VIPC&rsquo;s packages against the <em>per-platform</em> baked worker manifest, so
-        its <code>containers</code> array lists <code>windows</code> and/or <code>linux</code> independently (a Linux gap
-        is reported only when a real, non-base Linux worker manifest resolved for the revision), and <code>vipcs</code>
-        is the union of the files missing packages on either worker.</div>
+        live progress bar tracks every dispatched run at once. The <code>deps-pending.json</code> contract drives the
+        defaults: the dashboard compares each project VIPC&rsquo;s packages against the <em>per-platform</em> baked
+        worker manifest, so its <code>containers</code> array lists <code>windows</code> and/or <code>linux</code>
+        independently (a Linux gap is reported only when a real, non-base Linux worker manifest resolved for the
+        revision), and <code>vipcs</code> is the union of the files missing packages on either worker. The dependency
+        table evaluates each column the same way: a package that is <strong>monitored</strong> for a platform but not
+        yet baked into that worker shows as <strong>missing</strong> in that column (Linux is evaluated exactly like
+        Windows), while a package that is simply not monitored for the platform stays N/A.</div>
 
       <h3>Complete runner inventory</h3>
       <p>Every workflow in the repository, the runner(s) it uses, what triggers it, and the conditions under which it
