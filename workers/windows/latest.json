@@ -1,7 +1,7 @@
 {
-  "version": "win-979eeecc9f8e",
+  "version": "win-fbea0694df47",
   "platform": "windows",
-  "manifest_url": "https://danielcoons.github.io/tsc-pop-up/workers/windows/win-979eeecc9f8e/manifest.html",
-  "build_date": "2026-07-13T20:07:48Z",
-  "git_sha": "c072c4e49b5729ab34a4716061178f905462e8a9"
+  "manifest_url": "https://danielcoons.github.io/tsc-pop-up/workers/windows/win-fbea0694df47/manifest.html",
+  "build_date": "2026-07-21T20:27:02Z",
+  "git_sha": "467ff3a099f87d1520042e95c710e1043af512f0"
 }
