@@ -1,8 +1,17 @@
 {
   "schema": 1,
   "repo": "danielcoons/tsc-pop-up",
-  "sha": "66776487f1a05f2c4822c24f07769f0572617e38",
+  "sha": "1ebe420a9070c2e029395b51c4a2595e4a643f56",
   "revisions": [
+    {
+      "sha": "1ebe420a9070c2e029395b51c4a2595e4a643f56",
+      "short": "1ebe420",
+      "message": "ci: adopt LabVIEW CI tooling v4.4.18 (full update)",
+      "author": "github-actions[bot]",
+      "date": "2026-07-21T21:05:52Z",
+      "project": false,
+      "dep_only": false
+    },
     {
       "sha": "66776487f1a05f2c4822c24f07769f0572617e38",
       "short": "6677648",
@@ -545,24 +554,11 @@
     }
   ],
   "config": {
-    "use": "latest",
+    "use": "",
     "actions": {},
-    "vipc": [
-      {
-        "path": ".github/labview/antidoc/antidoc.vipc",
-        "monitor": true
-      },
-      {
-        "path": ".github/labview/vipm/ci-tooling.vipc",
-        "monitor": true
-      },
-      {
-        "path": "_vip/antidoc-missing-stuff.vipc",
-        "monitor": false
-      }
-    ],
+    "vipc": [],
     "dragon": [],
-    "hasVipcList": true,
+    "hasVipcList": false,
     "hasDragonList": false
   },
   "vipc": [
@@ -620,8 +616,8 @@
       "role": "project",
       "capability": "",
       "tooling": false,
-      "configured": false,
-      "monitored": false,
+      "configured": true,
+      "monitored": true,
       "locked": false,
       "packages": [
         "wiresmith_technology_lib_g_cli-3.0.1.98",
