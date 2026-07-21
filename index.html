@@ -116,6 +116,7 @@
     .cidash-chip .cidash-vseg.cc-pass{color:#3fb950}
     .cidash-chip .cidash-vseg.cc-fail{color:#f85149}
     .cidash-chip .cidash-vseg.cc-warn{color:#d29922}
+    .cidash-chip .cidash-vseg.cc-muted{color:#8b949e}
     /* A hard-failed segment in a split pill is filled bright red (a small solid
        badge) so it reads as a failure, not just a low number. */
     .cidash-chip .cidash-vseg.cc-fail.cc-solid{background:#da3633;color:#fff;padding:1px 7px;border-radius:6px}
@@ -132,6 +133,7 @@
       .cidash-chip .cidash-vseg.cc-pass{color:#1a7f37}
       .cidash-chip .cidash-vseg.cc-fail{color:#cf222e}
       .cidash-chip .cidash-vseg.cc-warn{color:#9a6700}
+      .cidash-chip .cidash-vseg.cc-muted{color:#57606a}
       .cidash-chip .cidash-vseg.cc-fail.cc-solid{background:#cf222e;color:#fff}
       .cidash-chip .cidash-vseg[data-tip]:hover::after{background:#fff;color:#1f2328;border-color:#d0d7de;box-shadow:0 2px 8px rgba(140,149,159,.35)}
       .cidash-chip .cidash-vseg[data-tip]:hover::before{border-top-color:#d0d7de}
@@ -1175,11 +1177,12 @@
       'masscompile': ['Mass Compile', 'Compiles the whole project, each revision'],
       'vi-analyzer': ['VI Analyzer',  'Runs the VI Analyzer suite, each revision'],
       'unit-tests':  ['Unit Tests',   'Runs the unit-test suite, each revision'],
-      'antidoc':     ['Antidoc',      'Generates project documentation, each revision']
+      'antidoc':     ['Antidoc',      'Generates project documentation, each revision'],
+      'builds':      ['Builds',       'Runs the project build specifications (EXE, PPL, ...), each revision']
     };
-    var CAP_ORDER = ['snapshots','snapshots2','vidiff','masscompile','vi-analyzer','unit-tests','antidoc'];
+    var CAP_ORDER = ['snapshots','snapshots2','vidiff','masscompile','vi-analyzer','unit-tests','antidoc','builds'];
     var DIFF_CAPS = { snapshots:1, snapshots2:1, vidiff:1 };  // the lean "diff-based" subset
-    var PLATFORM_CAPS = { snapshots2:1, vidiff:1, masscompile:1, 'vi-analyzer':1 };
+    var PLATFORM_CAPS = { snapshots2:1, vidiff:1, masscompile:1, 'vi-analyzer':1, builds:1 };
     var platState = {};                         // cap id -> selected platform keys for history rows
     function capPlatforms(capId){ return (RT[capId] && RT[capId].platforms) ? Object.keys(RT[capId].platforms) : []; }
     function histHasPlatformPicker(capId){ return !!PLATFORM_CAPS[capId] && capPlatforms(capId).length > 1; }
@@ -1746,7 +1749,7 @@
   </script>
   <main class="lvci-main">
   <h1>CI Dashboard — tsc-pop-up</h1>
-  <div class="sub">Last updated: 2026-07-21 22:18 UTC &nbsp;|&nbsp; Auto-refreshes every 15 min</div>
+  <div class="sub">Last updated: 2026-07-21 22:33 UTC &nbsp;|&nbsp; Auto-refreshes every 15 min</div>
   <div class="nav">
     <a href="https://github.com/danielcoons/tsc-pop-up">GitHub</a>
     <a href="https://github.com/danielcoons/tsc-pop-up/actions">Actions</a>
@@ -1787,9 +1790,29 @@
         <th style="text-align:center">Snapshots</th>
         <th style="text-align:center">Unit Tests</th>
         <th style="text-align:center">Antidoc</th>
+        <th style="text-align:center">Builds</th>
       </tr>
     </thead>
     <tbody>
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(150,42%,45%)" title="github-actions[bot]" aria-hidden="true">G</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=e6a6c95faea1eda09a9151572bf3b68625753910" class="cidash-rev-msg" title="ci: adopt LabVIEW CI tooling v4.6.1 (full update)">ci: adopt LabVIEW CI tooling v4.6.1 (full update)</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=e6a6c95faea1eda09a9151572bf3b68625753910" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">e6a6c95</a><span class="cidash-rev-dot">&middot;</span>github-actions[bot]<span class="cidash-rev-dot">&middot;</span>2026-07-21</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
     <tr data-project="false" data-deponly="false">
       <td class="cidash-rev">
         <div class="cidash-rev-wrap">
@@ -1800,6 +1823,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -1824,6 +1848,7 @@
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="e5f2c19692a9f84a00b23ef0cb7feef22d689fb7" data-parent="1ebe420a9070c2e029395b51c4a2595e4a643f56" data-short="e5f2c19" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=e5f2c19692a9f84a00b23ef0cb7feef22d689fb7" style="color:inherit">138</a></span></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="e5f2c19692a9f84a00b23ef0cb7feef22d689fb7" data-parent="1ebe420a9070c2e029395b51c4a2595e4a643f56" data-short="e5f2c19" title="Run Unit Tests for commit e5f2c19">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="e5f2c19692a9f84a00b23ef0cb7feef22d689fb7" data-parent="1ebe420a9070c2e029395b51c4a2595e4a643f56" data-short="e5f2c19" title="Run Antidoc for commit e5f2c19">&#9655;</a></td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -1836,6 +1861,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -1860,6 +1886,7 @@
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -1872,6 +1899,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -1896,6 +1924,7 @@
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -1908,6 +1937,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -1932,6 +1962,7 @@
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -1944,6 +1975,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -1968,6 +2000,7 @@
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -1980,6 +2013,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -2004,6 +2038,7 @@
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="4158cba013056aca5ddc8721b17013174cbf1158" data-parent="1ab866e010526b84726e864c189584739166b891" data-short="4158cba" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=4158cba013056aca5ddc8721b17013174cbf1158" style="color:inherit">138</a></span></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="4158cba013056aca5ddc8721b17013174cbf1158" data-parent="1ab866e010526b84726e864c189584739166b891" data-short="4158cba" title="Run Unit Tests for commit 4158cba">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="4158cba013056aca5ddc8721b17013174cbf1158" data-parent="1ab866e010526b84726e864c189584739166b891" data-short="4158cba" title="Run Antidoc for commit 4158cba">&#9655;</a></td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -2016,6 +2051,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -2040,6 +2076,7 @@
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="true" data-deponly="true">
@@ -2058,6 +2095,7 @@
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19" data-parent="a88d27d9c6de3c1bbf71cdf6c57c4af8d78e2715" data-short="97cd03e" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19" style="color:inherit">138</a></span></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19" data-parent="a88d27d9c6de3c1bbf71cdf6c57c4af8d78e2715" data-short="97cd03e" title="Run Unit Tests for commit 97cd03e">&#9655;</a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="antidoc" data-sha="97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19" data-parent="a88d27d9c6de3c1bbf71cdf6c57c4af8d78e2715" data-short="97cd03e" data-ts="2026-07-16T01:04:26Z"><span class="cidash-chip cc-fail"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.75.75 0 1 1 1.06 1.06L9.06 8l3.22 3.22a.75.75 0 1 1-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 0 1-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"/></svg><a href="https://danielcoons.github.io/tsc-pop-up/report/index.html?type=antidoc-report&sha=97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19&short=97cd03e&src=..%2Fantidoc%2F97cd03e4ffb847cb18b0d5b3c4cf61f0f8ddbe19%2Findex.html&title=Antidoc%20%C2%B7%2097cd03e" style="color:inherit">docs</a></span></td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -2070,6 +2108,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -2094,6 +2133,7 @@
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="9bfd002369b3bd10b80f4aeaedbbc819ddbd364c" data-parent="634cea975f0b0605e3538501f3147c361287f4de" data-short="9bfd002" data-ts="2026-07-15T02:23:03Z" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=9bfd002369b3bd10b80f4aeaedbbc819ddbd364c" style="color:inherit">138</a></span></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="unit-tests" data-sha="9bfd002369b3bd10b80f4aeaedbbc819ddbd364c" data-parent="634cea975f0b0605e3538501f3147c361287f4de" data-short="9bfd002" data-ts="2026-07-15T02:21:21Z"><span class="cidash-chip cc-pass" title="No unit tests found; 0% failed."><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L1.22 9.28a.75.75 0 1 1 1.06-1.06L6 11.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg><a href="https://danielcoons.github.io/tsc-pop-up/report/index.html?type=unit-tests-report&sha=9bfd002369b3bd10b80f4aeaedbbc819ddbd364c&short=9bfd002&src=..%2Funit-tests%2F9bfd002369b3bd10b80f4aeaedbbc819ddbd364c%2Findex.html&title=Unit%20Tests%20%C2%B7%209bfd002" style="color:inherit">0% failed</a></span></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="antidoc" data-sha="9bfd002369b3bd10b80f4aeaedbbc819ddbd364c" data-parent="634cea975f0b0605e3538501f3147c361287f4de" data-short="9bfd002" data-ts="2026-07-21T21:58:04Z"><span class="cidash-chip cc-fail"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.75.75 0 1 1 1.06 1.06L9.06 8l3.22 3.22a.75.75 0 1 1-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 0 1-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"/></svg><a href="https://danielcoons.github.io/tsc-pop-up/report/index.html?type=antidoc-report&sha=9bfd002369b3bd10b80f4aeaedbbc819ddbd364c&short=9bfd002&src=..%2Fantidoc%2F9bfd002369b3bd10b80f4aeaedbbc819ddbd364c%2Findex.html&title=Antidoc%20%C2%B7%209bfd002" style="color:inherit">docs</a></span></td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -2106,6 +2146,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -2130,6 +2171,7 @@
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -2142,6 +2184,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -2166,6 +2209,7 @@
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -2178,6 +2222,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -2202,6 +2247,7 @@
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -2214,6 +2260,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -2238,6 +2285,7 @@
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -2250,6 +2298,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -2274,6 +2323,7 @@
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -2286,6 +2336,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -2310,6 +2361,7 @@
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -2322,6 +2374,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -2346,6 +2399,7 @@
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -2358,6 +2412,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -2382,6 +2437,7 @@
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -2394,6 +2450,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -2418,6 +2475,7 @@
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -2430,6 +2488,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -2454,6 +2513,7 @@
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="eca6caad1cd0e9630eb817612157855388d4ca16" data-parent="400d3ee5ba99f6daac8c7ca67ce99a23229545bb" data-short="eca6caa" data-ts="2026-07-13T16:05:18Z" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=eca6caad1cd0e9630eb817612157855388d4ca16" style="color:inherit">138</a></span></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="eca6caad1cd0e9630eb817612157855388d4ca16" data-parent="400d3ee5ba99f6daac8c7ca67ce99a23229545bb" data-short="eca6caa" title="Run Unit Tests for commit eca6caa">&#9655;</a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="antidoc" data-sha="eca6caad1cd0e9630eb817612157855388d4ca16" data-parent="400d3ee5ba99f6daac8c7ca67ce99a23229545bb" data-short="eca6caa" data-ts="2026-07-13T22:14:34Z"><span class="cidash-chip cc-fail"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.75.75 0 1 1 1.06 1.06L9.06 8l3.22 3.22a.75.75 0 1 1-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 0 1-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"/></svg><a href="https://danielcoons.github.io/tsc-pop-up/report/index.html?type=antidoc-report&sha=eca6caad1cd0e9630eb817612157855388d4ca16&short=eca6caa&src=..%2Fantidoc%2Feca6caad1cd0e9630eb817612157855388d4ca16%2Findex.html&title=Antidoc%20%C2%B7%20eca6caa" style="color:inherit">docs</a></span></td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="true" data-deponly="false">
@@ -2472,6 +2532,7 @@
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="d160afc6add9ee1c80f270142d53003960db3142" data-parent="8e7530810e645c5d624eae20ec4f26b652ad33c5" data-short="d160afc" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d160afc6add9ee1c80f270142d53003960db3142" style="color:inherit">138</a></span></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="d160afc6add9ee1c80f270142d53003960db3142" data-parent="8e7530810e645c5d624eae20ec4f26b652ad33c5" data-short="d160afc" title="Run Unit Tests for commit d160afc">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="d160afc6add9ee1c80f270142d53003960db3142" data-parent="8e7530810e645c5d624eae20ec4f26b652ad33c5" data-short="d160afc" title="Run Antidoc for commit d160afc">&#9655;</a></td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -2484,6 +2545,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -2508,6 +2570,7 @@
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -2520,6 +2583,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -2544,6 +2608,7 @@
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="6c421addf74a456d8e55d7535abf74cfef0224b0" data-parent="d7fdde7c44de337ca0483d6388ebcf84a6ddc7c5" data-short="6c421ad" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=6c421addf74a456d8e55d7535abf74cfef0224b0" style="color:inherit">138</a></span></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="6c421addf74a456d8e55d7535abf74cfef0224b0" data-parent="d7fdde7c44de337ca0483d6388ebcf84a6ddc7c5" data-short="6c421ad" title="Run Unit Tests for commit 6c421ad">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="6c421addf74a456d8e55d7535abf74cfef0224b0" data-parent="d7fdde7c44de337ca0483d6388ebcf84a6ddc7c5" data-short="6c421ad" title="Run Antidoc for commit 6c421ad">&#9655;</a></td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -2556,6 +2621,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -2580,6 +2646,7 @@
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -2592,6 +2659,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -2616,6 +2684,7 @@
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="true" data-deponly="true">
@@ -2634,6 +2703,7 @@
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="d58e71090fc7a4b0f0668f67d411a7f0f740c216" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="d58e710" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d58e71090fc7a4b0f0668f67d411a7f0f740c216" style="color:inherit">138</a></span></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="d58e71090fc7a4b0f0668f67d411a7f0f740c216" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="d58e710" title="Run Unit Tests for commit d58e710">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="d58e71090fc7a4b0f0668f67d411a7f0f740c216" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="d58e710" title="Run Antidoc for commit d58e710">&#9655;</a></td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="true" data-deponly="true">
@@ -2652,6 +2722,7 @@
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="03fcdb0f4fca853ae68ab278017ab31d436b5bc4" data-parent="f67ec060e2093b4f0237a692c148292c9b38e60f" data-short="03fcdb0" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=03fcdb0f4fca853ae68ab278017ab31d436b5bc4" style="color:inherit">138</a></span></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="03fcdb0f4fca853ae68ab278017ab31d436b5bc4" data-parent="f67ec060e2093b4f0237a692c148292c9b38e60f" data-short="03fcdb0" title="Run Unit Tests for commit 03fcdb0">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="03fcdb0f4fca853ae68ab278017ab31d436b5bc4" data-parent="f67ec060e2093b4f0237a692c148292c9b38e60f" data-short="03fcdb0" title="Run Antidoc for commit 03fcdb0">&#9655;</a></td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="true" data-deponly="true">
@@ -2670,6 +2741,7 @@
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="8da7fa2af6d7036611a50abab5b4e19b8ca28db1" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="8da7fa2" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=8da7fa2af6d7036611a50abab5b4e19b8ca28db1" style="color:inherit">138</a></span></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="8da7fa2af6d7036611a50abab5b4e19b8ca28db1" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="8da7fa2" title="Run Unit Tests for commit 8da7fa2">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="8da7fa2af6d7036611a50abab5b4e19b8ca28db1" data-parent="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-short="8da7fa2" title="Run Antidoc for commit 8da7fa2">&#9655;</a></td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="true" data-deponly="true">
@@ -2688,6 +2760,7 @@
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="3cb5807" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=3cb5807e882e296e52c2d765e88281cd9ae49b45" style="color:inherit">138</a></span></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="3cb5807" title="Run Unit Tests for commit 3cb5807">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="3cb5807e882e296e52c2d765e88281cd9ae49b45" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="3cb5807" title="Run Antidoc for commit 3cb5807">&#9655;</a></td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="true" data-deponly="true">
@@ -2706,6 +2779,7 @@
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="f67ec060e2093b4f0237a692c148292c9b38e60f" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="f67ec06" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=f67ec060e2093b4f0237a692c148292c9b38e60f" style="color:inherit">138</a></span></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="f67ec060e2093b4f0237a692c148292c9b38e60f" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="f67ec06" title="Run Unit Tests for commit f67ec06">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="f67ec060e2093b4f0237a692c148292c9b38e60f" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="f67ec06" title="Run Antidoc for commit f67ec06">&#9655;</a></td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="true" data-deponly="true">
@@ -2724,6 +2798,7 @@
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="df6ef8d" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b" style="color:inherit">138</a></span></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="df6ef8d" title="Run Unit Tests for commit df6ef8d">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="df6ef8da0e628b0e085f1e1c9f0e2c7e7a39fe8b" data-parent="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-short="df6ef8d" title="Run Antidoc for commit df6ef8d">&#9655;</a></td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="true" data-deponly="false">
@@ -2742,6 +2817,7 @@
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-parent="b1e50bb6940788fae44af7a5b704498ddcc86901" data-short="d67b737" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 138 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=d67b737a4e3728d906e8163b9bffabb86c8f1d63" style="color:inherit">138</a></span></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-parent="b1e50bb6940788fae44af7a5b704498ddcc86901" data-short="d67b737" title="Run Unit Tests for commit d67b737">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="d67b737a4e3728d906e8163b9bffabb86c8f1d63" data-parent="b1e50bb6940788fae44af7a5b704498ddcc86901" data-short="d67b737" title="Run Antidoc for commit d67b737">&#9655;</a></td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="true" data-deponly="false">
@@ -2760,6 +2836,7 @@
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="b1e50bb6940788fae44af7a5b704498ddcc86901" data-parent="cc09dfec0897af335ef622eb0a8671b2d98c231d" data-short="b1e50bb" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 136 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=b1e50bb6940788fae44af7a5b704498ddcc86901" style="color:inherit">136</a></span></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="b1e50bb6940788fae44af7a5b704498ddcc86901" data-parent="cc09dfec0897af335ef622eb0a8671b2d98c231d" data-short="b1e50bb" title="Run Unit Tests for commit b1e50bb">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="b1e50bb6940788fae44af7a5b704498ddcc86901" data-parent="cc09dfec0897af335ef622eb0a8671b2d98c231d" data-short="b1e50bb" title="Run Antidoc for commit b1e50bb">&#9655;</a></td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -2772,6 +2849,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -2796,6 +2874,7 @@
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="true" data-deponly="false">
@@ -2814,6 +2893,7 @@
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="2c71e3bb0d286d598983e8364eb304249f2e4f49" data-parent="215f606e6268a0b156327c7fb2082521c6045433" data-short="2c71e3b" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 136 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=2c71e3bb0d286d598983e8364eb304249f2e4f49" style="color:inherit">136</a></span></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="2c71e3bb0d286d598983e8364eb304249f2e4f49" data-parent="215f606e6268a0b156327c7fb2082521c6045433" data-short="2c71e3b" title="Run Unit Tests for commit 2c71e3b">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="2c71e3bb0d286d598983e8364eb304249f2e4f49" data-parent="215f606e6268a0b156327c7fb2082521c6045433" data-short="2c71e3b" title="Run Antidoc for commit 2c71e3b">&#9655;</a></td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="true" data-deponly="false">
@@ -2832,6 +2912,7 @@
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="215f606e6268a0b156327c7fb2082521c6045433" data-parent="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-short="215f606" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 176 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=215f606e6268a0b156327c7fb2082521c6045433" style="color:inherit">176</a></span></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="215f606e6268a0b156327c7fb2082521c6045433" data-parent="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-short="215f606" title="Run Unit Tests for commit 215f606">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="215f606e6268a0b156327c7fb2082521c6045433" data-parent="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-short="215f606" title="Run Antidoc for commit 215f606">&#9655;</a></td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="true" data-deponly="false">
@@ -2850,6 +2931,7 @@
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-parent="1f5627a23092d4cb2a8a8a07cb8ce7a26d8fd403" data-short="58c08e3" data-ts="" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 176 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=58c08e3ee046ed06fe62a6072bfa9c176f1412c6" style="color:inherit">176</a></span></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="unit-tests" data-sha="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-parent="1f5627a23092d4cb2a8a8a07cb8ce7a26d8fd403" data-short="58c08e3" title="Run Unit Tests for commit 58c08e3">&#9655;</a></td>
       <td style="text-align:center"><a href="#" class="cidash-run" data-cap="antidoc" data-sha="58c08e3ee046ed06fe62a6072bfa9c176f1412c6" data-parent="1f5627a23092d4cb2a8a8a07cb8ce7a26d8fd403" data-short="58c08e3" title="Run Antidoc for commit 58c08e3">&#9655;</a></td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -2862,6 +2944,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
@@ -2886,6 +2969,7 @@
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -2904,6 +2988,7 @@
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
     </tr>
 
     <tr data-project="false" data-deponly="false">
@@ -2916,6 +3001,7 @@
           </div>
         </div>
       </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
       <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
