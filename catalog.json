@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "4.6.8",
+  "version": "4.8.1",
   "name": "LabVIEW CI",
   "description": "Portable, repo-agnostic CI/CD capabilities for LabVIEW repositories: mass compile, VI Analyzer, VIDiff comparison reports, VI snapshots / VI Browser, and a status dashboard. Driven entirely by this catalog so the configurator UI and the installer stay in sync and new capabilities are a one-entry change.",
   "installPause": {
@@ -11,6 +11,47 @@
   "history": {
     "comment": "Release notes for the tooling, newest first. `version` (above) is the CURRENT published release and MUST equal releases[0].version. The dashboard version badge and the What's New dialog read these notes to tell a consumer what changed between the version they run and the latest this source repo publishes. Each published version should also be tagged v<version> in this repo so consumers can pin an update to a specific release.",
     "releases": [
+      {
+        "version": "4.8.1",
+        "date": "2026-07-21",
+        "type": "patch",
+        "summary": "Dispatching one CI activity (e.g. Antidoc) no longer cancels an in-flight run of another (e.g. Unit Tests). The Windows report workflows (Mass Compile, VI Analyzer, Unit Tests, Antidoc, Builds) all shared a single 'report-pages-deploy' concurrency group that serialised them so their gh-pages pushes would not race; but GitHub keeps only one pending run per group, so a third queued run cancelled one of the others. Each report workflow now uses its own per-activity+revision group, so unrelated activities run in parallel and re-dispatching the same activity+revision queues instead of cancelling. gh-pages push races are already handled by the retry-safe publish-gh-pages action.",
+        "changes": [
+          "run-antidoc / unit-tests / masscompile-windows / vi-analyzer / build-binaries container workflows: concurrency group report-pages-deploy -> ${{ github.workflow }}-${{ inputs.commit_sha || github.sha }} so activities run in parallel and never cancel each other.",
+          "masscompile-linux comment refreshed; vidiff-deploy keeps report-pages-deploy (serialises only its own twin deploys).",
+          "documentation.html: 'Concurrency & parallel deploys' section rewritten for the per-activity model."
+        ]
+      },
+      {"version": "4.8.0", "date": "2026-07-21", "notes": "VI Browser 2.0 Windows renders now auto-generate on every new revision. The Windows render workflow (vi-snapshots-json-windows.yml) previously ran only on manual dispatch, so a VI a revision changed showed 'No Windows 2.0 render' until someone clicked Re-run; it now has the same workflow_run auto-trigger and config gate as the Linux path, auto-running when config.viBrowser.positionAware includes windows (the configurator default) and the triggering snapshot run succeeded. Renders stay content-addressed by git blob SHA, so unchanged VIs reuse their existing frames with no work and only the new/changed blobs a revision actually touched are rendered."},
+      {
+        "version": "4.7.0",
+        "date": "2026-07-21",
+        "notes": "Purge the Windows Beta and Linux Beta worker containers -- LCWC now has just two workers, Windows and Linux. Antidoc (which already ran on the standard Windows worker, never the beta image) is now a normal opt-in capability (status stable, off by default via a new defaultOff flag) instead of the sole experimental one, so the installer's Experimental features card is gone. Deleted build-labview-windows-beta-image.yml, build-labview-linux-beta-image.yml and the two beta Dockerfiles, and removed the leftover linux-beta image-selection branches, the build-worker-manifest beta platforms, and the wait-for-worker-image beta workflow mapping."
+      },
+      {
+        "version": "4.6.12",
+        "date": "2026-07-21",
+        "type": "patch",
+        "summary": "Antidoc doc-gen still times out at the g-cli launch handshake even with the 10-minute connect timeout (LabVIEW launches but the antidoc tool VI never connects back), so this adds diagnostics + hygiene to pinpoint it: run-antidoc.ps1 now runs g-cli with -v (verbose) so the launch and connection attempts are logged, kills any stray LabVIEW/VIPM process before launching (mirrors Wovalab's own Antidoc CI, so g-cli always gets a fresh attachable LabVIEW), and on failure records whether LabVIEW is still running (tool VI launched but hung = broken VI/deps) or gone (LabVIEW did not start).",
+        "changes": [
+          "run-antidoc.ps1: g-cli -v verbose; kill stray LabVIEW/VIPM before launch; post-mortem LabVIEW-process probe on failure."
+        ]
+      },
+      {
+        "version": "4.6.11",
+        "date": "2026-07-21",
+        "notes": "VI Browser now remembers viewer/platform choices per browser, defaults to Windows 2.0 when that render is available on a fresh load, shows dismissible coaching tip strips for the block-diagram toggle and case/event selector arrows, and versions those dismissal keys so a new rollout deliberately re-surfaces the tips for everyone until they dismiss them again."
+      },
+      {
+        "version": "4.6.10",
+        "date": "2026-07-21",
+        "notes": "Remove the Windows Beta and Linux Beta references from the dashboard surface. The Dependencies page dropped its dead experimental-column code, the deps-pending signal no longer emits a 'windows-beta' container, and the runner-inventory table in the docs no longer lists the two Beta image builds. The Dependencies page now shows just Windows and Linux. (The experimental Antidoc capability and the vestigial beta build workflows are unchanged for now.)"
+      },
+      {
+        "version": "4.6.9",
+        "date": "2026-07-21",
+        "notes": "Fix the Dependencies page not reflecting a completed container update. The worker-image build workflows (Build LabVIEW CI Image / Build LabVIEW CI Image - Linux) were missing from the dashboard's workflow_run triggers, so after a container update finished and published a new worker manifest, the dashboard stayed on its pre-update state (still showing packages as missing with no indication the update ran) until an unrelated rebuild. They now trigger a dashboard rebuild, so the deps-pending banner clears on its own once the update lands (source dashboard-pages.yml plus the vendored consumer dashboard workflow). Also fixed a false-missing: a VIPC under .github/ (e.g. an experimental-lane file) was classified as a project dependency, but the worker never bakes .github/ files, so it showed as perpetually missing; such files are now treated as internal tooling (N/A)."
+      },
       {
         "version": "4.6.8",
         "date": "2026-07-21",
@@ -4194,8 +4235,9 @@
       "id": "antidoc",
       "name": "Antidoc",
       "summary": "Generates browsable project documentation with Antidoc (Wovalab) inside the Windows worker and publishes it to Pages, framed in the dashboard. Antidoc renders the project structure, VI descriptions and block-diagram images headlessly through the Antidoc CLI.",
-      "status": "experimental",
+      "status": "stable",
       "recommended": false,
+      "defaultOff": true,
       "supportsOs": [
         "windows"
       ],
@@ -4215,9 +4257,7 @@
         ],
         "windows": [
           ".github/workflows/run-antidoc-windows-container.yml",
-          ".github/labview/run-antidoc.ps1",
-          ".github/workflows/build-labview-windows-beta-image.yml",
-          ".github/docker/labview-ci-windows-beta.Dockerfile"
+          ".github/labview/run-antidoc.ps1"
         ],
         "linux": []
       },
