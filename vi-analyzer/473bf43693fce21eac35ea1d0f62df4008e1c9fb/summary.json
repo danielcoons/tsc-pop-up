@@ -1,0 +1,40 @@
+{
+  "meta": {
+    "sha": "473bf43693fce21eac35ea1d0f62df4008e1c9fb",
+    "short": "473bf43",
+    "platform": "windows",
+    "repo": "danielcoons/tsc-pop-up",
+    "pages_url": "https://danielcoons.github.io/tsc-pop-up",
+    "pages_base": "../..",
+    "commit": {
+      "message": "Merge pull request #18 from danielcoons/feature/#10-plain-dialog-button-colors",
+      "author": "Daniel Coons",
+      "date": "2026-07-22T08:05:24-05:00"
+    },
+    "generated_utc": "2026-07-22 13:23 UTC",
+    "analysis_date": "Wednesday, July 22, 2026 1:23:13 PM",
+    "duration": "00:00:17.63",
+    "configs": [
+      {
+        "label": "assets/via/via-config-tsc.viancfg",
+        "scope": "all other VIs"
+      }
+    ]
+  },
+  "summary": {
+    "vis_analyzed": 1,
+    "tests_run": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "findings": 0,
+    "vis_with_findings": 0
+  },
+  "errors": {
+    "vi_not_loadable": 0,
+    "test_not_loadable": 0,
+    "test_not_runnable": 0,
+    "test_error_out": 0
+  },
+  "rule_counts": []
+}
