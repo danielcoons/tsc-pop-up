@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "4.8.9",
+  "version": "4.9.4",
   "name": "LabVIEW CI",
   "description": "Portable, repo-agnostic CI/CD capabilities for LabVIEW repositories: mass compile, VI Analyzer, VIDiff comparison reports, VI snapshots / VI Browser, and a status dashboard. Driven entirely by this catalog so the configurator UI and the installer stay in sync and new capabilities are a one-entry change.",
   "installPause": {
@@ -11,6 +11,35 @@
   "history": {
     "comment": "Release notes for the tooling, newest first. `version` (above) is the CURRENT published release and MUST equal releases[0].version. The dashboard version badge and the What's New dialog read these notes to tell a consumer what changed between the version they run and the latest this source repo publishes. Each published version should also be tagged v<version> in this repo so consumers can pin an update to a specific release.",
     "releases": [
+      {"version": "4.9.4", "date": "2026-07-22", "notes": "VI Analyzer honours a committed .viancfg again (fixes empty reports since a custom .viancfg was added). RunVIAnalyzer runs ZERO tests when a config\u2019s ItemsToAnalyze is a list of explicit VIs; the default pass now analyzes the whole PROJECT instead - it rewrites the generated config to VI Analyzer\u2019s native Analyze Project mode (AnalyzeProject=TRUE pointed at the detected .lvproj) while keeping the config\u2019s selected tests. Safety net: if the project pass still runs 0 tests (or the repo has no .lvproj) it auto re-runs in directory mode (the full built-in suite that worked historically) so the report is never blank"},
+      {
+        "version": "4.9.3",
+        "date": "2026-07-22",
+        "title": "Builds report follows the light/dark theme like the other reports",
+        "summary": "The per-revision Builds report page was hard-coded to a dark palette, so it ignored the OS light/dark preference and the shared header Light/Dark toggle -- unlike the Mass Compile, VI Analyzer, Unit Tests, and Antidoc reports. It now uses the same CSS-variable theme tokens (following prefers-color-scheme plus the header data-lvci-theme override), unifying its look with the rest of the site. The revision drop-down and Activity switcher in the shared header already covered the Builds report. The two runner fallback pages are themed the same way.",
+        "highlights": [
+          "Builds report themes to light or dark like every other report page",
+          "Follows both the OS preference and the header manual Light/Dark toggle",
+          "Runner fallback builds pages themed to match"
+        ]
+      },
+      {"version": "4.9.2", "date": "2026-07-22", "notes": "VI Analyzer: a pass that completed but analyzed a project containing a broken VI no longer fails the whole job. RunVIAnalyzer (LabVIEWCLI) writes bad-VI warnings to STDERR; under the script-wide ErrorActionPreference=Stop that native stderr write was promoted to a terminating NativeCommandError, aborting the whole-directory fallback pass AFTER it had already run and written its report (job exited 1). Invoke-ViaPass now shields the call the same way the pre-analysis MassCompile does (EAP=Continue + 2>&1), judging success by the process exit code. Unrelated to the pre-analysis MassCompile, which is a normal step that upgrades VIs to the image LabVIEW version before analysis"},
+      {
+        "version": "4.9.1",
+        "date": "2026-07-22",
+        "title": "Dispatched report runs survive a GitHub API rate limit",
+        "summary": "The Determine target SHA step in the container report workflows no longer calls the GitHub API when the dispatched commit_sha is already a full 40-character SHA, and it falls back to the raw input instead of aborting when a short-SHA lookup is rate-limited, so a transient HTTP 403 API rate limit exceeded no longer makes a run fail before it starts and show as an empty/failed activity (e.g. no unit tests).",
+        "highlights": [
+          "Determine target SHA skips the gh api commits lookup for a full 40-char SHA (the dashboard always passes one), removing the rate-limit failure point.",
+          "A short-SHA / ref lookup now falls back to the raw input on any API error instead of hard-failing the whole run under set -e -o pipefail.",
+          "Applied to build-binaries, mass compile, VI Analyzer, Antidoc and unit-tests container workflows (Windows + Linux); VIDiff already had the fallback."
+        ]
+      },
+      {"version": "4.9.0", "date": "2026-07-22", "notes": "New Tools > Debug Run: boot the Linux worker for a chosen revision with a full graphical desktop you can remote into over a browser noVNC session (Xvfb + x11vnc + websockify), tunnelled out with an ephemeral Cloudflare quick tunnel (no account or secret). A three-step dialog dispatches debug-session.yml, auto-opens the remote desktop, and lets you log into/activate LabVIEW interactively, then press ENTER in the on-screen prompt to run the selected activities live (masscompile.sh, ...). Sessions self-tear-down after a chosen time or on End session. Linux only, off by default, dispatch-only."},
+      {"version": "4.8.13", "date": "2026-07-22", "notes": "Dashboard resilience: a rate-limited or unavailable GitHub API no longer blanks the dashboard. dashboard.py now retries transient API failures (HTTP 403/429, 5xx, and dropped connections) with backoff that honors Retry-After / X-RateLimit-Reset, and if the commit history still cannot be read completely it refuses to publish and fails the build instead of overwriting the live dashboard with a blank or truncated table -- so the previous good dashboard stays up and rebuilds automatically once the API recovers. This fixes the blank dashboard that a burst of concurrent CI activity (many workflows dispatched at once) could cause by tripping a secondary rate limit while the build paged commit history."},
+      {"version": "4.8.12", "date": "2026-07-22", "notes": "Dependencies: version-tolerant VIPC package matching plus a per-file missing pill. A VIPC that requests one build of a package (e.g. wovalab_lib_antidoc_cli-3.3.0.117) no longer reads as missing when the worker baked a DIFFERENT build of the SAME package (e.g. 3.4.0.126) -- matching now compares the versionless base identifier, because VIPM installs one version per package, so a present-but-different build shows as installed in both the dependency table and the pending-update check. Each VIPC file's header row now also shows an 'N missing' / 'installed' pill rolled up from the same per-package result, so you can see which file is short a package without expanding it"},
+      {"version": "4.8.11", "date": "2026-07-22", "notes": "Unit Tests (NI UTF) project discovery is now robust to any repo layout. Because RunUnitTests runs a whole .lvproj, run-unit-tests.ps1 resolves each configured location to its owning project: a location may be a .lvproj path, a folder containing one or more test-bearing projects, or a folder of .lvtest files whose .lvproj lives in a parent directory (it now walks up to the nearest owning project); an empty location list discovers and runs EVERY test-bearing .lvproj anywhere in the repo. Previously a folder that held .lvtest files but no in-folder .lvproj (e.g. tests in a subfolder of the project) produced no project -> a blank Unit Tests report. CI tooling folders (.github, ci-out, build, .git) are always excluded"},
+      {"version": "4.8.10", "date": "2026-07-22", "notes": "VI Analyzer blank-report fix, take 2: the v4.6.1 change that enumerates a project\u2019s VIs for a custom-.viancfg default pass had a PowerShell array-return bug (return ,($out.ToArray()) wraps the whole list in a one-element array), so the runner saw only 1 VI and still produced a blank report. Return the array without the leading comma so all project VIs (recursively, excluding CI tooling) are analyzed with the committed config\u2019s tests, with un-loadable VIs flagged and skipped"},
       {
         "version": "4.8.9",
         "date": "2026-07-22",
