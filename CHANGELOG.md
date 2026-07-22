@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 - Future features to include
 
+## [4.1.0] - 07.22.2026
+### Added
+- Added an input for the `plain` type pop-ups that addresses [#10] (https://github.com/danielcoons/tsc-pop-up/issues/10) - material theme rules say that the buttons on these dialogs should be transparent, but sometimes it isn't obvious, so the launch VIs all have an input to set that to false to use the colors from the theme instead
+
+### Changed
+- Replaced the function in the palettes for flattening an image with the funcion in `{LabVIEW}\vi.lib\picture\PNG` folder `Draw Flattened Blended Pixmap.vi` which includes the **alpha layer** of the image and gives a much cleaner result for rendering the PNG into the 2d picture control
+
 ## [4.0.0] - 10.16.2025
 ### Added
 - Released the tool as a public, open-source project
