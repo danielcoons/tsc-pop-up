@@ -666,7 +666,12 @@ flowchart TD
         project's own revisions visible even after many CI/tooling commits have piled up on <code>main</code>, it
         keeps paging back through history — past the recent window it retains <em>only</em> project revisions —
         until it has collected the project's revisions or reaches a large safety cap on how many commits it will
-        classify. It also stages the
+        classify. Reading that history is resilient to a transient GitHub&nbsp;API failure: rate-limited
+        (<code>HTTP&nbsp;403</code>/<code>429</code>), server, and network errors are retried with backoff
+        (honoring <code>Retry-After</code>/<code>X-RateLimit-Reset</code>), and if a call still fails so the
+        revision list would be incomplete, the build <strong>refuses to publish</strong> and exits &mdash; the
+        previous good dashboard stays live and rebuilds automatically once the API recovers, so a burst of
+        concurrent CI activity can never overwrite it with a blank or truncated table. It also stages the
         bundled tooling pages and writes the VI Browser's <code>files.json</code> index.</p>
       <p>On a fresh install with project revisions but no CI results yet, <code>dashboard.py</code> emits a
         <strong>Populate the dashboard with your history</strong> card above the table. The card opens the Populate
@@ -783,6 +788,11 @@ flowchart TD
         ref during a checkout of a past commit) that current tooling fixes. If you are on older tooling, the
         workaround is to re-dispatch with the commit box <strong>blank</strong> (which targets the latest commit),
         then update your tooling.</p>
+      <p>Relatedly, the <em>Determine target SHA</em> step no longer calls the GitHub API when the dispatched
+        <code>commit_sha</code> is already a full 40-character SHA (the dashboard always passes one), and it falls
+        back to the raw input instead of aborting if a short-SHA lookup is rate-limited &mdash; so a transient
+        <code>HTTP 403 API rate limit exceeded</code> can no longer make a dispatched report run fail before it
+        starts (which otherwise showed on the dashboard as an empty/failed activity, e.g. &ldquo;no unit tests&rdquo;).</p>
 
       <h3>The first run on a fresh runner is very slow</h3>
       <p><strong>Cause &amp; fix.</strong> The worker image is multi-gigabyte and a GitHub-hosted runner re-pulls
@@ -924,7 +934,11 @@ mass-compile:
           <code>.vipc</code> / <code>.dragon</code> files that declare the add-on packages your action runners need.
           The dashboard compares those declarations against what is baked into the current worker manifest; if any are
           missing it shows a persistent <em>&ldquo;dependencies need to be installed&rdquo;</em> banner, and the
-          Dependencies page&rsquo;s update panel itemizes exactly which files and packages are pending. Applying it is
+          Dependencies page&rsquo;s update panel itemizes exactly which files and packages are pending. The comparison is
+          <strong>version-tolerant</strong>: a VIPC pins a specific build (e.g.
+          <code>wovalab_lib_antidoc_cli-3.3.0.117</code>), but VIPM installs one version per package, so a baked
+          <code>&hellip;-3.4.0.126</code> satisfies the request &mdash; matching is on the versionless base identifier, so a
+          present-but-different build reads as installed instead of a false <em>missing</em>. Applying it is
           <strong>opt-in</strong>: from the Dependencies page you dispatch the dependency build
           (<code>build-labview-image.yml</code>, &ldquo;Build LabVIEW CI Image&rdquo;), which runs on a Windows runner and
           this time starts <code>FROM</code> the base and applies a thin dependency layer
@@ -1122,6 +1136,35 @@ docker run --rm `
         <code>.github/workflows</code>, and the local <code>.github/actions/publish-gh-pages</code> action. That keeps
         history backfills compatible with commits that predate the current report builders or shared Pages publisher.</p>
 
+      <h3>Debug Run — remote into a worker over VNC</h3>
+      <p>Every activity above runs the container <em>headless</em>. When a run misbehaves in a way that is hard to
+        diagnose from logs (a VI that loads broken only inside the image, a dependency that resolves differently than
+        expected), <strong>Tools &rsaquo; Debug Run</strong> on the dashboard boots the <em>same</em> worker for a
+        chosen revision with a full graphical desktop you can remote into, so you can open the project in the LabVIEW
+        IDE and watch it happen.</p>
+      <p>The flow is a three-step dialog: <strong>(1) choose the target</strong> — the container (Linux for now), the
+        revision, which activities to run, and a session length; <strong>(2) connect</strong> — the dashboard
+        dispatches <code>debug-session.yml</code>, waits for the session to come up, and opens the remote desktop in a
+        new browser tab; <strong>(3) hand off</strong> — you log into / activate LabVIEW interactively, then press
+        <kbd>ENTER</kbd> in the on-screen terminal to run the selected activities live, and end the session (which
+        cancels the run) when done.</p>
+      <p>Mechanically, the job runs the Linux worker (<code>.github/labview/debug/debug-session.sh</code>) which starts
+        a virtual display (Xvfb) and window manager, launches the LabVIEW UI, and serves it as a browser
+        <strong>noVNC</strong> session (<code>x11vnc</code> + <code>websockify</code>) on port 6080. The runner exposes
+        that port through an ephemeral <strong>Cloudflare quick tunnel</strong> (no account or secret required) and
+        publishes the one-time connect URL to <code>gh-pages</code> under <code>debug/&lt;run-id&gt;.json</code>; the
+        dialog polls for it and auto-opens it. On the &ldquo;go&rdquo; signal the container runs
+        <code>.github/labview/debug/run-debug-actions.sh</code>, which invokes the same Linux entrypoints CI uses
+        (e.g. <code>masscompile.sh</code>). The session self-tears-down after the chosen minutes, on
+        <em>End&nbsp;session</em>, or when the run is cancelled — deleting the published connect file.</p>
+      <p><strong>No license secret is needed:</strong> LabVIEW prompts for interactive login/activation in the session,
+        so you activate it yourself; the activity runners then execute in that same activated session.
+        <strong>Security note:</strong> the tunnel URL and its one-time password are unguessable and short-lived, but on
+        a <em>public</em> repository anyone who can see the Actions run could read the connect file while the session is
+        live. Use Debug Run on private repositories for sensitive code; it is <strong>off by default</strong>,
+        dispatch-only, and never runs in normal CI. Windows debug sessions (interactive desktop in a Windows container)
+        are a future addition.</p>
+
       <!-- 15 ──────────────────────────────────────────────────────────────── -->
       <h2 id="vipm">15. VIPM dependency baking — lessons from the trenches <a class="anchor" href="#vipm">#</a></h2>
       <p class="lead-in">This section is the single hardest part of the whole stack, and it is documented in detail
@@ -1270,7 +1313,13 @@ docker run --rm `
         (a blank report), so when a project commits a config but doesn't pick one, the pipeline auto-selects the first
         <code>.viancfg</code> in the repo — excluding CI-internal directories (<code>.github/</code>,
         <code>actions/</code>, <code>ci-out/</code>, <code>build/</code>) so a bundled action-source template
-        (<code>via-config-default.viancfg</code>, which has empty <code>TestConfigData</code>) is never chosen.</p>
+        (<code>via-config-default.viancfg</code>, which has empty <code>TestConfigData</code>) is never chosen. For
+        that default pass the runner analyzes the whole <strong>project</strong>: it rewrites the generated config to
+        VI Analyzer's native <em>Analyze&nbsp;Project</em> mode (<code>AnalyzeProject=TRUE</code> pointed at the
+        detected <code>.lvproj</code>) while keeping the config's selected tests, because a <code>.viancfg</code> whose
+        <code>ItemsToAnalyze</code> is a list of explicit VIs runs <em>zero</em> tests headlessly. As a safety net, if
+        the project pass still executes no tests (or the repo has no <code>.lvproj</code>), it automatically re-runs in
+        directory mode (the full built-in suite) so the report is never blank.</p>
       <p>Configuration is layered. The manifest's <code>config.viAnalyzer</code> can name a <code>default</code>
         config and a list of per-path <code>rules</code> (e.g. strict rules for <code>src/critical/**</code>,
         relaxed for <code>tests/**</code>). VI Analyzer runs on Windows only; Linux is not offered in the
@@ -1318,7 +1367,13 @@ docker run --rm `
         <code>config.unitTests.tools[]</code> from the manifest, runs each enabled framework headlessly (Caraya and
         VI Tester via <code>g-cli</code>; NI UTF via <code>LabVIEWCLI -OperationName RunUnitTests</code>; LUnit via the
         same native CLI with <code>LabVIEWCLI -OperationName LUnit</code>), and
-        collects per-tool JUnit XML. The framework is inferred from the XML filename, and the "VI under test" is
+        collects per-tool JUnit XML. Because NI&nbsp;UTF runs a whole <code>.lvproj</code>, the driver resolves each
+        configured location to its owning project and is robust to however a repo is laid out: a location may be a
+        <code>.lvproj</code> path, a folder that contains one or more test-bearing projects, or a folder of
+        <code>.lvtest</code> files whose <code>.lvproj</code> lives in a parent directory (it walks up to find the
+        nearest owning project); an empty location list discovers and runs <em>every</em> test-bearing
+        <code>.lvproj</code> anywhere in the repo, so a fresh install reports results for one or more projects
+        wherever they live. The framework is inferred from the XML filename, and the "VI under test" is
         derived by stripping test affixes (e.g. <code>Foo Tests.vi → Foo.vi</code>) so results link back to source.
         The merged <code>results.json</code> carries per-tool suites, per-case status, and an overall summary.</p>
 
@@ -1611,7 +1666,11 @@ flowchart TD
         revision), and <code>vipcs</code> is the union of the files missing packages on either worker. The dependency
         table evaluates each column the same way: a package that is <strong>monitored</strong> for a platform but not
         yet baked into that worker shows as <strong>missing</strong> in that column (Linux is evaluated exactly like
-        Windows), while a package that is simply not monitored for the platform stays N/A. A push that adds or changes
+        Windows), while a package that is simply not monitored for the platform stays N/A. Package matching is
+        <strong>version-tolerant</strong> &mdash; a baked build satisfies a differently-versioned VIPC request of the same
+        package (VIPM installs one version per package) &mdash; and each VIPC file&rsquo;s header row rolls the same
+        per-package result up into an <em>N&nbsp;missing</em> / <em>installed</em> pill, so you can see which file is
+        short a package without expanding it. A push that adds or changes
         any <code>.vipc</code>/<code>.dragon</code> file now rebuilds the dashboard as well, so a newly declared &mdash;
         but not-yet-baked &mdash; package surfaces as missing and the &ldquo;dependencies need installing&rdquo; banner
         appears immediately, without waiting for a worker build or a commit status.</div>
