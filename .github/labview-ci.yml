@@ -15,6 +15,13 @@ config:
     use: latest
   viAnalyzer:
     default: assets/via/via-config-tsc.viancfg
+  vipc:
+    - path: ".github/labview/antidoc/antidoc.vipc"
+      monitor: true
+    - path: ".github/labview/vipm/ci-tooling.vipc"
+      monitor: true
+    - path: "_vip/antidoc-missing-stuff.vipc"
+      monitor: false
 activities:
   - dashboard
   - vi-analyzer
