@@ -1,8 +1,17 @@
 {
   "schema": 1,
   "repo": "danielcoons/tsc-pop-up",
-  "sha": "473bf43693fce21eac35ea1d0f62df4008e1c9fb",
+  "sha": "586ddaa1ea322e43c43cd3ce92b5a972189cba2d",
   "revisions": [
+    {
+      "sha": "586ddaa1ea322e43c43cd3ce92b5a972189cba2d",
+      "short": "586ddaa",
+      "message": "ci: adopt LabVIEW CI tooling v4.8.9 (full update)",
+      "author": "github-actions[bot]",
+      "date": "2026-07-22T14:52:07Z",
+      "project": false,
+      "dep_only": false
+    },
     {
       "sha": "473bf43693fce21eac35ea1d0f62df4008e1c9fb",
       "short": "473bf43",
@@ -752,7 +761,7 @@
     }
   ],
   "config": {
-    "use": "latest",
+    "use": "",
     "actions": {},
     "vipc": [],
     "dragon": [],
@@ -768,17 +777,17 @@
       "configured": true,
       "monitored": true,
       "monitorOn": [
-        "windows",
-        "linux"
+        "windows"
       ],
       "locked": false,
       "packages": [
         "graphbuilder-2.3.0.7",
+        "jki_lib_state_machine-2024.0.3.23",
+        "jki_rsc_toolkits_palette-1.1-1",
         "wiresmith_technology_lib_g_cli-3.0.1.98",
         "wovalab_lib_antidoc-3.3.1.879",
         "wovalab_lib_antidoc_add_on_labview_project_documentation-3.2.0.358",
         "wovalab_lib_antidoc_add_on_labview_toolkit_documentation-3.0.0.77",
-        "wovalab_lib_antidoc_add_on_teststand-3.1.0.202",
         "wovalab_lib_antidoc_cli-3.4.0.126",
         "wovalab_lib_asciidoc_for_labview-1.12.1.492"
       ],
