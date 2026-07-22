@@ -1,8 +1,44 @@
 {
   "schema": 1,
   "repo": "danielcoons/tsc-pop-up",
-  "sha": "fcdeeb45f97f30a77158a1752243a1ae8ec546c4",
+  "sha": "473bf43693fce21eac35ea1d0f62df4008e1c9fb",
   "revisions": [
+    {
+      "sha": "473bf43693fce21eac35ea1d0f62df4008e1c9fb",
+      "short": "473bf43",
+      "message": "Merge pull request #18 from danielcoons/feature/#10-plain-dialog-button-colors",
+      "author": "Daniel Coons",
+      "date": "2026-07-22T13:05:24Z",
+      "project": true,
+      "dep_only": false
+    },
+    {
+      "sha": "bd3a2e928e39f461a99f6ff19ce509e793e14221",
+      "short": "bd3a2e9",
+      "message": "remove enable debugging",
+      "author": "daniel-coons",
+      "date": "2026-07-22T03:39:14Z",
+      "project": true,
+      "dep_only": false
+    },
+    {
+      "sha": "97d0e0f0c22d5da73a1d485b5be307816f40f945",
+      "short": "97d0e0f",
+      "message": "updating data member access naming convention to meet current defined best practices in org",
+      "author": "daniel-coons",
+      "date": "2026-07-22T03:37:24Z",
+      "project": true,
+      "dep_only": false
+    },
+    {
+      "sha": "0245a5248ae1f5ed865dc8d482f5a55c3d41f877",
+      "short": "0245a52",
+      "message": "added input to each launcher VI to leave transparent (follow material rules, true by default) or apply the colors from the theme class (when input set false)",
+      "author": "daniel-coons",
+      "date": "2026-07-22T03:34:10Z",
+      "project": true,
+      "dep_only": false
+    },
     {
       "sha": "fcdeeb45f97f30a77158a1752243a1ae8ec546c4",
       "short": "fcdeeb4",
@@ -148,6 +184,15 @@
       "dep_only": true
     },
     {
+      "sha": "2750ac22f427358c72464ab4891a19e184cf20a7",
+      "short": "2750ac2",
+      "message": "testing application of colors for plain dialog buttons",
+      "author": "daniel-coons",
+      "date": "2026-07-21T21:32:07Z",
+      "project": true,
+      "dep_only": false
+    },
+    {
       "sha": "1ebe420a9070c2e029395b51c4a2595e4a643f56",
       "short": "1ebe420",
       "message": "ci: adopt LabVIEW CI tooling v4.4.18 (full update)",
@@ -199,6 +244,15 @@
       "author": "github-actions[bot]",
       "date": "2026-07-21T16:38:55Z",
       "project": false,
+      "dep_only": false
+    },
+    {
+      "sha": "b2859d4fb3e2e4ae3bf1f6d9a40c0109c25d4e02",
+      "short": "b2859d4",
+      "message": "Merge branch 'main' into develop",
+      "author": "daniel-coons",
+      "date": "2026-07-21T15:02:32Z",
+      "project": true,
       "dep_only": false
     },
     {
