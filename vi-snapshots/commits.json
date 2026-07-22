@@ -1,10 +1,10 @@
 [
   {
-    "sha": "9bfd002369b3bd10b80f4aeaedbbc819ddbd364c",
-    "short": "9bfd002",
-    "message": "updated paths for the vi analyzer config file and edited a vi to hopefully trigger the ci",
-    "author": "daniel-coons",
-    "date": "2026-07-14T22:08:35-04:00",
-    "vi_count": 138
+    "sha": "473bf43693fce21eac35ea1d0f62df4008e1c9fb",
+    "short": "473bf43",
+    "message": "Merge pull request #18 from danielcoons/feature/#10-plain-dialog-button-colors",
+    "author": "Daniel Coons",
+    "date": "2026-07-22T08:05:24-05:00",
+    "vi_count": 140
   }
 ]
