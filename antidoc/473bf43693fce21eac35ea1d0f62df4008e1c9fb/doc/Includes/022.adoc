@@ -1,0 +1,88 @@
+== Plain - Two Button.lvclass
+
+*Responsibility:*
+No description found (add content in lvclass description)
+
+*Version:* 1.0.0.0
+
+[plantuml, format="svg", align="center"]
+....
+@startuml
+set namespaceSeparator :
+skinparam ClassBackgroundColor #FFFFFF
+skinparam ClassBorderColor #555555
+skinparam ClassFontColor #000000
+skinparam ClassHeaderBackgroundColor #808080
+
+skinparam top to bottom direction
+class "Pop-Up.lvlib:Plain - Two Button" {
+{static} {method} +Display Two Button Popup (Plain)()
+{method} #Display()
+
+}
+"Pop-Up.lvlib:Plain Parent" <|-- "Pop-Up.lvlib:Plain - Two Button"
+
+
+
+@enduml
+....
+
+=== Methods
+
+.Functions (non private scope only)
+[cols="<.<4d,<.<8a,<.<12d,<.<1a,<.<1a,<.<1a", %autowidth, frame=all, grid=all, stripes=none]
+|===
+|Name |Connector pane |Description |S. |R. |I.
+
+|Display Two Button Popup (Plain)
+|image:Pop_Up.lvlib_Plain___Two_Button.lvclass_Display_Two_Button_Popup_(Plain).vi.png[Pop-Up.lvlib:Plain - Two Button.lvclass:Display Two Button Popup (Plain).vi]
+|The two button popup will display information to the user and wait for the operator to click the  button to make a choice.
+
+**Note:** The function **Close Pop-Up.vi** can be used to close this dialog early.
+
+**Note:** The dialog vertical sizing will adjust for longer messages, so **test** all messages prior to deployment to make sure that scaling fits.
+
+Inputs: +
+-Dialog Title [String] - String variable to populate the dialog's title bar +
+-Message [String] - String Variable to populate Display +
+-Theme [lvclass] - the theme for the style of the popup +
+-Y-Text [String] - the button text for the **yes** button (right) +
+-N-Text [String] - the button text for the **no** button (left) +
+-Keep transparent buttons? [Boolean] - choose to leave buttons transparent (T) or use theme colors (F)
+
+Outputs: +
+-Choice [Boolean] - true/false of user selection
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Display
+|image:Pop_Up.lvlib_Plain___Two_Button.lvclass_Display.vi.png[Pop-Up.lvlib:Plain - Two Button.lvclass:Display.vi]
+|This is the override method required for each child of the pop up class.  It is the pop up that will display to the user.
+
+To extend this function, create a child class of the pop up class. Then create an override method for this VI. **Display.vi** is a protected function, therefore it cannot be called in a main application. This VI must be called by a caller function. See one of the standard pop-ups for a setup example.
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|===
+
+**S**cope: image:scope-protected.png[] -> Protected | image:scope-community.png[] -> Community
+
+**R**eentrancy: image:reentrancy-preallocated.png[] -> Preallocated reentrancy | image:reentrancy-shared.png[] -> Shared reentrancy
+
+**I**nlining: image:inlined.png[] -> Inlined
+
+=== Class Constant VIs
+
+[NOTE]
+====
+No Constant VIs Found
+====
