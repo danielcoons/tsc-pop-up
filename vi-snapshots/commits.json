@@ -1,10 +1,10 @@
 [
   {
-    "sha": "473bf43693fce21eac35ea1d0f62df4008e1c9fb",
-    "short": "473bf43",
-    "message": "Merge pull request #18 from danielcoons/feature/#10-plain-dialog-button-colors",
+    "sha": "3fd1ae2545bc6f07a8d8ef374e51d51b4923b9d9",
+    "short": "3fd1ae2",
+    "message": "Merge pull request #20 from danielcoons/release/v4.1.0",
     "author": "Daniel Coons",
-    "date": "2026-07-22T08:05:24-05:00",
+    "date": "2026-07-22T14:43:00-05:00",
     "vi_count": 140
   }
 ]
