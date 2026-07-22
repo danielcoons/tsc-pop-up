@@ -1,8 +1,26 @@
 {
   "schema": 1,
   "repo": "danielcoons/tsc-pop-up",
-  "sha": "586ddaa1ea322e43c43cd3ce92b5a972189cba2d",
+  "sha": "9322a8fb691dcbaec8c20e939c6b10fe9666578c",
   "revisions": [
+    {
+      "sha": "9322a8fb691dcbaec8c20e939c6b10fe9666578c",
+      "short": "9322a8f",
+      "message": "Merge pull request #19 from danielcoons/feature/update-pixmap-draw",
+      "author": "Daniel Coons",
+      "date": "2026-07-22T19:16:59Z",
+      "project": true,
+      "dep_only": false
+    },
+    {
+      "sha": "c5a5d7e1838577fecdec3ea37aee0e980000f3e8",
+      "short": "c5a5d7e",
+      "message": "replaces the draw flattened pixmap built-in function with the blended flattened pixmap vi that includes the alpha layer (located in `{LabVIEW}\\vi.lib\\picture\\PNG`)",
+      "author": "daniel-coons",
+      "date": "2026-07-22T19:15:32Z",
+      "project": true,
+      "dep_only": false
+    },
     {
       "sha": "586ddaa1ea322e43c43cd3ce92b5a972189cba2d",
       "short": "586ddaa",
