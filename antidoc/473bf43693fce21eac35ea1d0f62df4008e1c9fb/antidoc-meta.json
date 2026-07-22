@@ -1,0 +1,16 @@
+{
+    "status":  "failed",
+    "title":  "tsc-pop-up",
+    "project":  "tsc-pop-up.lvproj",
+    "lvVersion":  "2026",
+    "primary":  {
+                    "kind":  "none",
+                    "path":  ""
+                },
+    "fileCount":  0,
+    "files":  [
+
+              ],
+    "exit":  1,
+    "duration":  659.5
+}
