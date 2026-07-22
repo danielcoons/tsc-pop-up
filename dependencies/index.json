@@ -1,8 +1,35 @@
 {
   "schema": 1,
   "repo": "danielcoons/tsc-pop-up",
-  "sha": "e383273ac10c1c43801f73c2a179fee81093f1b8",
+  "sha": "4678a5d35853c11ed5dfc2230249383c3067c38b",
   "revisions": [
+    {
+      "sha": "4678a5d35853c11ed5dfc2230249383c3067c38b",
+      "short": "4678a5d",
+      "message": "ci: adopt LabVIEW CI tooling v4.8.1 (full update)",
+      "author": "github-actions[bot]",
+      "date": "2026-07-22T03:06:01Z",
+      "project": false,
+      "dep_only": false
+    },
+    {
+      "sha": "f5625bf7c86bb9587970ab3f7a1e68e8b4596e26",
+      "short": "f5625bf",
+      "message": "Merge pull request #15 from danielcoons/labview-ci/reconfigure-29887364702",
+      "author": "Daniel Coons",
+      "date": "2026-07-22T03:05:32Z",
+      "project": false,
+      "dep_only": false
+    },
+    {
+      "sha": "49ee1050392f1d6313a9af4ad4c8f48a67105cc4",
+      "short": "49ee105",
+      "message": "Merge branch 'main' into labview-ci/reconfigure-29887364702",
+      "author": "Daniel Coons",
+      "date": "2026-07-22T03:05:19Z",
+      "project": false,
+      "dep_only": false
+    },
     {
       "sha": "e383273ac10c1c43801f73c2a179fee81093f1b8",
       "short": "e383273",
@@ -18,6 +45,15 @@
       "message": "Merge branch 'main' into labview-ci/reconfigure-29870527301",
       "author": "Daniel Coons",
       "date": "2026-07-22T03:03:18Z",
+      "project": false,
+      "dep_only": false
+    },
+    {
+      "sha": "f751aba4c513e078c80e6953ae600f4b66a5c51b",
+      "short": "f751aba",
+      "message": "ci: reconfigure LabVIEW CI settings",
+      "author": "github-actions[bot]",
+      "date": "2026-07-22T03:02:00Z",
       "project": false,
       "dep_only": false
     },
@@ -617,27 +653,11 @@
     }
   ],
   "config": {
-    "use": "latest",
+    "use": "",
     "actions": {},
-    "vipc": [
-      {
-        "path": ".github/labview/antidoc/antidoc.vipc",
-        "monitor": true,
-        "monitorOn": null
-      },
-      {
-        "path": ".github/labview/vipm/ci-tooling.vipc",
-        "monitor": true,
-        "monitorOn": null
-      },
-      {
-        "path": "_vip/antidoc-missing-stuff.vipc",
-        "monitor": false,
-        "monitorOn": null
-      }
-    ],
+    "vipc": [],
     "dragon": [],
-    "hasVipcList": true,
+    "hasVipcList": false,
     "hasDragonList": false
   },
   "vipc": [
@@ -696,18 +716,6 @@
         "oglib_lvdata-6.0.0.45",
         "oglib_string-6.0.2.35"
       ],
-      "error": ""
-    },
-    {
-      "path": "_vip/antidoc-missing-stuff.vipc",
-      "role": "project",
-      "capability": "",
-      "tooling": false,
-      "configured": false,
-      "monitored": false,
-      "monitorOn": [],
-      "locked": false,
-      "packages": [],
       "error": ""
     }
   ],

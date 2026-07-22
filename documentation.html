@@ -858,16 +858,20 @@ mass-compile:
         executes — a self-hosted runner additionally gives you a persistent Docker layer cache so the multi-gigabyte
         image is not re-pulled every job.</p>
 
-      <h3>Concurrency &amp; serialised deploys</h3>
-      <p>Report-producing workflows share the concurrency group <code>report-pages-deploy</code> with
-        <code>cancel-in-progress: false</code>. Because several jobs push to the same <code>gh-pages</code> branch,
-        serialising them prevents one job's <code>git push</code> from racing another's. The dashboard build uses a
+      <h3>Concurrency &amp; parallel deploys</h3>
+      <p>Each report-producing workflow runs in its own concurrency group keyed by activity and revision
+        (<code>${{ github.workflow }}-${{ inputs.commit_sha }}</code>, <code>cancel-in-progress: false</code>), so
+        different activities &mdash; and the same activity on different revisions &mdash; run in parallel and never
+        cancel each other; re-dispatching the same activity for the same revision simply queues behind the in-flight
+        run. Several jobs still push to the same <code>gh-pages</code> branch, so races are handled at the deploy
+        step: the shared <code>publish-gh-pages</code> action is retry-safe &mdash; it re-fetches <code>gh-pages</code>
+        and retries the push (up to six times with back-off) so every parallel publish lands instead of one losing a
+        non-fast-forward <code>cannot lock ref &#39;refs/heads/gh-pages&#39;</code> push. (Earlier versions serialised
+        all report workflows through a single <code>report-pages-deploy</code> group; that made unrelated activities
+        wait on &mdash; and, because GitHub keeps only one <em>pending</em> run per group, cancel &mdash; each other,
+        so it was replaced by per-activity groups once the deploy became retry-safe.) The dashboard build uses a
         separate group (<code>dashboard-pages</code>, <code>cancel-in-progress: true</code>) so a burst of status
-        events collapses into a single latest-wins rebuild. Because that keeps the dashboard outside the serialised
-        line, its Pages deploy can still lose a push race against a report or configurator-site deploy in the same
-        fresh-install burst (a non-fast-forward <code>cannot lock ref 'refs/heads/gh-pages'</code>); the deploy step
-        therefore retries once after a short wait, and <code>peaceiris</code> re-clones <code>gh-pages</code> on the
-        retry so it starts from the advanced tip.</p>
+        events collapses into a single latest-wins rebuild.</p>
       <p>The dashboard surfaces this line live. It reads GitHub's in-progress, pending, waiting/requested, and queued
         runs and shows each enqueued activity as a spinning <em>Queued</em> cell on the revision it targets. Because
         a manual re-run is dispatched on the default branch ref, the run's <code>head_sha</code> is the workflow-file
@@ -875,7 +879,7 @@ mass-compile:
         target SHA (<code>inputs.commit_sha</code>, or <code>inputs.head_sha</code> for VIDiff) in their run name, and
         <code>dashboard.py</code> keys active runs on that target SHA rather than the dispatch ref. Snapshot backfills
         are one global run, so they are treated as active for every snapshot cell still awaiting coverage. When several
-        activities wait behind each other in the <code>report-pages-deploy</code> line,
+        runs are waiting for an available runner,
         each queued cell also reports how many jobs are ahead of it (for example <em>Queued &middot; 1 ahead</em>).</p>
       <p>A capability that runs on two platforms (Windows and Linux) writes a single shared result for the commit, so
         the faster platform finishes first. The dashboard checks for an active run on the commit&nbsp;+ capability
@@ -1353,6 +1357,8 @@ docker run --rm `
         positioned frames, and emits a JSON array. Output is written to
         <code>by-blob/&lt;ab&gt;/&lt;blob&gt;.json</code>, deployed alongside the 1.0 HTML so any VI without JSON
         gracefully falls back to the classic view.</p>
+      <p>Both 2.0 renderers <strong>auto-run on every new revision</strong> via a <code>workflow_run</code> trigger after the snapshot pipeline finishes, each behind a gate job that reads <code>config.viBrowser.positionAware</code>: the Linux workflow runs when it includes <code>linux</code>, the Windows workflow when it includes <code>windows</code> (the configurator default). Because renders are content-addressed by git blob SHA, the worklist skips every VI whose blob already has a render &mdash; <strong>unchanged VIs reuse their existing frames with no work</strong> &mdash; and queues only the new/changed blobs, so a VI a revision actually changed gets a fresh render automatically.</p>
+      <p>The browser now remembers its viewer mode and 2.0 platform choice in local storage, defaults to the Windows 2.0 render when that render is available on a fresh load, and shows dismissible coaching tip strips for the block-diagram toggle and the case/event selector arrows. Those tips are browser-local too: dismissing one with <strong>Never show this again</strong> hides it only in that browser profile, and the dismissal keys are versioned so a new coaching rollout can deliberately surface the tips once more for everyone.</p>
 
       <!-- 17 ──────────────────────────────────────────────────────────────── -->
       <h2 id="contracts">17. Report data contracts <a class="anchor" href="#contracts">#</a></h2>
@@ -1586,6 +1592,15 @@ flowchart TD
         table evaluates each column the same way: a package that is <strong>monitored</strong> for a platform but not
         yet baked into that worker shows as <strong>missing</strong> in that column (Linux is evaluated exactly like
         Windows), while a package that is simply not monitored for the platform stays N/A.</div>
+      <div class="note"><span class="lbl">The dashboard refreshes after a build</span>
+        A completed worker build (<code>Build LabVIEW CI Image</code> / <code>Build LabVIEW CI Image - Linux</code>) is
+        in the dashboard&rsquo;s <code>workflow_run</code> triggers, so finishing a container update rebuilds the
+        dashboard and regenerates <code>deps-pending.json</code> against the freshly published worker manifest &mdash;
+        the &ldquo;dependencies need installing&rdquo; banner clears on its own once the update lands, with no manual
+        refresh. (Publishing the worker manifest to <code>gh-pages</code> does not itself trigger a rebuild; the
+        <em>build workflow completing</em> is the signal.) VIPC files under <code>.github/</code> are treated as
+        internal tooling &mdash; the build&rsquo;s &ldquo;Stage repo VIPC files&rdquo; step never bakes them, so they
+        are shown as N/A on the worker columns rather than as a false missing dependency.</div>
 
       <h3>Complete runner inventory</h3>
       <p>Every workflow in the repository, the runner(s) it uses, what triggers it, and the conditions under which it
@@ -1605,7 +1620,7 @@ flowchart TD
           <tr><td>Run Antidoc — Windows Container</td><td><span class="pill win">windows-2022</span></td><td>push to default branch, dispatch (no PR)</td><td>Windows-only; heavier doc render, so no per-PR run.</td></tr>
           <tr><td>VI Snapshots and VI Browser</td><td><span class="pill win">windows-2022</span></td><td>push VI source (excl. <code>.github/</code>), dispatch (head / backfill)</td><td>Renders HTML snapshots + Windows 2.0 frames in one warm container.</td></tr>
           <tr><td>VI Snapshots JSON (VI Browser 2.0, Linux)</td><td><span class="pill lin">ubuntu-latest</span></td><td><code>workflow_run</code> after snapshots, dispatch</td><td>Gate job decides; auto-runs only when <code>positionAware</code> includes <code>linux</code>.</td></tr>
-          <tr><td>VI Browser 2.0 render (Windows container)</td><td><span class="pill win">windows-2022</span></td><td>dispatch only</td><td>Additive Windows frames via COM in the stock NI image.</td></tr>
+          <tr><td>VI Browser 2.0 render (Windows container)</td><td><span class="pill win">windows-2022</span></td><td><code>workflow_run</code> after snapshots, dispatch</td><td>Gate job decides; auto-runs only when <code>positionAware</code> includes <code>windows</code> (the configurator default). Additive Windows frames via COM in the stock NI image.</td></tr>
         </tbody>
       </table>
 
@@ -1617,8 +1632,6 @@ flowchart TD
           <tr><td>Copy LabVIEW CI Image (install seed)</td><td><span class="pill lin">ubuntu-latest</span></td><td>dispatch (the installer dispatches it on a fresh install)</td><td>Seeds a fresh worker by copying the LCWC base into the repo&rsquo;s GHCR with crane &mdash; no LabVIEW build; the install-time counterpart to the dependency build above.</td></tr>
           <tr><td>Build LabVIEW CI Image &mdash; Linux</td><td><span class="pill lin">ubuntu-latest</span> (gate + build)</td><td>dispatch (dashboard or manual), monthly cron, and a push that changes a <strong>monitored</strong> <code>.vipc</code></td><td>Dependency bake (mirrors the Windows worker); also bakes the VI&nbsp;Browser 2.0 render engine into the worker. On a push the gate rebuilds only if a changed <code>.vipc</code> is <code>monitor: true</code>; otherwise it skips.</td></tr>
           <tr><td>Copy LabVIEW CI Image &mdash; Linux (install seed)</td><td><span class="pill lin">ubuntu-latest</span></td><td>dispatch (the installer dispatches it on a fresh install)</td><td>Seeds a fresh Linux worker by copying the LCWC Linux base into the repo&rsquo;s GHCR with crane &mdash; no build; the Linux counterpart to the Copy workflow above.</td></tr>
-          <tr><td>Build LabVIEW CI Image &mdash; Linux Beta</td><td><span class="pill lin">ubuntu-latest</span></td><td>push to the beta build recipe, monthly cron, dispatch</td><td>Experimental Linux lane &mdash; a rebase of the Linux core that diverges as experimental capabilities are baked in.</td></tr>
-          <tr><td>Build LabVIEW CI Image &mdash; Windows Beta</td><td><span class="pill lin">ubuntu-latest</span> copy, <span class="pill win">windows-2022</span> source base build</td><td>monthly cron, dispatch (the installer dispatches a <code>copy_only</code> copy when an experimental Windows capability is selected)</td><td>Experimental Windows lane &mdash; the source builds the beta base, clients copy it; never rebuilt on install.</td></tr>
           <tr><td>Bake VIPC Windows Base Image</td><td><span class="pill win">windows-2022</span></td><td>dispatch only</td><td>Proof-and-promote: verifies a VIPC installs before pushing tags.</td></tr>
         </tbody>
       </table>
