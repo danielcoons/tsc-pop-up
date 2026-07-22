@@ -1,8 +1,26 @@
 {
   "schema": 1,
   "repo": "danielcoons/tsc-pop-up",
-  "sha": "114e65487a759253892a727fa9e646ba77341cea",
+  "sha": "e383273ac10c1c43801f73c2a179fee81093f1b8",
   "revisions": [
+    {
+      "sha": "e383273ac10c1c43801f73c2a179fee81093f1b8",
+      "short": "e383273",
+      "message": "Merge pull request #12 from danielcoons/labview-ci/reconfigure-29870527301",
+      "author": "Daniel Coons",
+      "date": "2026-07-22T03:03:31Z",
+      "project": false,
+      "dep_only": false
+    },
+    {
+      "sha": "7cf46bedcb0301457ed21fa7736d19827b11c953",
+      "short": "7cf46be",
+      "message": "Merge branch 'main' into labview-ci/reconfigure-29870527301",
+      "author": "Daniel Coons",
+      "date": "2026-07-22T03:03:18Z",
+      "project": false,
+      "dep_only": false
+    },
     {
       "sha": "114e65487a759253892a727fa9e646ba77341cea",
       "short": "114e654",
@@ -27,6 +45,15 @@
       "message": "ci: adopt LabVIEW CI tooling v4.5.0 (full update)",
       "author": "github-actions[bot]",
       "date": "2026-07-21T21:35:13Z",
+      "project": false,
+      "dep_only": false
+    },
+    {
+      "sha": "69fe075e92e6cb07a1690973d05e2f696531b7bd",
+      "short": "69fe075",
+      "message": "ci: reconfigure LabVIEW CI settings",
+      "author": "github-actions[bot]",
+      "date": "2026-07-21T21:35:02Z",
       "project": false,
       "dep_only": false
     },
@@ -590,11 +617,27 @@
     }
   ],
   "config": {
-    "use": "",
+    "use": "latest",
     "actions": {},
-    "vipc": [],
+    "vipc": [
+      {
+        "path": ".github/labview/antidoc/antidoc.vipc",
+        "monitor": true,
+        "monitorOn": null
+      },
+      {
+        "path": ".github/labview/vipm/ci-tooling.vipc",
+        "monitor": true,
+        "monitorOn": null
+      },
+      {
+        "path": "_vip/antidoc-missing-stuff.vipc",
+        "monitor": false,
+        "monitorOn": null
+      }
+    ],
     "dragon": [],
-    "hasVipcList": false,
+    "hasVipcList": true,
     "hasDragonList": false
   },
   "vipc": [
@@ -653,6 +696,18 @@
         "oglib_lvdata-6.0.0.45",
         "oglib_string-6.0.2.35"
       ],
+      "error": ""
+    },
+    {
+      "path": "_vip/antidoc-missing-stuff.vipc",
+      "role": "project",
+      "capability": "",
+      "tooling": false,
+      "configured": false,
+      "monitored": false,
+      "monitorOn": [],
+      "locked": false,
+      "packages": [],
       "error": ""
     }
   ],
