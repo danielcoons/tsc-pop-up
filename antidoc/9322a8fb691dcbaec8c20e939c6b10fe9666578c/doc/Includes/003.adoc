@@ -1,0 +1,71 @@
+== Error-Prompt.lvclass
+
+*Responsibility:*
+No description found (add content in lvclass description)
+
+*Version:* 1.0.0.0
+
+[plantuml, format="svg", align="center"]
+....
+@startuml
+set namespaceSeparator :
+skinparam ClassBackgroundColor #FFFFFF
+skinparam ClassBorderColor #555555
+skinparam ClassFontColor #000000
+skinparam ClassHeaderBackgroundColor #808080
+
+skinparam top to bottom direction
+class "Pop-Up.lvlib:Error-Prompt" {
+{static} {method} +Display Error-Prompt()
+{method} #Display()
+
+}
+"Pop-Up.lvlib:Popup" <|-- "Pop-Up.lvlib:Error-Prompt"
+
+
+
+@enduml
+....
+
+=== Methods
+
+.Functions (non private scope only)
+[cols="<.<4d,<.<8a,<.<12d,<.<1a,<.<1a,<.<1a", %autowidth, frame=all, grid=all, stripes=none]
+|===
+|Name |Connector pane |Description |S. |R. |I.
+
+|Display Error-Prompt
+|image:Pop_Up.lvlib_Error_Prompt.lvclass_Display_Error_Prompt.vi.png[Pop-Up.lvlib:Error-Prompt.lvclass:Display Error-Prompt.vi]
+|This VI shows a common error prompt dialog.
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Display
+|image:Pop_Up.lvlib_Error_Prompt.lvclass_Display.vi.png[Pop-Up.lvlib:Error-Prompt.lvclass:Display.vi]
+|Display method for an error prompt
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|===
+
+**S**cope: image:scope-protected.png[] -> Protected | image:scope-community.png[] -> Community
+
+**R**eentrancy: image:reentrancy-preallocated.png[] -> Preallocated reentrancy | image:reentrancy-shared.png[] -> Shared reentrancy
+
+**I**nlining: image:inlined.png[] -> Inlined
+
+=== Class Constant VIs
+
+[NOTE]
+====
+No Constant VIs Found
+====

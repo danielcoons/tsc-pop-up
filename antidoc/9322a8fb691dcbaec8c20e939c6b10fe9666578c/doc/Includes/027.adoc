@@ -1,0 +1,19 @@
+=== #via_ignore
+
+.#via_ignore
+[cols="<.<8d,<.<2d,<.<2d", %autowidth, frame=all, grid=all, stripes=none]
+|===
+|Text |VI |Owned by
+
+|#via_ignore In Place Element Structure Usage
+|Shift Input.vi
+|<<Popup.lvclass>>
+
+|#via_ignore For Loop Iteration Count
+|Format Message - Embedded.vi
+|<<Popup.lvclass>>
+
+|#via_ignore For Loop Iteration Count
+|Format Message - Embedded.vi
+|<<Popup.lvclass>>
+|===

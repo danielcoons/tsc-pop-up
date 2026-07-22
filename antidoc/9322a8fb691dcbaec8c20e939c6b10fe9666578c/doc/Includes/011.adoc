@@ -1,0 +1,85 @@
+== Two Button.lvclass
+
+*Responsibility:*
+No description found (add content in lvclass description)
+
+*Version:* 1.0.0.1
+
+[plantuml, format="svg", align="center"]
+....
+@startuml
+set namespaceSeparator :
+skinparam ClassBackgroundColor #FFFFFF
+skinparam ClassBorderColor #555555
+skinparam ClassFontColor #000000
+skinparam ClassHeaderBackgroundColor #808080
+
+skinparam top to bottom direction
+class "Pop-Up.lvlib:Two Button" {
+{field} -YText : String
+{field} -NText : String
+{static} {method} +Display Two Button Popup()
+{method} #Display()
+
+}
+"Pop-Up.lvlib:Popup" <|-- "Pop-Up.lvlib:Two Button"
+
+
+
+@enduml
+....
+
+=== Methods
+
+.Functions (non private scope only)
+[cols="<.<4d,<.<8a,<.<12d,<.<1a,<.<1a,<.<1a", %autowidth, frame=all, grid=all, stripes=none]
+|===
+|Name |Connector pane |Description |S. |R. |I.
+
+|Display Two Button Popup
+|image:Pop_Up.lvlib_Two_Button.lvclass_Display_Two_Button_Popup.vi.png[Pop-Up.lvlib:Two Button.lvclass:Display Two Button Popup.vi]
+|The two button popup will display information to the user and wait for the operator to choose a button.
+
+**Note:** The function **Close Pop-Up (Two Button Choice).vi** can be used to close this dialog early and send a value for the choice of Boolean selection. Otherwise, to just close the dialog early, use Close Pop-Up.vi.
+
+Inputs: +
+-Graphic [typedef combobox] - Image (PNG) for Graphic for Popup +
+-Message [String] - String Variable to populate Display +
+-Theme [lvclass] - the theme for the style of the popup +
+-YText [string] - the string for the YES button +
+-NText [string] - the string for the NO button
+
+Outputs: +
+-Choice [boolean] - the option that was chosen by the user
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Display
+|image:Pop_Up.lvlib_Two_Button.lvclass_Display.vi.png[Pop-Up.lvlib:Two Button.lvclass:Display.vi]
+|This vi displays the two button popup.
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|===
+
+**S**cope: image:scope-protected.png[] -> Protected | image:scope-community.png[] -> Community
+
+**R**eentrancy: image:reentrancy-preallocated.png[] -> Preallocated reentrancy | image:reentrancy-shared.png[] -> Shared reentrancy
+
+**I**nlining: image:inlined.png[] -> Inlined
+
+=== Class Constant VIs
+
+[NOTE]
+====
+No Constant VIs Found
+====

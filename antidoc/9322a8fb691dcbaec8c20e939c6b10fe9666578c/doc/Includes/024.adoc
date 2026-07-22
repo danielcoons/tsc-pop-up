@@ -1,0 +1,152 @@
+== Plain Parent.lvclass
+
+*Responsibility:*
+Follows the **dialogs** component type in Material Design for how it defines rulesets for layout.
+
+https://m3.material.io/components/dialogs/overview
+
+*Version:* 1.0.0.4
+
+[plantuml, format="svg", align="center"]
+....
+@startuml
+set namespaceSeparator :
+skinparam ClassBackgroundColor #FFFFFF
+skinparam ClassBorderColor #555555
+skinparam ClassFontColor #000000
+skinparam ClassHeaderBackgroundColor #808080
+
+skinparam top to bottom direction
+class "Pop-Up.lvlib:Plain Parent" {
+{field} -Dialog Title : String
+{field} -Action 1 Text : String
+{field} -Action 2 Text : String
+{field} -Action 3 Text : String
+{field} -Transparent buttons? : Boolean
+{static} {method} +Get Action 1 Text()
+{static} {method} +Set Action 1 Text()
+{static} {method} +Get Action 2 Text()
+{static} {method} +Set Action 2 Text()
+{static} {method} +Get Action 3 Text()
+{static} {method} +Set Action 3 Text()
+{static} {method} +Get Dialog Title()
+{static} {method} +Set Dialog Title()
+{static} {method} +Get Transparent buttons()
+{static} {method} +Set Transparent buttons()
+{method} #Display()
+
+}
+"Pop-Up.lvlib:Popup" <|-- "Pop-Up.lvlib:Plain Parent"
+
+
+
+@enduml
+....
+
+=== Methods
+
+.Functions (non private scope only)
+[cols="<.<4d,<.<8a,<.<12d,<.<1a,<.<1a,<.<1a", %autowidth, frame=all, grid=all, stripes=none]
+|===
+|Name |Connector pane |Description |S. |R. |I.
+
+|Get Action 1 Text
+|image:Pop_Up.lvlib_Plain_Parent.lvclass_Get_Action_1_Text.vi.png[Pop-Up.lvlib:Plain Parent.lvclass:Get Action 1 Text.vi]
+|data member access VI: read the text of the action 1 button
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Set Action 1 Text
+|image:Pop_Up.lvlib_Plain_Parent.lvclass_Set_Action_1_Text.vi.png[Pop-Up.lvlib:Plain Parent.lvclass:Set Action 1 Text.vi]
+|data member access VI: write the text for the action 1 button
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Get Action 2 Text
+|image:Pop_Up.lvlib_Plain_Parent.lvclass_Get_Action_2_Text.vi.png[Pop-Up.lvlib:Plain Parent.lvclass:Get Action 2 Text.vi]
+|data member access VI: read the text of the action 2 button
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Set Action 2 Text
+|image:Pop_Up.lvlib_Plain_Parent.lvclass_Set_Action_2_Text.vi.png[Pop-Up.lvlib:Plain Parent.lvclass:Set Action 2 Text.vi]
+|data member access VI: write the text for the action 2 button
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Get Action 3 Text
+|image:Pop_Up.lvlib_Plain_Parent.lvclass_Get_Action_3_Text.vi.png[Pop-Up.lvlib:Plain Parent.lvclass:Get Action 3 Text.vi]
+|data member access VI: read the text of the action 3 button
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Set Action 3 Text
+|image:Pop_Up.lvlib_Plain_Parent.lvclass_Set_Action_3_Text.vi.png[Pop-Up.lvlib:Plain Parent.lvclass:Set Action 3 Text.vi]
+|data member access VI: write the text of the action 3 button
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Get Dialog Title
+|image:Pop_Up.lvlib_Plain_Parent.lvclass_Get_Dialog_Title.vi.png[Pop-Up.lvlib:Plain Parent.lvclass:Get Dialog Title.vi]
+|data member access VI: read the title for the plain dialog
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Set Dialog Title
+|image:Pop_Up.lvlib_Plain_Parent.lvclass_Set_Dialog_Title.vi.png[Pop-Up.lvlib:Plain Parent.lvclass:Set Dialog Title.vi]
+|data member access VI: write the dialog title text for the plain pop up
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Get Transparent buttons
+|image:Pop_Up.lvlib_Plain_Parent.lvclass_Get_Transparent_buttons.vi.png[Pop-Up.lvlib:Plain Parent.lvclass:Get Transparent buttons.vi]
+|DATA MEMBER ACCESS:
+
+Get the transparent button Boolean info
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Set Transparent buttons
+|image:Pop_Up.lvlib_Plain_Parent.lvclass_Set_Transparent_buttons.vi.png[Pop-Up.lvlib:Plain Parent.lvclass:Set Transparent buttons.vi]
+|DATA MEMBER ACCESS:
+
+Set the transparent button Boolean info
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Display
+|image:Pop_Up.lvlib_Plain_Parent.lvclass_Display.vi.png[Pop-Up.lvlib:Plain Parent.lvclass:Display.vi]
+|This is the override method required for each child of the pop up class.  It is the pop up that will display to the user.
+
+To extend this function, create a child class of the pop up class. Then create an override method for this VI. **Display.vi** is a protected function, therefore it cannot be called in a main application. This VI must be called by a caller function. See one of the standard pop-ups for a setup example.
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|===
+
+**S**cope: image:scope-protected.png[] -> Protected | image:scope-community.png[] -> Community
+
+**R**eentrancy: image:reentrancy-preallocated.png[] -> Preallocated reentrancy | image:reentrancy-shared.png[] -> Shared reentrancy
+
+**I**nlining: image:inlined.png[] -> Inlined
+
+=== Class Constant VIs
+
+[NOTE]
+====
+No Constant VIs Found
+====
