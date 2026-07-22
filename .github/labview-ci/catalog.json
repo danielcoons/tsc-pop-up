@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "4.8.1",
+  "version": "4.8.9",
   "name": "LabVIEW CI",
   "description": "Portable, repo-agnostic CI/CD capabilities for LabVIEW repositories: mass compile, VI Analyzer, VIDiff comparison reports, VI snapshots / VI Browser, and a status dashboard. Driven entirely by this catalog so the configurator UI and the installer stay in sync and new capabilities are a one-entry change.",
   "installPause": {
@@ -11,6 +11,90 @@
   "history": {
     "comment": "Release notes for the tooling, newest first. `version` (above) is the CURRENT published release and MUST equal releases[0].version. The dashboard version badge and the What's New dialog read these notes to tell a consumer what changed between the version they run and the latest this source repo publishes. Each published version should also be tagged v<version> in this repo so consumers can pin an update to a specific release.",
     "releases": [
+      {
+        "version": "4.8.9",
+        "date": "2026-07-22",
+        "title": "Failed dashboard runs stay re-runnable and link to their report",
+        "summary": "A run that failed and left the dashboard's sticky red \"Failed\" badge is now offered for Re-run in the Populate history chooser instead of showing \"none in scope\", and clicking the badge offers Re-run plus a direct View report link when the failed run still produced a report.",
+        "highlights": [
+          "Populate history now gathers browser-side queued/failed overlay cells (cidash-queued-cell) that replaced an empty run glyph, so a failed dispatch stays re-runnable rather than disappearing as \"none in scope\".",
+          "The failed-run manage dialog adds a Re-run button (dispatch the activity again for that commit) and a View report link when the failed run deployed a report; a hard failure with no report keeps just the View run (Actions) link."
+        ]
+      },
+      {
+        "version": "4.8.8",
+        "date": "2026-07-22",
+        "type": "patch",
+        "summary": "The Antidoc report is now a proper in-browser documentation viewer. A file navigator lists the main AsciiDoc, its section includes and every rendered image; the pane beside it shows the fully rendered document (Asciidoctor.js with a custom include-processor that resolves Antidoc's include:: sections and an imagesdir pinned at the deployed image folder) and lets you open the raw source of any file or preview any image. Also fixes the Asciidoctor.js CDN URL, which was wrong before (asciidoctor@2.2.6/.../asciidoctor.min.js 404s), so the previous report never actually rendered and always fell back to raw text; it now loads @asciidoctor/core@2.2.6 with an SRI integrity hash.",
+        "changes": [
+          "build-antidoc-report.py: two-pane viewer (file navigator + rendered document + raw/image views); resolve include:: via an Asciidoctor.js include-processor; pin imagesdir to the deployed doc/Images.",
+          "build-antidoc-report.py: fix the Asciidoctor.js CDN URL (@asciidoctor/core@2.2.6/dist/browser/asciidoctor.js) + add SRI integrity so rendering actually works.",
+          "documentation.html: describe the Antidoc in-browser viewer."
+        ]
+      },
+      {
+        "version": "4.8.7",
+        "date": "2026-07-22",
+        "type": "patch",
+        "summary": "VI Browser now defaults an opened VI to the 2.0 viewer whenever that VI has a 2.0 render, instead of only auto-switching when a Windows render exists. When both platforms exist, Windows 2.0 is still preferred for that first auto-default.",
+        "changes": [
+          "vi-browser.html (dashboard/pages/snapshots): generalized the first-open auto-default from Windows-only to any available 2.0 render, with Windows preferred when both exist.",
+          "documentation.html (dashboard/pages): updated the VI Browser 2.0 behavior note to match the new defaulting rule."
+        ]
+      },
+      {
+        "version": "4.8.6",
+        "date": "2026-07-22",
+        "type": "patch",
+        "summary": "Bake NI's global headless override LV_RTE_HEADLESS=1 into the Windows worker base image so any tool that launches LabVIEW.exe directly (g-cli / Antidoc) runs headless and activation-free, not just via the runner-set env var. This makes the Antidoc fix survive even if a repo's run-antidoc.ps1 predates it, and covers any future g-cli-based capability.",
+        "changes": [
+          "labview-ci-base.Dockerfile: ENV LV_RTE_HEADLESS=1 (NI global headless override) so direct LabVIEW launches in the container are headless/activation-free.",
+          "documentation.html: note the base image bakes the headless override (runner env var kept as a fallback)."
+        ]
+      },
+      {
+        "version": "4.8.5",
+        "date": "2026-07-22",
+        "type": "patch",
+        "summary": "THE fix for Antidoc's \"No connection established / Timed out waiting for app to connect to g-cli\". Root cause (confirmed against NI's ni/labview-for-containers docs): the Antidoc CLI is a g-cli tool, and g-cli launches LabVIEW.exe DIRECTLY rather than through LabVIEWCLI -Headless. In NI's official LabVIEW container (2026 Q1+) a non-headless launch comes up at the activation wizard and never runs the VI, so g-cli times out -- which is exactly why Mass Compile / VI Analyzer (LabVIEWCLI -Headless) work but Antidoc did not. run-antidoc.ps1 now sets NI's global headless override LV_RTE_HEADLESS=1 before launching g-cli, so the direct LabVIEW launch runs headless and activation-free.",
+        "changes": [
+          "run-antidoc.ps1: set LV_RTE_HEADLESS=1 (NI global headless override) before the g-cli launch so a direct LabVIEW.exe launch does not hit the activation wizard in the container.",
+          "documentation.html: document the headless override as the key Antidoc implementation detail."
+        ]
+      },
+      {
+        "version": "4.8.4",
+        "date": "2026-07-22",
+        "type": "patch",
+        "summary": "Dependencies page: the revision selector is unified with the rest of the site. The big in-page dropdown is replaced by the shared searchable revision picker in the header context bar -- the same control (and same spot) used on the report viewer and VI Browser. It hides CI-only and dependency-only (.vipc/.vip) revisions by default behind a 'Show CI & dependency-only revisions' toggle, and adds a filter box so you can type a commit title, build number or short SHA to jump straight to the revision you want, plus prev/next steppers that walk the filtered list.",
+        "highlights": [
+          "Dependencies revision selector moved into the shared header context bar (same picker as reports / VI Browser).",
+          "Filter out CI-only and dependency-only revisions by default; type to search by title, build # or SHA."
+        ]
+      },
+      {
+        "version": "4.8.3",
+        "date": "2026-07-21",
+        "type": "patch",
+        "summary": "The Populate history dialog now confirms before queuing a large batch of runs. Choosing a broad scope (for example All revisions across several activities) and clicking Populate history / Queue previously dispatched every run immediately with no prompt, so it was easy to accidentally fire dozens of workflow runs and burn a lot of Actions minutes. Now, whenever a queue would start more than ten workflow runs, a confirmation asks you to approve the exact count first; ten or fewer still queue instantly as before.",
+        "changes": [
+          "dashboard.py: new dispatchTotal(cells, opts) counts the runs a queue will start (snapshots collapse to one backfill, each warm-container batch group to one dispatch, remaining per-revision platforms individually) without dispatching, and confirmLargeQueue(n) gates on QUEUE_CONFIRM_MAX = 10.",
+          "Both the Populate-history dialog (histRun) and the fresh-install Populate history card (bfRunAll) now call confirmLargeQueue before dispatching; cancelling leaves nothing queued.",
+          "documentation.html: the Populate-history section notes the large-batch confirmation."
+        ]
+      },
+      {
+        "version": "4.8.2",
+        "date": "2026-07-21",
+        "type": "patch",
+        "summary": "The Dependencies page and the 'update the container' banner now review capability VIPCs (e.g. Antidoc), not just project VIPCs, and the dashboard rebuilds whenever any .vipc/.dragon file changes. Previously a capability VIPC's packages showed N/A and never drove the pending banner, and a VIPC-only push did not regenerate the dependency index -- so adding a package (e.g. jki_lib_state_machine to antidoc.vipc) that was not baked into the worker went unflagged. Now an installed capability's VIPC is compared against its worker platform(s) (Antidoc = Windows), missing packages show as 'missing', and the banner prompts a container rebuild.",
+        "changes": [
+          "dashboard.py: _compute_deps_pending includes role=='capability' VIPCs when the capability is installed (configured); _build_dependencies_index limits a capability VIPC's monitorOn to _capability_platforms(cap) (Antidoc = windows) so a Windows-only capability never nags about Linux.",
+          "dependencies.html twins: classifyVipc is capability-aware, isProjectVipc counts installed capability VIPCs, and the generated mapping trusts the server's capability configured/monitored/monitorOn -> missing packages render as 'missing' (not N/A) on the capability's platform.",
+          "dashboard-pages.yml + consumer dashboard workflows (install.py, integrate.html): rebuild on push of any **/*.vipc or **/*.dragon so a dependency-manifest change refreshes the page + banner immediately.",
+          "documentation.html twins: deps-pending contract updated for capability VIPCs + the VIPC/Dragon rebuild trigger."
+        ]
+      },
       {
         "version": "4.8.1",
         "date": "2026-07-21",
