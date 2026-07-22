@@ -1,0 +1,71 @@
+{
+ "meta": {
+  "sha": "83ce44b3ebcdeff08ddfe8995b434afacd5c1fcf",
+  "short": "83ce44b",
+  "platform": "windows",
+  "repo": "danielcoons/tsc-pop-up",
+  "pages_url": "https://danielcoons.github.io/tsc-pop-up",
+  "snap_base": "https://danielcoons.github.io/tsc-pop-up/vi-snapshots/",
+  "dash_url": "https://danielcoons.github.io/tsc-pop-up/",
+  "labview_version": "2026",
+  "tools": [],
+  "commit": {
+   "message": "Merge c5a5d7e1838577fecdec3ea37aee0e980000f3e8 into 586ddaa1ea322e43c43cd3ce92b5a972189cba2d",
+   "author": "Daniel Coons",
+   "date": "2026-07-22T19:16:52Z"
+  },
+  "generated_utc": "2026-07-22 19:42 UTC"
+ },
+ "summary": {
+  "tests": 0,
+  "passed": 0,
+  "failed": 0,
+  "errored": 0,
+  "skipped": 0,
+  "percent": 0,
+  "status": "empty",
+  "duration": 0.0
+ },
+ "status_order": [
+  "failed",
+  "error",
+  "skipped",
+  "passed"
+ ],
+ "status_meta": {
+  "failed": {
+   "label": "Failed",
+   "color": "#da3633",
+   "blurb": "An assertion failed."
+  },
+  "error": {
+   "label": "Errored",
+   "color": "#bb8009",
+   "blurb": "The test raised an unexpected error."
+  },
+  "skipped": {
+   "label": "Skipped",
+   "color": "#6e7681",
+   "blurb": "The test was skipped."
+  },
+  "passed": {
+   "label": "Passed",
+   "color": "#2ea043",
+   "blurb": "The test passed."
+  }
+ },
+ "platforms": [
+  {
+   "id": "windows",
+   "url": null
+  },
+  {
+   "id": "linux",
+   "url": "linux/results.json"
+  }
+ ],
+ "suites": [],
+ "tooling": {
+  "missing": []
+ }
+}
