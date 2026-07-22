@@ -1,15 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <Config>
 <FileFormatVersion>1</FileFormatVersion>
-<AnalyzeProject>FALSE</AnalyzeProject>
-<ProjectPath>""</ProjectPath>
+<AnalyzeProject>TRUE</AnalyzeProject>
+<ProjectPath>"C:\workspace\tsc-pop-up.lvproj"</ProjectPath>
 <TargetIndex>0</TargetIndex>
 <ItemsToAnalyze>
-		<Item>
-			<Path>"C:\workspace\Theme Definer UI.vi C:\workspace\Custom\Custom - Input (DBL)\Display Input (DBL) Popup (Custom).vi C:\workspace\Custom\Custom - Input (DBL)\Display.vi C:\workspace\Custom\Custom - Input (I32)\Display Input (I32) Popup (Custom).vi C:\workspace\Custom\Custom - Input (I32)\Display.vi C:\workspace\Custom\Custom - Input (String)\Display Input (String) Popup (Custom).vi C:\workspace\Custom\Custom - Input (String)\Display.vi C:\workspace\Custom\Custom - One Button\Display One Button Popup (Custom).vi C:\workspace\Custom\Custom - One Button\Display.vi C:\workspace\Custom\Custom - Timeout\Display Timeout Popup (Custom).vi C:\workspace\Custom\Custom - Timeout\Display.vi C:\workspace\Custom\Custom - Timeout One Button\Display Timeout One Button Popup (Custom).vi C:\workspace\Custom\Custom - Timeout One Button\Display.vi C:\workspace\Custom\Custom - Timeout Two Button\Display Timeout Two Button Popup (Custom).vi C:\workspace\Custom\Custom - Timeout Two Button\Display.vi C:\workspace\Custom\Custom - Two Button\Display Two Button Popup (Custom).vi C:\workspace\Custom\Custom - Two Button\Display.vi C:\workspace\Example\main--pop up example.vi C:\workspace\Plain\Display.vi C:\workspace\Plain\Get Action 1 Text.vi C:\workspace\Plain\Get Action 2 Text.vi C:\workspace\Plain\Get Action 3 Text.vi C:\workspace\Plain\Get Dialog Title.vi C:\workspace\Plain\Get Transparent buttons.vi C:\workspace\Plain\Set Action 1 Text.vi C:\workspace\Plain\Set Action 2 Text.vi C:\workspace\Plain\Set Action 3 Text.vi C:\workspace\Plain\Set Dialog Title.vi C:\workspace\Plain\Set Transparent buttons.vi C:\workspace\Plain\Plain - One Button\Display One Button Popup (Plain).vi C:\workspace\Plain\Plain - One Button\Display.vi C:\workspace\Plain\Plain - Three Button\Display Three Button Popup (Plain).vi C:\workspace\Plain\Plain - Three Button\Display.vi C:\workspace\Plain\Plain - Two Button\Display Two Button Popup (Plain).vi C:\workspace\Plain\Plain - Two Button\Display.vi C:\workspace\PNG\Display.vi C:\workspace\PNG\PNG Picture Setup.vi C:\workspace\PNG\PNG Picture Size Reader.vi C:\workspace\PNG\Template Pattern - Caller.vi C:\workspace\Popup\Close Pop-Up (DBL).vi C:\workspace\Popup\Close Pop-Up (I32).vi C:\workspace\Popup\Close Pop-Up (String).vi C:\workspace\Popup\Close Pop-Up (Two Button Choice).vi C:\workspace\Popup\Close Pop-Up.vi C:\workspace\Popup\Display.vi C:\workspace\Popup\Format Message.vi C:\workspace\Popup\PopUp Theme Global.vi C:\workspace\Popup\Data Member Access\Read Choice.vi C:\workspace\Popup\Data Member Access\Read Image.vi C:\workspace\Popup\Data Member Access\Read Message Size.vi C:\workspace\Popup\Data Member Access\Read Message.vi C:\workspace\Popup\Data Member Access\Read Pic Height.vi C:\workspace\Popup\Data Member Access\Read Pic Width.vi C:\workspace\Popup\Data Member Access\Read pre-empt.vi C:\workspace\Popup\Data Member Access\Read Theme.vi C:\workspace\Popup\Data Member Access\Read Timeout.vi C:\workspace\Popup\Data Member Access\Write Choice.vi C:\workspace\Popup\Data Member Access\Write Image.vi C:\workspace\Popup\Data Member Access\Write Message Size.vi C:\workspace\Popup\Data Member Access\Write Message.vi C:\workspace\Popup\Data Member Access\Write Pic Height.vi C:\workspace\Popup\Data Member Access\Write Pic Width.vi C:\workspace\Popup\Data Member Access\Write pre-empt.vi C:\workspace\Popup\Data Member Access\Write Theme.vi C:\workspace\Popup\Data Member Access\Write Timeout.vi C:\workspace\Popup\private\Custom - Resize FP.vi C:\workspace\Popup\private\Custom - Resize Pic and String.vi C:\workspace\Popup\Protected Functions\Close FP.vi C:\workspace\Popup\Protected Functions\Configure FP-Message-Image.vi C:\workspace\Popup\Protected Functions\Convert Enum to Image.vi C:\workspace\Popup\Protected Functions\Format Message - Embedded.vi C:\workspace\Popup\Protected Functions\Format Message - Strip Tags.vi C:\workspace\Popup\Protected Functions\LAVA.move picture.vi C:\workspace\Popup\Protected Functions\LAVA.Parse drawing operation.vi C:\workspace\Popup\Protected Functions\Move Button.vi C:\workspace\Popup\Protected Functions\Shift Input.vi C:\workspace\Popup\Protected Functions\Template Pattern - Caller.vi C:\workspace\Popup\Protected Functions\Template Pattern - Display.vi C:\workspace\Popup\Protected Functions\Update FP and Show.vi C:\workspace\Popup\Protected Functions\pre-empt\Check pre-empt -- Boolean.vi C:\workspace\Popup\Protected Functions\pre-empt\Check pre-empt -- DBL.vi C:\workspace\Popup\Protected Functions\pre-empt\Check pre-empt -- I32.vi C:\workspace\Popup\Protected Functions\pre-empt\Check pre-empt -- String.vi C:\workspace\Popup\Protected Functions\pre-empt\Check pre-empt.vi C:\workspace\Popup\Protected Functions\pre-empt\Close pre-empt.vi C:\workspace\Popup\Protected Functions\pre-empt\Create pre-empt.vi C:\workspace\Standard\Error-Prompt\Display Error-Prompt.vi C:\workspace\Standard\Error-Prompt\Display.vi C:\workspace\Standard\Input (DBL)\Display Input (DBL) Popup.vi C:\workspace\Standard\Input (DBL)\Display.vi C:\workspace\Standard\Input (I32)\Display Input (I32) Popup.vi C:\workspace\Standard\Input (I32)\Display.vi C:\workspace\Standard\Input (String)\Display Input (String) Popup.vi C:\workspace\Standard\Input (String)\Display.vi C:\workspace\Standard\One Button\Display One Button Popup.vi C:\workspace\Standard\One Button\Display.vi C:\workspace\Standard\Timeout\Display Timeout Popup.vi C:\workspace\Standard\Timeout\Display.vi C:\workspace\Standard\Timeout One Button\Display Timeout One Button Popup.vi C:\workspace\Standard\Timeout One Button\Display.vi C:\workspace\Standard\Timeout Two Button\Display Timeout Two Button Popup.vi C:\workspace\Standard\Timeout Two Button\Display.vi C:\workspace\Standard\Two Button\Display Two Button Popup.vi C:\workspace\Standard\Two Button\Display.vi C:\workspace\Test\Dialog Tester - back to back.vi C:\workspace\Test\Dialog Tester - Error Prompt.vi C:\workspace\Test\Dialog Tester - Format String.vi C:\workspace\Test\Dialog Tester - Formatting.vi C:\workspace\Test\Dialog Tester - Outputs.vi C:\workspace\Test\Dialog Tester - Plain PopUp.vi C:\workspace\Test\Dialog Tester - Preempt.vi C:\workspace\Test\Dialog Tester.vi C:\workspace\Theme\Apply Style - button.vi C:\workspace\Theme\Apply Style - input.vi C:\workspace\Theme\Apply Style - Simple Dialog.vi C:\workspace\Theme\Apply Style.vi C:\workspace\Theme\Construct Theme.vi C:\workspace\Theme\Load Material Dialog.vi C:\workspace\Theme\Load Theme - Light Gray.vi C:\workspace\Theme\Load Theme - TSC Dark.vi C:\workspace\Theme\Load Theme - TSC Light.vi C:\workspace\Theme\Load Theme.vi C:\workspace\Theme\Pick Button Hover.vi C:\workspace\Theme\Pick Text Color.vi C:\workspace\Theme\priv-default theme.vi C:\workspace\Theme\Read Theme.vi C:\workspace\Theme\Reset Theme.vi C:\workspace\Theme\Save Theme.vi C:\workspace\Theme\Set picture background.vi C:\workspace\Theme\Temp - Change Font.vi"</Path>
-			<Removed>FALSE</Removed>
-		</Item>
-	</ItemsToAnalyze>
+	<Item>
+		<Path>"..\\.."</Path>
+		<Removed>FALSE</Removed>
+	</Item>
+	<Item>
+		<Path>"..\\..\\.git"</Path>
+		<Removed>TRUE</Removed>
+	</Item>
+	<Item>
+		<Path>"..\\..\\.github"</Path>
+		<Removed>TRUE</Removed>
+	</Item>
+	<Item>
+		<Path>"..\\..\\_graphic source"</Path>
+		<Removed>TRUE</Removed>
+	</Item>
+	<Item>
+		<Path>"..\\..\\_vip"</Path>
+		<Removed>TRUE</Removed>
+	</Item>
+	<Item>
+		<Path>".."</Path>
+		<Removed>TRUE</Removed>
+	</Item>
+	<Item>
+		<Path>"..\\..\\Test"</Path>
+		<Removed>TRUE</Removed>
+	</Item>
+	<Item>
+		<Path>"..\\..\\Theme Definer UI.vi"</Path>
+		<Removed>TRUE</Removed>
+	</Item>
+</ItemsToAnalyze>
 <TestConfigData>
 	<Test>
 		<Name>"Arrays and Strings in Loops"</Name>
