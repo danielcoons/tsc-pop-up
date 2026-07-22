@@ -1,0 +1,82 @@
+== Timeout One Button.lvclass
+
+*Responsibility:*
+No description found (add content in lvclass description)
+
+*Version:* 1.0.0.1
+
+[plantuml, format="svg", align="center"]
+....
+@startuml
+set namespaceSeparator :
+skinparam ClassBackgroundColor #FFFFFF
+skinparam ClassBorderColor #555555
+skinparam ClassFontColor #000000
+skinparam ClassHeaderBackgroundColor #808080
+
+skinparam top to bottom direction
+class "Pop-Up.lvlib:Timeout One Button" {
+{field} -Timeout (s) : Double Float
+{field} -Button Text : String
+{static} {method} +Display Timeout One Button Popup()
+{method} #Display()
+
+}
+"Pop-Up.lvlib:Popup" <|-- "Pop-Up.lvlib:Timeout One Button"
+
+
+
+@enduml
+....
+
+=== Methods
+
+.Functions (non private scope only)
+[cols="<.<4d,<.<8a,<.<12d,<.<1a,<.<1a,<.<1a", %autowidth, frame=all, grid=all, stripes=none]
+|===
+|Name |Connector pane |Description |S. |R. |I.
+
+|Display Timeout One Button Popup
+|image:Pop_Up.lvlib_Timeout_One_Button.lvclass_Display_Timeout_One_Button_Popup.vi.png[Pop-Up.lvlib:Timeout One Button.lvclass:Display Timeout One Button Popup.vi]
+|The one button popup will display information to the user and wait for the operator to click the  button or until the timeout expires.
+
+**Note:** The function **Close Pop-Up.vi** can be used to close this dialog early.
+
+Inputs: +
+-Graphic [typedef combobox] - Image (PNG) for Graphic for Popup +
+-Message [String] - String Variable to populate Display +
+-Theme [lvclass] - the theme for the style of the popup +
+-Timeout (s) [DBL] - the amount of seconds for the timeout +
+-Button Text [String] - the boolean text of the button
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Display
+|image:Pop_Up.lvlib_Timeout_One_Button.lvclass_Display.vi.png[Pop-Up.lvlib:Timeout One Button.lvclass:Display.vi]
+|This vi displays the one button timeout popup.
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|===
+
+**S**cope: image:scope-protected.png[] -> Protected | image:scope-community.png[] -> Community
+
+**R**eentrancy: image:reentrancy-preallocated.png[] -> Preallocated reentrancy | image:reentrancy-shared.png[] -> Shared reentrancy
+
+**I**nlining: image:inlined.png[] -> Inlined
+
+=== Class Constant VIs
+
+[NOTE]
+====
+No Constant VIs Found
+====

@@ -1,0 +1,80 @@
+== Timeout.lvclass
+
+*Responsibility:*
+No description found (add content in lvclass description)
+
+*Version:* 1.0.0.2
+
+[plantuml, format="svg", align="center"]
+....
+@startuml
+set namespaceSeparator :
+skinparam ClassBackgroundColor #FFFFFF
+skinparam ClassBorderColor #555555
+skinparam ClassFontColor #000000
+skinparam ClassHeaderBackgroundColor #808080
+
+skinparam top to bottom direction
+class "Pop-Up.lvlib:Timeout" {
+{field} -Timeout (s) : Double Float
+{static} {method} +Display Timeout Popup()
+{method} #Display()
+
+}
+"Pop-Up.lvlib:Popup" <|-- "Pop-Up.lvlib:Timeout"
+
+
+
+@enduml
+....
+
+=== Methods
+
+.Functions (non private scope only)
+[cols="<.<4d,<.<8a,<.<12d,<.<1a,<.<1a,<.<1a", %autowidth, frame=all, grid=all, stripes=none]
+|===
+|Name |Connector pane |Description |S. |R. |I.
+
+|Display Timeout Popup
+|image:Pop_Up.lvlib_Timeout.lvclass_Display_Timeout_Popup.vi.png[Pop-Up.lvlib:Timeout.lvclass:Display Timeout Popup.vi]
+|The timeout popup will display information to the user and wait the specified timeout depending on the number of seconds passed into this VI.
+
+**Note:** The function **Close Pop-Up.vi** can be used to close this dialog early.
+
+Inputs: +
+-Graphic [typedef combobox] - Image (PNG) for Graphic for Popup +
+-Message [String] - String Variable to populate Display +
+-Theme [lvclass] - the theme for the style of the popup +
+-Timeout (s) [DBL] - the amount of seconds for the timeout
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Display
+|image:Pop_Up.lvlib_Timeout.lvclass_Display.vi.png[Pop-Up.lvlib:Timeout.lvclass:Display.vi]
+|This vi displays the timeout Popup.
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|===
+
+**S**cope: image:scope-protected.png[] -> Protected | image:scope-community.png[] -> Community
+
+**R**eentrancy: image:reentrancy-preallocated.png[] -> Preallocated reentrancy | image:reentrancy-shared.png[] -> Shared reentrancy
+
+**I**nlining: image:inlined.png[] -> Inlined
+
+=== Class Constant VIs
+
+[NOTE]
+====
+No Constant VIs Found
+====

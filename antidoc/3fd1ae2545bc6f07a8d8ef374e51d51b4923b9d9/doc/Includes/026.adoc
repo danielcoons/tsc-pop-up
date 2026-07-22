@@ -1,0 +1,268 @@
+== Theme.lvclass
+
+*Responsibility:*
+No description found (add content in lvclass description)
+
+*Version:* 4.1.0.0
+
+[plantuml, format="svg", align="center"]
+....
+@startuml
+set namespaceSeparator :
+skinparam ClassBackgroundColor #FFFFFF
+skinparam ClassBorderColor #555555
+skinparam ClassFontColor #000000
+skinparam ClassHeaderBackgroundColor #808080
+
+skinparam top to bottom direction
+class "Theme" {
+{field} -dialog colors : Cluster
+{field} -button colors : Cluster
+{field} -message font : Cluster
+{field} -input : Cluster
+{static} {method} +Apply Style - button()
+{static} {method} +Apply Style - input()
+{static} {method} +Apply Style - Simple Dialog()
+{static} {method} +Apply Style()
+{static} {method} +Set picture background()
+{static} {method} +Construct Theme()
+{static} {method} +Load Material Dialog()
+{static} {method} +Load Theme - Light Gray()
+{static} {method} +Load Theme - TSC Dark()
+{static} {method} +Load Theme - TSC Light()
+{static} {method} +Load Theme()
+{static} {method} +Pick Button Hover()
+{static} {method} +Pick Text Color()
+{static} {method} ~priv-default theme()
+{static} {method} +Reset Theme()
+{static} {method} +Save Theme()
+{static} {method} +Temp - Change Font()
+
+}
+
+
+
+@enduml
+....
+
+=== Methods
+
+.Functions (non private scope only)
+[cols="<.<4d,<.<8a,<.<12d,<.<1a,<.<1a,<.<1a", %autowidth, frame=all, grid=all, stripes=none]
+|===
+|Name |Connector pane |Description |S. |R. |I.
+
+|Apply Style - button
+|image:Theme.lvclass_Apply_Style___button.vi.png[Theme.lvclass:Apply Style - button.vi]
+|Apply the theme style to a button (colors)
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Apply Style - input
+|image:Theme.lvclass_Apply_Style___input.vi.png[Theme.lvclass:Apply Style - input.vi]
+|Apply the theme style to an input control (double/integer digital numveric or string)
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Apply Style - Simple Dialog
+|image:Theme.lvclass_Apply_Style___Simple_Dialog.vi.png[Theme.lvclass:Apply Style - Simple Dialog.vi]
+|Apply the style to the message pop up : format the header, background, and message box
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Apply Style
+|image:Theme.lvclass_Apply_Style.vi.png[Theme.lvclass:Apply Style.vi]
+|Apply the style to the message pop up : format the header, background, and message box
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Set picture background
+|image:Theme.lvclass_Set_picture_background.vi.png[Theme.lvclass:Set picture background.vi]
+|Set the background of a picture to the specified color
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Construct Theme
+|image:Theme.lvclass_Construct_Theme.vi.png[Theme.lvclass:Construct Theme.vi]
+|Construct a theme object from an input of all of the type defs
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Load Material Dialog
+|image:Theme.lvclass_Load_Material_Dialog.vi.png[Theme.lvclass:Load Material Dialog.vi]
+|Load a theme from a material file supported by the TSC Material Library:
+
+https://github.com/danielcoons/tsc-material-theme
+https://www.vipm.io/package/tsc_lib_tsc_material_theme/
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Load Theme - Light Gray
+|image:Theme.lvclass_Load_Theme___Light_Gray.vi.png[Theme.lvclass:Load Theme - Light Gray.vi]
+|Load the default light theme for pop ups
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Load Theme - TSC Dark
+|image:Theme.lvclass_Load_Theme___TSC_Dark.vi.png[Theme.lvclass:Load Theme - TSC Dark.vi]
+|Load the default dark theme for pop ups
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Load Theme - TSC Light
+|image:Theme.lvclass_Load_Theme___TSC_Light.vi.png[Theme.lvclass:Load Theme - TSC Light.vi]
+|Load the default light theme for pop ups
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Load Theme
+|image:Theme.lvclass_Load_Theme.vi.png[Theme.lvclass:Load Theme.vi]
+|Load a theme from file
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Pick Button Hover
+|image:Theme.lvclass_Pick_Button_Hover.vi.png[Theme.lvclass:Pick Button Hover.vi]
+|perform a calculation to lighten or darken the button to give a hover contrast
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Pick Text Color
+|image:Theme.lvclass_Pick_Text_Color.vi.png[Theme.lvclass:Pick Text Color.vi]
+|perform a calculation to determine which font color should be used for a given background color
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|priv-default theme
+|image:Theme.lvclass_priv_default_theme.vi.png[Theme.lvclass:priv-default theme.vi]
+|Load the default theme for pop ups
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-community.png[scope-community.png]
+|image:reentrancy-shared.png[reentrancy-shared.png]
+|image:empty.png[empty.png]
+
+|Read Theme
+|image:Theme.lvclass_Read_Theme.vi.png[Theme.lvclass:Read Theme.vi]
+|Read theme data from an object
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Reset Theme
+|image:Theme.lvclass_Reset_Theme.vi.png[Theme.lvclass:Reset Theme.vi]
+|Reset the global theme for the application - this unloads the global theme that will be used and uses the default theme or input from a VI
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Save Theme
+|image:Theme.lvclass_Save_Theme.vi.png[Theme.lvclass:Save Theme.vi]
+|Save the theme data
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Temp - Change Font
+|image:Theme.lvclass_Temp___Change_Font.vi.png[Theme.lvclass:Temp - Change Font.vi]
+|Change the font of the pop-ups 
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|===
+
+**S**cope: image:scope-protected.png[] -> Protected | image:scope-community.png[] -> Community
+
+**R**eentrancy: image:reentrancy-preallocated.png[] -> Preallocated reentrancy | image:reentrancy-shared.png[] -> Shared reentrancy
+
+**I**nlining: image:inlined.png[] -> Inlined
+
+=== Class Constant VIs
+
+[NOTE]
+====
+No Constant VIs Found
+====

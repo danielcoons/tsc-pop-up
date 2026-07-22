@@ -1,0 +1,626 @@
+== Popup.lvclass
+
+*Responsibility:*
+The parent class that defines the overall data structure and functions for all TSC Pop Up types
+
+*Version:* 4.1.0.0
+
+[plantuml, format="svg", align="center"]
+....
+@startuml
+set namespaceSeparator :
+skinparam ClassBackgroundColor #FFFFFF
+skinparam ClassBorderColor #555555
+skinparam ClassFontColor #000000
+skinparam ClassHeaderBackgroundColor #808080
+
+skinparam top to bottom direction
+class "Pop-Up.lvlib:Popup" {
+{field} #Message : String
+{field} #Image : Picture
+{field} #Choice : Boolean
+{field} #Pic Width : I16
+{field} #Pic Height : I16
+{field} #pre-empt : NoType
+{field} #Theme : LV Class
+{field} #Message Size : Cluster
+{field} -Timeout? : Boolean
+{static} {method} #Check pre-empt -- Boolean()
+{static} {method} #Check pre-empt -- DBL()
+{static} {method} #Check pre-empt -- I32()
+{static} {method} #Check pre-empt -- String()
+{static} {method} #Check pre-empt()
+{static} {method} #Close pre-empt()
+{static} {method} #Create pre-empt()
+{static} {method} #Close FP()
+{static} {method} #Configure FP-Message-Image()
+{static} {method} #Convert Enum to Image()
+{static} {method} #Format Message - Embedded()
+{static} {method} #Format Message - Strip Tags()
+{static} {method} #LAVA.move picture()
+{static} {method} #LAVA.Parse drawing operation()
+{static} {method} #Move Button()
+{static} {method} #Shift Input()
+{static} {method} #Template Pattern - Display()
+{static} {method} #Update FP and Show()
+{static} {method} -Custom - Resize FP()
+{static} {method} -Custom - Resize Pic and String()
+{static} {method} +Close Pop-Up()
+{static} {method} +Close Pop-Up (Two Button Choice)()
+{static} {method} +Close Pop-Up (I32)()
+{static} {method} +Close Pop-Up (DBL)()
+{static} {method} +Close Pop-Up (String)()
+{static} {method} +Format Message()
+{method} #Template Pattern - Caller()
+{method} #Display()
+
+}
+"Pop-Up.lvlib:Popup" *-- "Theme"
+
+
+
+@enduml
+....
+
+=== Methods
+
+.Functions (non private scope only)
+[cols="<.<4d,<.<8a,<.<12d,<.<1a,<.<1a,<.<1a", %autowidth, frame=all, grid=all, stripes=none]
+|===
+|Name |Connector pane |Description |S. |R. |I.
+
+|Read Image
+|image:Pop_Up.lvlib_Popup.lvclass_Read_Image.vi.png[Pop-Up.lvlib:Popup.lvclass:Read Image.vi]
+|This Data Member Access VI will read the Image from the object.
+
+Outputs: +
+-Image [2D Image] - the image to display on the pop up
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Write Image
+|image:Pop_Up.lvlib_Popup.lvclass_Write_Image.vi.png[Pop-Up.lvlib:Popup.lvclass:Write Image.vi]
+|This Data Member Access VI will write the Image to the object.
+
+Inputs: +
+-Image [2D Picture] - the image to write to the display pop up
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Read Message
+|image:Pop_Up.lvlib_Popup.lvclass_Read_Message.vi.png[Pop-Up.lvlib:Popup.lvclass:Read Message.vi]
+|This Data Member Access VI will read the Label from the object.
+
+Outputs: +
+-Label [string] - label string to write to the pop up display
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Write Message
+|image:Pop_Up.lvlib_Popup.lvclass_Write_Message.vi.png[Pop-Up.lvlib:Popup.lvclass:Write Message.vi]
+|This Data Member Access VI will write the Label to the object.
+
+Inputs: +
+-Label [string] - the text to write to the display pop up
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Read Choice
+|image:Pop_Up.lvlib_Popup.lvclass_Read_Choice.vi.png[Pop-Up.lvlib:Popup.lvclass:Read Choice.vi]
+|This Data Member Access VI will read the choice Boolean from the object.
+
+Outputs: +
+-Choice [Boolean] - the user choice on a two button pop up
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Write Choice
+|image:Pop_Up.lvlib_Popup.lvclass_Write_Choice.vi.png[Pop-Up.lvlib:Popup.lvclass:Write Choice.vi]
+|This Data Member Access VI will write the Choice Boolean to the object.
+
+Inputs: +
+-Choice [Boolean] - the value to write to the object
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Read pre-empt
+|image:Pop_Up.lvlib_Popup.lvclass_Read_pre_empt.vi.png[Pop-Up.lvlib:Popup.lvclass:Read pre-empt.vi]
+|get the pre-emptible notifier reference
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Write pre-empt
+|image:Pop_Up.lvlib_Popup.lvclass_Write_pre_empt.vi.png[Pop-Up.lvlib:Popup.lvclass:Write pre-empt.vi]
+|write the preemptible notifier
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Read Theme
+|image:Pop_Up.lvlib_Popup.lvclass_Read_Theme.vi.png[Pop-Up.lvlib:Popup.lvclass:Read Theme.vi]
+|Read the theme of the pop up
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Write Theme
+|image:Pop_Up.lvlib_Popup.lvclass_Write_Theme.vi.png[Pop-Up.lvlib:Popup.lvclass:Write Theme.vi]
+|Write the theme class for the pop up
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:empty.png[empty.png]
+
+|Read Message Size
+|image:Pop_Up.lvlib_Popup.lvclass_Read_Message_Size.vi.png[Pop-Up.lvlib:Popup.lvclass:Read Message Size.vi]
+|Read the size of the message
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Write Message Size
+|image:Pop_Up.lvlib_Popup.lvclass_Write_Message_Size.vi.png[Pop-Up.lvlib:Popup.lvclass:Write Message Size.vi]
+|Write the size of the message
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Read Pic Width
+|image:Pop_Up.lvlib_Popup.lvclass_Read_Pic_Width.vi.png[Pop-Up.lvlib:Popup.lvclass:Read Pic Width.vi]
+|Read the width of the custom picture
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Write Pic Width
+|image:Pop_Up.lvlib_Popup.lvclass_Write_Pic_Width.vi.png[Pop-Up.lvlib:Popup.lvclass:Write Pic Width.vi]
+|Write the custom picture width
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Read Pic Height
+|image:Pop_Up.lvlib_Popup.lvclass_Read_Pic_Height.vi.png[Pop-Up.lvlib:Popup.lvclass:Read Pic Height.vi]
+|Read the height of the custom picture
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Write Pic Height
+|image:Pop_Up.lvlib_Popup.lvclass_Write_Pic_Height.vi.png[Pop-Up.lvlib:Popup.lvclass:Write Pic Height.vi]
+|Write the custom picture height
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Read Timeout
+|image:Pop_Up.lvlib_Popup.lvclass_Read_Timeout.vi.png[Pop-Up.lvlib:Popup.lvclass:Read Timeout.vi]
+|This Data Member Access VI will read the timeout Boolean from the object.
+
+Outputs: +
+-Timeout [Boolean] - the timeout result
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Write Timeout
+|image:Pop_Up.lvlib_Popup.lvclass_Write_Timeout.vi.png[Pop-Up.lvlib:Popup.lvclass:Write Timeout.vi]
+|This Data Member Access VI will write the timeout Boolean on the object.
+
+Outputs: +
+-Timeout [Boolean] - the result of the timeout
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Check pre-empt -- Boolean
+|image:Pop_Up.lvlib_Popup.lvclass_Check_pre_empt____Boolean.vi.png[Pop-Up.lvlib:Popup.lvclass:Check pre-empt -- Boolean.vi]
+|check on the status of the pre-empt notifier
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Check pre-empt -- DBL
+|image:Pop_Up.lvlib_Popup.lvclass_Check_pre_empt____DBL.vi.png[Pop-Up.lvlib:Popup.lvclass:Check pre-empt -- DBL.vi]
+|check on the status of the pre-empt notifier
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Check pre-empt -- I32
+|image:Pop_Up.lvlib_Popup.lvclass_Check_pre_empt____I32.vi.png[Pop-Up.lvlib:Popup.lvclass:Check pre-empt -- I32.vi]
+|check on the status of the pre-empt notifier
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Check pre-empt -- String
+|image:Pop_Up.lvlib_Popup.lvclass_Check_pre_empt____String.vi.png[Pop-Up.lvlib:Popup.lvclass:Check pre-empt -- String.vi]
+|check on the status of the pre-empt notifier
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Check pre-empt
+|image:Pop_Up.lvlib_Popup.lvclass_Check_pre_empt.vi.png[Pop-Up.lvlib:Popup.lvclass:Check pre-empt.vi]
+|check on the status of the pre-empt notifier
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Close pre-empt
+|image:Pop_Up.lvlib_Popup.lvclass_Close_pre_empt.vi.png[Pop-Up.lvlib:Popup.lvclass:Close pre-empt.vi]
+|get the pre-emptible notifier reference
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Create pre-empt
+|image:Pop_Up.lvlib_Popup.lvclass_Create_pre_empt.vi.png[Pop-Up.lvlib:Popup.lvclass:Create pre-empt.vi]
+|get the pre-emptible notifier reference
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:reentrancy-preallocated.png[reentrancy-preallocated.png]
+|image:inlined.png[inlined.png]
+
+|Close FP
+|image:Pop_Up.lvlib_Popup.lvclass_Close_FP.vi.png[Pop-Up.lvlib:Popup.lvclass:Close FP.vi]
+|Will close the front panel from the screen for the input VI Reference - should be used in all pop-up types that configure all the front panel BEFORE showing it when it is called so that the user doesn't see jitter
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Configure FP-Message-Image
+|image:Pop_Up.lvlib_Popup.lvclass_Configure_FP_Message_Image.vi.png[Pop-Up.lvlib:Popup.lvclass:Configure FP-Message-Image.vi]
+|Configure the front panel size, the message, and the image for a custom pop up type.
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Convert Enum to Image
+|image:Pop_Up.lvlib_Popup.lvclass_Convert_Enum_to_Image.vi.png[Pop-Up.lvlib:Popup.lvclass:Convert Enum to Image.vi]
+|This VI will take the input ENUM typedef for the Graphic chosen and will get its image data using the LabVIEW PNG files.
+
+Inputs: +
+-Graphics [typedef combobox] - the image to look up +
+-background [2d picture] - the background color for the image
+
+Outputs: +
+-Image [2D Image] - the image data
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Format Message - Embedded
+|image:Pop_Up.lvlib_Popup.lvclass_Format_Message___Embedded.vi.png[Pop-Up.lvlib:Popup.lvclass:Format Message - Embedded.vi]
+|This VI will check for embedded tags within a found tag in the loop searching for the content.
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Format Message - Strip Tags
+|image:Pop_Up.lvlib_Popup.lvclass_Format_Message___Strip_Tags.vi.png[Pop-Up.lvlib:Popup.lvclass:Format Message - Strip Tags.vi]
+|Remove the formatting tags from the string input - will strip off the first one so that string can continue to be processed for more tags.
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|LAVA.move picture
+|image:Pop_Up.lvlib_Popup.lvclass_LAVA.move_picture.vi.png[Pop-Up.lvlib:Popup.lvclass:LAVA.move picture.vi]
+|adapted from: https://lavag.org/topic/17138-2d-picture-translation-movement/#comment-105597
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|LAVA.Parse drawing operation
+|image:Pop_Up.lvlib_Popup.lvclass_LAVA.Parse_drawing_operation.vi.png[Pop-Up.lvlib:Popup.lvclass:LAVA.Parse drawing operation.vi]
+|Adapted from : https://lavag.org/topic/17138-2d-picture-translation-movement/#comment-105597
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Move Button
+|image:Pop_Up.lvlib_Popup.lvclass_Move_Button.vi.png[Pop-Up.lvlib:Popup.lvclass:Move Button.vi]
+|move the button on the screen to the correct location based on the FP size
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Shift Input
+|image:Pop_Up.lvlib_Popup.lvclass_Shift_Input.vi.png[Pop-Up.lvlib:Popup.lvclass:Shift Input.vi]
+|move the input down to the correct position and shift the front panel size and location for input button if needed
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Template Pattern - Caller
+|image:Pop_Up.lvlib_Popup.lvclass_Template_Pattern___Caller.vi.png[Pop-Up.lvlib:Popup.lvclass:Template Pattern - Caller.vi]
+|Implements the TEMPLATE PATTERN OOP Design to define the call of a Display function and its setup for standard pop-ups.
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Template Pattern - Display
+|image:Pop_Up.lvlib_Popup.lvclass_Template_Pattern___Display.vi.png[Pop-Up.lvlib:Popup.lvclass:Template Pattern - Display.vi]
+|A "Template Pattern" VI that will call the display child for the given pop-up type and set up/tear down the pre-empt messaging.
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Update FP and Show
+|image:Pop_Up.lvlib_Popup.lvclass_Update_FP_and_Show.vi.png[Pop-Up.lvlib:Popup.lvclass:Update FP and Show.vi]
+|turn back on the front panel updates and show the FP on the screen - this should be done after all moving parts have been placed. this will be used for custom pop ups when the image size is unknown and the locations move.
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Display
+|image:Pop_Up.lvlib_Popup.lvclass_Display.vi.png[Pop-Up.lvlib:Popup.lvclass:Display.vi]
+|This is the override method required for each child of the pop up class.  It is the pop up that will display to the user.
+
+To extend this function, create a child class of the pop up class. Then create an override method for this VI. **Display.vi** is a protected function, therefore it cannot be called in a main application. This VI must be called by a caller function. See one of the standard pop-ups for a setup example.
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:scope-protected.png[scope-protected.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Close Pop-Up
+|image:Pop_Up.lvlib_Popup.lvclass_Close_Pop_Up.vi.png[Pop-Up.lvlib:Popup.lvclass:Close Pop-Up.vi]
+|This VI can be used to close the pop-up early before the user has finished interacting or it has completed its action.
+
+For example, a timeout dialog can be implemented with an approximate time for an action, but could be closed early if the action finishes before the dialog is complete.
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Close Pop-Up (Two Button Choice)
+|image:Pop_Up.lvlib_Popup.lvclass_Close_Pop_Up_(Two_Button_Choice).vi.png[Pop-Up.lvlib:Popup.lvclass:Close Pop-Up (Two Button Choice).vi]
+|This VI can be used to close the pop-up early before the user has finished interacting.
+
+Use this VI to also send a Boolean value - this is read when using the two-button dialog pop-up types (timeout or standard). This will make the selection for the user based on whatever the developer has decided. 
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Close Pop-Up (I32)
+|image:Pop_Up.lvlib_Popup.lvclass_Close_Pop_Up_(I32).vi.png[Pop-Up.lvlib:Popup.lvclass:Close Pop-Up (I32).vi]
+|This VI can be used to close the pop-up early before the user has finished interacting.
+
+Use this VI to also send an integer value - this is read when using the Input (I32) pop-up types.
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Close Pop-Up (DBL)
+|image:Pop_Up.lvlib_Popup.lvclass_Close_Pop_Up_(DBL).vi.png[Pop-Up.lvlib:Popup.lvclass:Close Pop-Up (DBL).vi]
+|This VI can be used to close the pop-up early before the user has finished interacting.
+
+Use this VI to also send a DBL value - this is read when using the Input (DBL) pop-up types.
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Close Pop-Up (String)
+|image:Pop_Up.lvlib_Popup.lvclass_Close_Pop_Up_(String).vi.png[Pop-Up.lvlib:Popup.lvclass:Close Pop-Up (String).vi]
+|This VI can be used to close the pop-up early before the user has finished interacting.
+
+Use this VI to also send a string value - this is read when using the Input (String) pop-up types.
+
+**Code Developed By:** +
+Daniel Coons +
+https://github.com/danielcoons/tsc-pop-up
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+
+|Format Message
+|image:Pop_Up.lvlib_Popup.lvclass_Format_Message.vi.png[Pop-Up.lvlib:Popup.lvclass:Format Message.vi]
+|This VI applies special formatting to message strings. The tags are listed below and their purpose:
+
+        < b> bold < /b> - without spaces; used so tags will show in context help +
+        __ italic __ +
+        <strong> bold - strong </strong> +
+        <em> italic - emphasis </em> +
+        <del> strikethrough </del> +
+        <ins> underline </ins> +
+        <font rgb(#,#,#)> RGB-based color of text </font> +
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|image:empty.png[empty.png]
+|===
+
+**S**cope: image:scope-protected.png[] -> Protected | image:scope-community.png[] -> Community
+
+**R**eentrancy: image:reentrancy-preallocated.png[] -> Preallocated reentrancy | image:reentrancy-shared.png[] -> Shared reentrancy
+
+**I**nlining: image:inlined.png[] -> Inlined
+
+=== Class Constant VIs
+
+[NOTE]
+====
+No Constant VIs Found
+====
+
+=== Bookmarks
+
+==== #via_ignore
+
+.#via_ignore
+[cols="<.<8d,<.<2d", %autowidth, frame=all, grid=all, stripes=none]
+|===
+|Text |VI
+
+|#via_ignore In Place Element Structure Usage
+|Shift Input.vi
+
+|#via_ignore For Loop Iteration Count
+|Format Message - Embedded.vi
+
+|#via_ignore For Loop Iteration Count
+|Format Message - Embedded.vi
+|===
