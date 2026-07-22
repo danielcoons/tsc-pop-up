@@ -1,8 +1,44 @@
 {
   "schema": 1,
   "repo": "danielcoons/tsc-pop-up",
-  "sha": "9322a8fb691dcbaec8c20e939c6b10fe9666578c",
+  "sha": "3fd1ae2545bc6f07a8d8ef374e51d51b4923b9d9",
   "revisions": [
+    {
+      "sha": "3fd1ae2545bc6f07a8d8ef374e51d51b4923b9d9",
+      "short": "3fd1ae2",
+      "message": "Merge pull request #20 from danielcoons/release/v4.1.0",
+      "author": "Daniel Coons",
+      "date": "2026-07-22T19:43:00Z",
+      "project": true,
+      "dep_only": false
+    },
+    {
+      "sha": "2a980085353d101f4f9bada8af7d1ce758945cbb",
+      "short": "2a98008",
+      "message": "updated the vip build and the vip package for release",
+      "author": "daniel-coons",
+      "date": "2026-07-22T19:41:07Z",
+      "project": true,
+      "dep_only": true
+    },
+    {
+      "sha": "67467dd6345e9b92b9e23815dcad944cb14880b8",
+      "short": "67467dd",
+      "message": "updated top-level library and class versions",
+      "author": "daniel-coons",
+      "date": "2026-07-22T19:40:38Z",
+      "project": true,
+      "dep_only": false
+    },
+    {
+      "sha": "8fce7e78a23dac39826edc773bd93f08496124be",
+      "short": "8fce7e7",
+      "message": "updated changelog",
+      "author": "daniel-coons",
+      "date": "2026-07-22T19:27:40Z",
+      "project": false,
+      "dep_only": false
+    },
     {
       "sha": "9322a8fb691dcbaec8c20e939c6b10fe9666578c",
       "short": "9322a8f",
