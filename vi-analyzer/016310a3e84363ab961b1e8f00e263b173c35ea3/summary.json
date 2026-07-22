@@ -1,0 +1,40 @@
+{
+  "meta": {
+    "sha": "016310a3e84363ab961b1e8f00e263b173c35ea3",
+    "short": "016310a",
+    "platform": "windows",
+    "repo": "danielcoons/tsc-pop-up",
+    "pages_url": "https://danielcoons.github.io/tsc-pop-up",
+    "pages_base": "../..",
+    "commit": {
+      "message": "Merge 2a980085353d101f4f9bada8af7d1ce758945cbb into 9322a8fb691dcbaec8c20e939c6b10fe9666578c",
+      "author": "Daniel Coons",
+      "date": "2026-07-22T19:42:41Z"
+    },
+    "generated_utc": "2026-07-22 20:11 UTC",
+    "analysis_date": "Wednesday, July 22, 2026 8:11:28 PM",
+    "duration": "00:00:24.09",
+    "configs": [
+      {
+        "label": "assets/via/via-config-tsc.viancfg",
+        "scope": "all other VIs"
+      }
+    ]
+  },
+  "summary": {
+    "vis_analyzed": 1,
+    "tests_run": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "findings": 0,
+    "vis_with_findings": 0
+  },
+  "errors": {
+    "vi_not_loadable": 0,
+    "test_not_loadable": 0,
+    "test_not_runnable": 0,
+    "test_error_out": 0
+  },
+  "rule_counts": []
+}
