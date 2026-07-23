@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "4.9.5",
+  "version": "4.10.0",
   "name": "LabVIEW CI",
   "description": "Portable, repo-agnostic CI/CD capabilities for LabVIEW repositories: mass compile, VI Analyzer, VIDiff comparison reports, VI snapshots / VI Browser, and a status dashboard. Driven entirely by this catalog so the configurator UI and the installer stay in sync and new capabilities are a one-entry change.",
   "installPause": {
@@ -9,8 +9,31 @@
     "message": "Installation is temporarily unavailable due to an in-progress update. Please check back in about 30 minutes."
   },
   "history": {
-    "comment": "Release notes for the tooling, newest first. `version` (above) is the CURRENT published release and MUST equal releases[0].version. The dashboard version badge and the What's New dialog read these notes to tell a consumer what changed between the version they run and the latest this source repo publishes. Each published version should also be tagged v<version> in this repo so consumers can pin an update to a specific release.",
+    "comment": "Release notes for the tooling, newest first. `version` (above) is the CURRENT published release and MUST equal releases[0].version. The dashboard version badge and the What's New dialog read these notes to tell a consumer what changed between the version they run and the latest this source repo publishes. Each published version should also be tagged v<version> in this repo so consumers can pin an update to a specific release. `stableVersion` (top level, optional) names the newest release the maintainer has promoted to the stable channel, and each such release entry is flagged \"stable\": true; installs and upgrades default to the stable channel and fall back to `version` (the beta tip) only while no stable release has been promoted yet.",
     "releases": [
+      {
+        "version": "4.10.0",
+        "date": "2026-07-22",
+        "title": "VI Analyzer now runs on Linux too",
+        "summary": "The VI Analyzer capability gained a Linux container runner alongside the existing Windows one, so the same test suite and friendly report are produced on both platforms. The Linux report deploys under vi-analyzer/<sha>/linux/ and the dashboard VI Analyzer column now shows the Windows and Linux finding counts side by side, so you can compare both outcomes at a glance.",
+        "highlights": [
+          "New run-vi-analyzer-linux-container.yml + run-vi-analyzer.sh run the VI Analyzer suite inside the Linux worker (LabVIEWCLI RunVIAnalyzer, headless), mirroring the Windows runner including the pre-analysis mass compile and the config.viAnalyzer default / AnalyzeProject handling with a directory-mode fallback.",
+          "The Linux report is published at vi-analyzer/<sha>/linux/ (Windows stays at vi-analyzer/<sha>/) with its own CI / VI Analyzer (Linux) status, so both reports coexist just like Mass Compile and VIDiff.",
+          "The dashboard VI Analyzer column now reads the per-platform summary.json and shows a split pill of the Windows and Linux finding counts (a degraded analysis is flagged solid red), letting you parse both outcomes from the table.",
+          "Enable Linux for VI Analyzer from the Configure page (it is opt-in, like the other Linux workers); a single-VI re-run from a Linux report dispatches the Linux workflow."
+        ]
+      },
+      {"version": "4.9.12", "date": "2026-07-22", "notes": "Debug Run: the existing-sessions list moved below the start form into an \"Existing debug sessions\" section, and each session now shows a live progress bar + status (Queued / Booting with the current step / Live) alongside Open remote desktop and End, updated every few seconds. So a session that is still starting shows its progress instead of just \"booting\", and you can reconnect to or end any session from any device."},
+      {"version": "4.9.11", "date": "2026-07-22", "notes": "Client discovery finds fork-based installs (follow-up to 4.9.8). GitHub's search APIs exclude forks by default, so the discovery scan now adds the fork:true qualifier to its topic and code searches; a client that forked another LabVIEW project and added this stack now surfaces as a candidate and, after the existing verification (catalog points back here or a workflow references this stack), appears on the Clients page. Forks of this framework repository itself are still excluded."},
+      {"version": "4.9.10", "date": "2026-07-22", "notes": "VI Browser now truly defaults opened files to 2.0 whenever a 2.0 render exists (Windows preferred when both platforms exist): the auto-default path no longer bails out just because local storage previously remembered viewer mode 1.0, so older 1.0 preferences no longer suppress the 2.0-first open behavior."},
+      {
+        "version": "4.9.9",
+        "date": "2026-07-22",
+        "notes": "Linux worker rendering fix: the Linux worker image and the standalone VI Browser 2.0 render image now bake a set of X11 core and TrueType fonts (DejaVu, Liberation, Noto, and the 75/100 dpi xfonts-* families). NI's minimal Linux base ships almost none, so LabVIEW's UI controls and rendered VI text previously came out blank in VI Browser snapshots and the Debug Run desktop. The Debug Run session also installs those fonts on demand (best-effort), makes them visible to the running Xvfb (xset), and switches fluxbox to focus-follows-mouse so the on-screen terminal reliably receives the ENTER keystroke."
+      },
+      {"version": "4.9.8", "date": "2026-07-22", "notes": "Client discovery now lists genuine fork-based installs. The Clients scan no longer drops a repository just because it is a fork: a fork that installed this stack (a fork of some other LabVIEW project) is now discovered and listed, while a fork of this framework repository itself stays excluded. Per-candidate verification (public, and the catalog points back here or a workflow references this stack) is unchanged, so unrelated repositories still never leak in."},
+      {"version": "4.9.7", "date": "2026-07-22", "notes": "Release channels: installs and upgrades now default to a stable release channel and only prompt for versions the maintainer has explicitly marked stable, so a freshly published build never nags users onto an unproven revision; pre-release (beta) builds stay available behind an opt-in toggle. Adds the owner-only 'Mark as stable release' button on the What's New page (dispatching a new Promote release workflow), a rolling 'stable' git tag moved by the release workflow, and a stableVersion/stable catalog contract that is inert until the first version is promoted."},
+      {"version": "4.9.6", "date": "2026-07-22", "notes": "Debug Run now shows what's happening and lists live sessions. The connect view reports the run's real step (\"Current step: ...\") and a clear \"Queued - waiting for another debug session to finish\" state instead of an opaque \"booting\". The dialog lists all live & queued debug sessions (any in-progress debug-session run) with Open remote desktop and End (confirm) buttons, so you can reconnect from any device - not just the browser that started the session - or end one to free the single-session slot."},
       {"version": "4.9.5", "date": "2026-07-22", "notes": "Debug Run fix: the dashboard's periodic full-page auto-refresh no longer reloads the page out from under an open Debug Run (or Populate history) dialog, which was wiping the connect panel while the container booted (\"the dialog just went away\"). The reload guard now defers while those modals are open. Debug Run is also resumable: the active session is remembered, so reopening Debug Run (or a reload) returns you to the live remote-desktop button or the still-booting connect view instead of a blank form, and a cancelled/finished run is detected and cleared. The manual \"Open remote desktop\" button remains the primary connect action since browsers block auto-opened tabs."},
       {"version": "4.9.4", "date": "2026-07-22", "notes": "VI Analyzer honours a committed .viancfg again (fixes empty reports since a custom .viancfg was added). RunVIAnalyzer runs ZERO tests when a config\u2019s ItemsToAnalyze is a list of explicit VIs; the default pass now analyzes the whole PROJECT instead - it rewrites the generated config to VI Analyzer\u2019s native Analyze Project mode (AnalyzeProject=TRUE pointed at the detected .lvproj) while keeping the config\u2019s selected tests. Safety net: if the project pass still runs 0 tests (or the repo has no .lvproj) it auto re-runs in directory mode (the full built-in suite that worked historically) so the report is never blank"},
       {
@@ -4162,7 +4185,8 @@
       "status": "stable",
       "recommended": true,
       "supportsOs": [
-        "windows"
+        "windows",
+        "linux"
       ],
       "requires": [],
       "recommends": [
@@ -4178,9 +4202,13 @@
         "windows": [
           ".github/workflows/run-vi-analyzer-windows-container.yml",
           ".github/labview/run-vi-analyzer.ps1"
+        ],
+        "linux": [
+          ".github/workflows/run-vi-analyzer-linux-container.yml",
+          ".github/labview/run-vi-analyzer.sh"
         ]
       },
-      "notes": "Runs on Windows only. The full default test set (~90 tests) requires the custom image (enable “Shared LabVIEW image”). On the bare NI base image the analyzer reports “0 tests run”."
+      "notes": "Also runs on Linux. The full default test set (~90 tests) requires the custom image (enable “Shared LabVIEW image”). On the bare NI base image the analyzer reports “0 tests run”."
     },
     {
       "id": "vidiff",
