@@ -390,7 +390,7 @@ flowchart TD
         <thead><tr><th>Capability</th><th>What it does</th><th>Platforms</th></tr></thead>
         <tbody>
           <tr><td><strong>Mass Compile</strong></td><td>Compiles every VI/CTL and flags broken VIs and missing dependencies.</td><td><span class="pill win">Win</span> <span class="pill lin">Linux</span></td></tr>
-          <tr><td><strong>VI Analyzer</strong></td><td>Runs NI's static-analysis test suite for correctness, performance, style and documentation.</td><td><span class="pill win">Win</span></td></tr>
+          <tr><td><strong>VI Analyzer</strong></td><td>Runs NI's static-analysis test suite for correctness, performance, style and documentation.</td><td><span class="pill win">Win</span> <span class="pill lin">Linux</span></td></tr>
           <tr><td><strong>VIDiff</strong></td><td>Generates visual, side-by-side front-panel + block-diagram diffs of changed VIs between commits.</td><td><span class="pill win">Win</span> <span class="pill lin">Linux</span></td></tr>
           <tr><td><strong>Unit Tests</strong></td><td>Runs Caraya / LUnit / VI Tester / NI Unit Test Framework headlessly and merges JUnit output into one report.</td><td><span class="pill win">Win</span></td></tr>
           <tr><td><strong>Antidoc</strong></td><td>Generates project documentation from the VI hierarchy using Wovalab's Antidoc CLI.</td><td><span class="pill win">Win</span></td></tr>
@@ -804,9 +804,10 @@ flowchart TD
         <code>windows-latest</code> now resolves to Windows Server 2025, whose Docker daemon is broken for these
         LabVIEW containers. If you changed a runner label, set it back to <code>windows-2022</code>.</p>
 
-      <h3>VI Analyzer / Unit Tests / Antidoc &ldquo;missing&rdquo; on Linux</h3>
-      <p><strong>Not a bug.</strong> VI Analyzer, Unit Tests, and Antidoc are Windows-only today (they depend on
-        baked VIPM tooling). They are not offered for Linux in Configure or Populate history.</p>
+      <h3>Unit Tests / Antidoc &ldquo;missing&rdquo; on Linux</h3>
+      <p><strong>Not a bug.</strong> Unit Tests and Antidoc are Windows-only today (they depend on
+        baked VIPM tooling). They are not offered for Linux in Configure or Populate history. VI Analyzer, by
+        contrast, now runs on Linux too &mdash; enable it per platform on the Configure page.</p>
 
       <h3>A new install does not appear on the Clients page</h3>
       <p><strong>Not a bug.</strong> Discovery is a daily pull-based scan plus GitHub's own search-index lag, so a
@@ -990,8 +991,12 @@ flowchart TD
   MODE -->|"new"| NEW["Publish dated tag year-deps-date&lt;br/&gt;select per action in Configure"]
 </div>
 
-      <p>Linux builds are handled by <code>build-labview-linux-image.yml</code> on the same model. Images are pushed to
-        <strong>your</strong> GitHub Container Registry (GHCR) as packages attached to your repo:</p>
+      <p>Linux builds are handled by <code>build-labview-linux-image.yml</code> on the same model. The Linux worker and
+        the standalone VI&nbsp;Browser&nbsp;2.0 render image also bake a set of X11 core and TrueType fonts (DejaVu,
+        Liberation, Noto, and the 75/100&nbsp;dpi <code>xfonts-*</code> families) &mdash; NI&rsquo;s minimal Linux base
+        ships almost none, and without them LabVIEW&rsquo;s UI controls and rendered VI text (VI&nbsp;Browser snapshots
+        and the Debug&nbsp;Run desktop) come out blank. Images are pushed to <strong>your</strong> GitHub Container
+        Registry (GHCR) as packages attached to your repo:</p>
       <pre><code>ghcr.io/&lt;owner&gt;/&lt;repo&gt;-labview      # your LabVIEW worker (copied from the base, or base + your deps; the Linux worker also bakes the VI Browser 2.0 render engine)
 ghcr.io/&lt;lcwc-owner&gt;/&lt;lcwc-repo&gt;-labview-base   # the shared base, owned &amp; published by the source repo</code></pre>
       <p>The image inherits your repository's visibility and is authenticated with the job's built-in
@@ -1304,7 +1309,8 @@ docker run --rm `
       redBelow: 80</code></pre>
 
       <h3 id="cap-vianalyzer">16.2 VI Analyzer <a class="anchor" href="#cap-vianalyzer">#</a></h3>
-      <p>Driver: <code>run-vi-analyzer.ps1</code> <span class="pill win">Windows</span>; report:
+      <p>Driver: <code>run-vi-analyzer.ps1</code> <span class="pill win">Windows</span> /
+        <code>run-vi-analyzer.sh</code> <span class="pill lin">Linux</span>; report:
         <code>build-analyzer-report.py</code>. It runs
         <code>LabVIEWCLI -OperationName RunVIAnalyzer</code> against a <code>.viancfg</code> configuration. The
         full built-in suite runs in <em>directory mode</em> — passing the mounted workspace directory itself makes
@@ -1322,8 +1328,12 @@ docker run --rm `
         directory mode (the full built-in suite) so the report is never blank.</p>
       <p>Configuration is layered. The manifest's <code>config.viAnalyzer</code> can name a <code>default</code>
         config and a list of per-path <code>rules</code> (e.g. strict rules for <code>src/critical/**</code>,
-        relaxed for <code>tests/**</code>). VI Analyzer runs on Windows only; Linux is not offered in the
-        configurator or Populate history. The report builder maps each failed test to a category
+        relaxed for <code>tests/**</code>). VI Analyzer runs on <strong>both Windows and Linux</strong>: the Linux
+        runner (<code>run-vi-analyzer.sh</code>) mirrors the Windows one (same pre-analysis Mass Compile, the same
+        <em>directory</em> / <em>Analyze&nbsp;Project</em> config handling with a directory-mode fallback) and
+        deploys its report under <code>vi-analyzer/&lt;sha&gt;/linux/</code> with a <code>CI / VI Analyzer (Linux)</code>
+        status, while Windows stays at <code>vi-analyzer/&lt;sha&gt;/</code>. The dashboard's VI Analyzer column shows
+        both platforms' finding counts side by side. The report builder maps each failed test to a category
         (correctness / performance / style / documentation) for the dashboard's coloured breakdown and preserves the
         LabVIEW-native HTML as <code>raw.html</code>.</p>
       <p>Before analyzing, the driver runs a headless <strong>Mass Compile</strong> to upgrade the project's VIs
@@ -1431,7 +1441,7 @@ docker run --rm `
         <code>by-blob/&lt;ab&gt;/&lt;blob&gt;.json</code>, deployed alongside the 1.0 HTML so any VI without JSON
         gracefully falls back to the classic view.</p>
       <p>Both 2.0 renderers <strong>auto-run on every new revision</strong> via a <code>workflow_run</code> trigger after the snapshot pipeline finishes, each behind a gate job that reads <code>config.viBrowser.positionAware</code>: the Linux workflow runs when it includes <code>linux</code>, the Windows workflow when it includes <code>windows</code> (the configurator default). Because renders are content-addressed by git blob SHA, the worklist skips every VI whose blob already has a render &mdash; <strong>unchanged VIs reuse their existing frames with no work</strong> &mdash; and queues only the new/changed blobs, so a VI a revision actually changed gets a fresh render automatically.</p>
-      <p>The browser now remembers its viewer mode and 2.0 platform choice in local storage, defaults to 2.0 when a VI has a 2.0 render (preferring the Windows render when both platforms exist), and shows dismissible coaching tip strips for the block-diagram toggle and the case/event selector arrows. Those tips are browser-local too: dismissing one with <strong>Never show this again</strong> hides it only in that browser profile, and the dismissal keys are versioned so a new coaching rollout can deliberately surface the tips once more for everyone.</p>
+      <p>The browser now remembers its viewer mode and 2.0 platform choice in local storage, defaults to 2.0 when a VI has a 2.0 render (preferring the Windows render when both platforms exist), and shows dismissible coaching tip strips for the block-diagram toggle and the case/event selector arrows. The 2.0 auto-default is now enforced on open whenever a 2.0 render exists (unless the URL explicitly pins <code>viewer</code>/<code>plat2</code>). Those tips are browser-local too: dismissing one with <strong>Never show this again</strong> hides it only in that browser profile, and the dismissal keys are versioned so a new coaching rollout can deliberately surface the tips once more for everyone.</p>
 
       <!-- 17 ──────────────────────────────────────────────────────────────── -->
       <h2 id="contracts">17. Report data contracts <a class="anchor" href="#contracts">#</a></h2>
@@ -1442,6 +1452,7 @@ docker run --rm `
         <tbody>
           <tr><td><code>masscompile/&lt;sha&gt;/summary.json</code></td><td>Mass Compile report builder</td><td>Dashboard cell (pass %, counts)</td></tr>
           <tr><td><code>vi-analyzer/&lt;sha&gt;/summary.json</code></td><td>VI Analyzer report builder</td><td>Dashboard cell</td></tr>
+          <tr><td><code>vi-analyzer/&lt;sha&gt;/linux/summary.json</code></td><td>VI Analyzer report builder (Linux)</td><td>Dashboard cell (Windows / Linux split)</td></tr>
           <tr><td><code>vidiff/&lt;segment&gt;/&lt;platform&gt;/vidiff/changes.json</code></td><td>VIDiff</td><td>Dashboard + VIDiff report</td></tr>
           <tr><td><code>unit-tests/&lt;sha&gt;/results.json</code></td><td>Unit-test report builder</td><td>Dashboard + report</td></tr>
           <tr><td><code>builds/&lt;sha&gt;/summary.json</code></td><td>Builds report builder</td><td>Dashboard cell (succeeded/failed split) + report</td></tr>
@@ -1493,6 +1504,24 @@ docker run --rm `
       <p><code>reconfigure.yml</code> backs the <strong>Configure Pipeline</strong> dialog: it rewrites
         <code>.github/labview-ci.yml</code> from a <code>workflow_dispatch</code> form and opens a reviewable pull
         request rather than committing directly.</p>
+      <h3>Release channels (stable vs. beta)</h3>
+      <p>Every catalog change bumps <code>version</code> &mdash; the <strong>beta tip</strong>. A separate optional
+        top-level <code>stableVersion</code> names the newest release the maintainer has <strong>promoted</strong> to
+        the <strong>stable</strong> channel, and each promoted release entry carries <code>"stable": true</code>.
+        Promotion never builds anything: it blesses an already-published, immutable <code>v&lt;version&gt;</code>
+        release. <code>release.yml</code> force-moves a rolling <code>stable</code> git tag to the blessed commit.</p>
+      <p>Installs and upgrades default to the <strong>stable</strong> channel: the What's New page and the header's
+        update indicator only treat a newer <em>stable</em> release as an available update, so a freshly published
+        beta never nags a client onto an unproven build. Users opt into pre-release builds per browser via a
+        &ldquo;Show pre-release updates&rdquo; toggle (<code>localStorage.lvci_update_channel = 'beta'</code>). Until
+        the first promotion, <code>stableVersion</code> is absent and everything falls back to the latest published
+        version &mdash; exactly the pre-channel behaviour.</p>
+      <p>The maintainer promotes from the <strong>Mark as stable release</strong> button on their own source repo's
+        What's New page. It dispatches <code>promote-release.yml</code> (owner-only &mdash; GitHub requires
+        <code>Actions: write</code> on the source repo), which verifies the <code>v&lt;version&gt;</code> tag exists,
+        runs the catalog/source-sync gate, edits the catalog via <code>promote-release.py</code> (set
+        <code>stableVersion</code>, flag the entry, bump the version), and commits to the default branch; the same
+        button un-promotes to roll the channel back to the previous stable.</p>
       <h3>Relocation pointer</h3>
       <p><code>.github/labview-ci/source.json</code> lets the project migrate (for example to an official NI repo)
         without breaking installs: if it names a different repo than the current one, the bootstrappers and the
@@ -1510,8 +1539,10 @@ docker run --rm `
         <li>this repo's slug as <code>source.repo</code> in a client's <code>catalog.json</code>;</li>
         <li>a <code>uses:</code> reference back to this repo in a client's workflows.</li>
       </ol>
-      <p>Every candidate is verified (public, non-fork, catalog actually points back here) before listing, and only
-        public metadata GitHub already exposes is shown. Private repositories are never indexed or listed. See the
+      <p>Every candidate is verified (public, and catalog actually points back here) before listing, and only
+        public metadata GitHub already exposes is shown. A fork is listed when it is a genuine install (a fork of
+        another project that added this stack); a fork of this framework repo itself is not, since it carries our
+        own catalog verbatim. Private repositories are never indexed or listed. See the
         <a href="faq.html#discovery">FAQ discovery entry</a> for the privacy details.</p>
 
       <!-- 20 ──────────────────────────────────────────────────────────────── -->
@@ -1562,8 +1593,6 @@ docker run --rm `
       <ul>
         <li><strong>Concurrency is per account, not per repo.</strong> GitHub's job-concurrency limit is shared
           across all your repositories, which is why the per-repo runner cap defaults conservatively.</li>
-        <li><strong>VI Analyzer is Windows-only.</strong> Linux is not offered in the configurator, Populate history,
-          or generated workflows.</li>
         <li><strong>Unit Tests &amp; Antidoc are Windows-only</strong> today (they depend on baked VIPM tooling).</li>
         <li><strong>First container pull is slow.</strong> The worker image is multi-gigabyte; GitHub-hosted runners
           re-pull every job. A self-hosted runner with a warm Docker layer cache is the cure.</li>
@@ -1696,6 +1725,7 @@ flowchart TD
           <tr><td>Mass Compile — Windows Container</td><td><span class="pill win">windows-2022</span></td><td>PR / push on VI source (<code>**.vi/.ctl/.lvproj/.lvlib/.lvclass</code>, excl. <code>.github/</code>), dispatch</td><td>Compiles every VI; skipped when only tooling under <code>.github/</code> changed.</td></tr>
           <tr><td>Mass Compile — Linux Container</td><td><span class="pill lin">ubuntu-latest</span></td><td>same as above</td><td>Linux counterpart; deploys under <code>masscompile/&lt;sha&gt;/linux/</code>.</td></tr>
           <tr><td>Run VI Analyzer — Windows Container</td><td><span class="pill win">windows-2022</span></td><td>PR / push VI source, dispatch</td><td>Full <code>.viancfg</code> suite incl. per-path rule subsets.</td></tr>
+          <tr><td>Run VI Analyzer — Linux Container</td><td><span class="pill lin">ubuntu-latest</span></td><td>same as above</td><td>Linux counterpart; deploys under <code>vi-analyzer/&lt;sha&gt;/linux/</code>.</td></tr>
           <tr><td>VIDiff Report — Windows Container</td><td><span class="pill win">windows-2022</span></td><td>PR / push <code>**.vi/.ctl</code>, dispatch</td><td>Diffs changed VIs; runs on the bare NI image (no custom worker).</td></tr>
           <tr><td>VIDiff Report — Linux Container</td><td><span class="pill lin">ubuntu-latest</span></td><td>PR / push <code>**.vi/.ctl</code>, dispatch</td><td>Linux counterpart.</td></tr>
           <tr><td>Run Unit Tests — Windows Container</td><td><span class="pill win">windows-2022</span></td><td>PR / push (VIs, <code>**.lvtest</code>), dispatch</td><td>Windows-only (depends on baked VIPM/UTF tooling).</td></tr>
