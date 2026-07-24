@@ -1147,12 +1147,20 @@ docker run --rm `
         expected), <strong>Tools &rsaquo; Debug Run</strong> on the dashboard boots the <em>same</em> worker for a
         chosen revision with a full graphical desktop you can remote into, so you can open the project in the LabVIEW
         IDE and watch it happen.</p>
-      <p>The flow is a three-step dialog: <strong>(1) choose the target</strong> — the container (Linux for now), the
-        revision, which activities to run, and a session length; <strong>(2) connect</strong> — the dashboard
-        dispatches <code>debug-session.yml</code>, waits for the session to come up, and opens the remote desktop in a
-        new browser tab; <strong>(3) hand off</strong> — you log into / activate LabVIEW interactively, then press
-        <kbd>ENTER</kbd> in the on-screen terminal to run the selected activities live, and end the session (which
-        cancels the run) when done.</p>
+      <p>The dialog is a single form over a live list. In the form you <strong>choose the target</strong> — the
+        container (Linux or Windows), the revision, which activities to run, and a session length — and click
+        <strong>Start debug session</strong>, which dispatches <code>debug-session.yml</code>. (An <strong>Open
+        source</strong> button beside it boots the <em>same</em> debug desktop but, instead of waiting to run
+        activities, launches the LabVIEW IDE with the checkout&rsquo;s project (<code>*.lvproj</code>) already open, so
+        you can just browse the source in the IDE over VNC. It sets the <code>open_source</code> input, which the
+        container script uses to open the first project it finds under the workspace.) The form stays put; each
+        session you start appears in a scrollable <strong>Existing debug sessions</strong> list beneath it, so you can
+        launch several (extra ones queue and start as earlier sessions finish). Every row shows a live progress bar and
+        status — <em>Queued</em>, <em>Booting</em> with the current step, or <em>Live</em> — plus
+        <strong>Open remote desktop</strong> and <strong>End</strong>, and the list is driven by the Actions API so it
+        works from any device (not just the browser that started the session). Once a desktop is live you open it,
+        log into / activate LabVIEW interactively, press <kbd>ENTER</kbd> in the on-screen terminal to run the selected
+        activities live, and <em>End</em> the session (which cancels the run) when done.</p>
       <p>Mechanically, the job runs the Linux worker (<code>.github/labview/debug/debug-session.sh</code>) which starts
         a virtual display (Xvfb) and window manager, launches the LabVIEW UI, and serves it as a browser
         <strong>noVNC</strong> session (<code>x11vnc</code> + <code>websockify</code>) on port 6080. The runner exposes
@@ -1160,15 +1168,22 @@ docker run --rm `
         publishes the one-time connect URL to <code>gh-pages</code> under <code>debug/&lt;run-id&gt;.json</code>; the
         dialog polls for it and auto-opens it. On the &ldquo;go&rdquo; signal the container runs
         <code>.github/labview/debug/run-debug-actions.sh</code>, which invokes the same Linux entrypoints CI uses
-        (e.g. <code>masscompile.sh</code>). The session self-tears-down after the chosen minutes, on
+        (e.g. <code>masscompile.sh</code>). The Windows container works the same way but hosts an interactive Windows
+        desktop: it runs <code>.github/labview/debug/debug-session.ps1</code>, which starts <strong>TightVNC</strong>
+        against the session&rsquo;s window station; because the Windows image ships no Python or cloudflared, the
+        <strong>noVNC/websockify</strong> bridge and the Cloudflare tunnel run on the runner host against the
+        container&rsquo;s published VNC port (5900), and the &ldquo;go&rdquo; signal runs
+        <code>run-debug-actions.ps1</code> (e.g. <code>masscompile.ps1</code>). (TightVNC in app mode is configured
+        via the registry with VNC authentication disabled &mdash; the one-time tunnel URL is the access gate &mdash;
+        because its app-mode config is separate from the MSI&rsquo;s service settings.) The session self-tears-down after the chosen minutes, on
         <em>End&nbsp;session</em>, or when the run is cancelled — deleting the published connect file.</p>
       <p><strong>No license secret is needed:</strong> LabVIEW prompts for interactive login/activation in the session,
         so you activate it yourself; the activity runners then execute in that same activated session.
         <strong>Security note:</strong> the tunnel URL and its one-time password are unguessable and short-lived, but on
         a <em>public</em> repository anyone who can see the Actions run could read the connect file while the session is
         live. Use Debug Run on private repositories for sensitive code; it is <strong>off by default</strong>,
-        dispatch-only, and never runs in normal CI. Windows debug sessions (interactive desktop in a Windows container)
-        are a future addition.</p>
+        dispatch-only, and never runs in normal CI. Both Linux and Windows containers are supported &mdash; pick the
+        platform in the dialog.</p>
 
       <!-- 15 ──────────────────────────────────────────────────────────────── -->
       <h2 id="vipm">15. VIPM dependency baking — lessons from the trenches <a class="anchor" href="#vipm">#</a></h2>
@@ -1333,7 +1348,10 @@ docker run --rm `
         <em>directory</em> / <em>Analyze&nbsp;Project</em> config handling with a directory-mode fallback) and
         deploys its report under <code>vi-analyzer/&lt;sha&gt;/linux/</code> with a <code>CI / VI Analyzer (Linux)</code>
         status, while Windows stays at <code>vi-analyzer/&lt;sha&gt;/</code>. The dashboard's VI Analyzer column shows
-        both platforms' finding counts side by side. The report builder maps each failed test to a category
+        both platforms' finding counts side by side. Inside the report itself, a segmented
+        <strong>Windows&nbsp;|&nbsp;Linux</strong> toggle under the title switches between the two platforms' reports
+        (the other platform's button is disabled with a note when VI Analyzer hasn't run there for that commit),
+        mirroring the Mass Compile report. The report builder maps each failed test to a category
         (correctness / performance / style / documentation) for the dashboard's coloured breakdown and preserves the
         LabVIEW-native HTML as <code>raw.html</code>.</p>
       <p>Before analyzing, the driver runs a headless <strong>Mass Compile</strong> to upgrade the project's VIs
@@ -1504,24 +1522,30 @@ docker run --rm `
       <p><code>reconfigure.yml</code> backs the <strong>Configure Pipeline</strong> dialog: it rewrites
         <code>.github/labview-ci.yml</code> from a <code>workflow_dispatch</code> form and opens a reviewable pull
         request rather than committing directly.</p>
-      <h3>Release channels (stable vs. beta)</h3>
-      <p>Every catalog change bumps <code>version</code> &mdash; the <strong>beta tip</strong>. A separate optional
-        top-level <code>stableVersion</code> names the newest release the maintainer has <strong>promoted</strong> to
-        the <strong>stable</strong> channel, and each promoted release entry carries <code>"stable": true</code>.
-        Promotion never builds anything: it blesses an already-published, immutable <code>v&lt;version&gt;</code>
-        release. <code>release.yml</code> force-moves a rolling <code>stable</code> git tag to the blessed commit.</p>
-      <p>Installs and upgrades default to the <strong>stable</strong> channel: the What's New page and the header's
-        update indicator only treat a newer <em>stable</em> release as an available update, so a freshly published
-        beta never nags a client onto an unproven build. Users opt into pre-release builds per browser via a
-        &ldquo;Show pre-release updates&rdquo; toggle (<code>localStorage.lvci_update_channel = 'beta'</code>). Until
-        the first promotion, <code>stableVersion</code> is absent and everything falls back to the latest published
-        version &mdash; exactly the pre-channel behaviour.</p>
-      <p>The maintainer promotes from the <strong>Mark as stable release</strong> button on their own source repo's
-        What's New page. It dispatches <code>promote-release.yml</code> (owner-only &mdash; GitHub requires
-        <code>Actions: write</code> on the source repo), which verifies the <code>v&lt;version&gt;</code> tag exists,
-        runs the catalog/source-sync gate, edits the catalog via <code>promote-release.py</code> (set
-        <code>stableVersion</code>, flag the entry, bump the version), and commits to the default branch; the same
-        button un-promotes to roll the channel back to the previous stable.</p>
+      <h3>Release channels (Dev / Beta / Stable)</h3>
+      <p>Every published build is a <strong>Dev</strong> build by default (the tooling ships many a day). The
+        maintainer can then mark a build up two tiers: <strong>Beta</strong> (a release candidate &mdash; &ldquo;might
+        be good enough&rdquo;) and <strong>Stable</strong> (a release, ready for clients). The catalog carries this as
+        two optional top-level pointers &mdash; <code>betaVersion</code> and <code>stableVersion</code> &mdash; plus a
+        <code>"beta": true</code> / <code>"stable": true</code> flag on each marked release entry. Marking never builds
+        anything: it blesses an already-published, immutable <code>v&lt;version&gt;</code> release, and
+        <code>release.yml</code> force-moves a rolling <code>beta</code> and <code>stable</code> git tag to the marked
+        commits.</p>
+      <p>The install and What's New dialogs offer a cumulative channel picker &mdash; <strong>Release only</strong>
+        (<code>stable</code>), <strong>Release + beta</strong> (<code>beta</code>), or <strong>Release + beta + dev</strong>
+        (<code>dev</code>) &mdash; stored per browser in <code>lvci_install_channel</code> /
+        <code>lvci_update_channel</code>. The header's update indicator and the What's New compare resolve the channel
+        target the same way: <code>dev</code>&nbsp;=&nbsp;latest published; <code>beta</code>&nbsp;=&nbsp;newest of
+        <code>betaVersion</code>/<code>stableVersion</code>; <code>stable</code>&nbsp;=&nbsp;<code>stableVersion</code>.
+        Everything gracefully falls back to the latest published version while a tier hasn't been marked yet. The
+        install dialog fetches the target version's own catalog so its version, capabilities, and vendored files are
+        all consistent at the tag being installed.</p>
+      <p>The maintainer marks builds from the per-release <strong>Mark as beta</strong> / <strong>Mark as stable</strong>
+        buttons on their own source repo's What's New page. They dispatch <code>promote-release.yml</code> (owner-only
+        &mdash; GitHub requires <code>Actions: write</code> on the source repo) with a <code>tier</code> input, which
+        verifies the <code>v&lt;version&gt;</code> tag exists, runs the catalog/source-sync gate, edits the catalog via
+        <code>promote-release.py --tier</code> (set the pointer, flag the entry, bump the version), and commits to the
+        default branch; the same buttons un-mark to roll a channel back to the previous build in that tier.</p>
       <h3>Relocation pointer</h3>
       <p><code>.github/labview-ci/source.json</code> lets the project migrate (for example to an official NI repo)
         without breaking installs: if it names a different repo than the current one, the bootstrappers and the

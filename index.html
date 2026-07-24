@@ -1840,7 +1840,6 @@
     var TOK_KEY = "lvci_dispatch_token";
     var WF = "debug-session.yml";
     var CAP_LABEL = { masscompile:'Mass Compile', vidiff:'VIDiff', snapshots2:'VI Browser 2.0 Snapshots', builds:'Builds' };
-    var tr = null;   // active tracker { runId, dispatchAt, timer }
     function $(id){ return document.getElementById(id); }
     function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
     function getTok(){ try{ return localStorage.getItem(TOK_KEY)||localStorage.getItem("lvci_install_token")||''; }catch(e){ return ''; } }
@@ -1852,21 +1851,6 @@
       return 'https://github.com/settings/personal-access-tokens/new?name='+encodeURIComponent('LabVIEW CI dispatch')
         +'&description='+encodeURIComponent('Queue LabVIEW CI runs for '+REPO)
         +(owner?'&target_name='+encodeURIComponent(owner):'')+'&actions=write';
-    }
-    // Persist the active session so a reload or reopening Debug Run returns to the
-    // live desktop instead of losing it (the "dialog vanished" report). Cleared on
-    // End session and on expiry.
-    var DKEY = 'lvci_debug_session';
-    function saveSession(s){ try{ localStorage.setItem(DKEY, JSON.stringify(s)); }catch(e){} }
-    function clearSession(){ try{ localStorage.removeItem(DKEY); }catch(e){} }
-    function loadSession(){ try{ var s=JSON.parse(localStorage.getItem(DKEY)||'null'); if(!s) return null; if(s.expiresAt && Date.now()>s.expiresAt){ clearSession(); return null; } return s; }catch(e){ return null; } }
-    function persist(){ if(tr) saveSession({ runId:tr.runId, dispatchAt:tr.dispatchAt, sha:tr.sha, acts:tr.acts, mins:tr.mins, expiresAt:tr.expiresAt, url:tr.url||'' }); }
-    function sessionEnded(msg){
-      if(tr&&tr.timer){ clearInterval(tr.timer); } clearLiveTimer(); tr=null; clearSession();
-      var b=$('cidash-debug-body'); if(!b) return;
-      b.innerHTML='<p style="margin:0 0 12px">'+esc(msg||'The debug session has ended.')+'</p>'
-        +'<button id="dbg-new" style="background:#1f6feb;border:1px solid #1f6feb;color:#fff;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:.9em">Start a new session</button>';
-      var nb=$('dbg-new'); if(nb){ nb.addEventListener('click', renderStep1); }
     }
     // Existing debug sessions (any in-progress debug-session run), shown below the
     // start form: reconnect (Open) or End from ANY device, with a live progress
@@ -1887,7 +1871,7 @@
       if(!runId) return;
       if(!window.confirm('End debug session run #'+runId+'? This cancels the run and tears down the container.')) return;
       fetch('https://api.github.com/repos/'+REPO+'/actions/runs/'+runId+'/cancel', { method:'POST', headers:ghHeaders() })
-        .then(function(){ if(String(runId)===String(tr&&tr.runId)){ clearSession(); } setTimeout(refreshLiveSessions, 1500); }).catch(function(){});
+        .then(function(){ setTimeout(refreshLiveSessions, 1500); }).catch(function(){});
     }
     function livePlat(r){ var m=/\((windows|linux)\)/i.exec(r.display_title||r.name||''); return m?m[1].toLowerCase():''; }
     function liveRow(r){
@@ -1951,170 +1935,91 @@
           runs.forEach(fillLiveRow);
         }).catch(function(){});
     }
-    // Reflect the run's real step in the connect view so it is never opaque.
-    function updateStageSteps(st){
-      if(!tr||!tr.runId||!st) return;
-      fetch('https://api.github.com/repos/'+REPO+'/actions/runs/'+tr.runId+'/jobs?per_page=5', { headers:ghHeaders(), cache:'no-cache' })
-        .then(function(r){ return r.ok?r.json():null; })
-        .then(function(d){ var st=$('dbg-stage'); if(!st) return; var jobs=(d&&d.jobs)||[]; var cur=''; jobs.forEach(function(j){ (j.steps||[]).forEach(function(s){ if(s.status==='in_progress'&&!cur) cur=s.name; }); }); st.innerHTML = cur ? ('Current step: <strong>'+esc(cur)+'</strong>') : 'Working&hellip;'; })
-        .catch(function(){});
-    }
-    // Activities that can run in a Linux debug container (have a linux run target).
-    function linuxCaps(){
+    // Quickly surface a just-dispatched run in the list (before the 5s poll settles).
+    function kickLive(){ refreshLiveSessions(); setTimeout(refreshLiveSessions,1500); setTimeout(refreshLiveSessions,4000); setTimeout(refreshLiveSessions,8000); }
+    // Activities that can run in a debug container for the given platform
+    // (they have a run target for that OS).
+    function platCaps(plat){
       var out=[]; ['masscompile','vidiff','snapshots2','builds'].forEach(function(c){
-        if(RT[c] && RT[c].platforms && RT[c].platforms.linux) out.push(c);
+        if(RT[c] && RT[c].platforms && RT[c].platforms[plat]) out.push(c);
       }); return out;
     }
+    function selectedPlat(){ var el=document.querySelector('input[name="dbg-plat"]:checked'); return el?el.value:'linux'; }
+    function platLabel(plat){ return plat==='windows'?'Windows':'Linux'; }
+    function renderActs(plat){
+      var host=$('dbg-acts'); if(!host) return;
+      var caps=platCaps(plat);
+      host.innerHTML = caps.length ? caps.map(function(c){ return '<label style="display:block;margin:.15em 0"><input type="checkbox" class="dbg-act" value="'+esc(c)+'"> '+esc(CAP_LABEL[c]||c)+'</label>'; }).join('')
+                                   : '<div style="color:var(--fg-muted)">No '+esc(platLabel(plat))+' activity runners are installed; you can still open an interactive session.</div>';
+    }
     function modal(){ return $('cidash-debug-modal'); }
-    function cidashDebugClose(){ if(tr&&tr.timer){ clearInterval(tr.timer); } clearLiveTimer(); var m=modal(); if(m) m.style.display='none'; document.body.style.overflow=''; }
+    function cidashDebugClose(){ clearLiveTimer(); var m=modal(); if(m) m.style.display='none'; document.body.style.overflow=''; }
     window.cidashDebugClose = cidashDebugClose;
     function debugStatus(html, kind){
       var s=$('dbg-status'); if(!s) return;
       var col = kind==='ok' ? '#3fb950' : (kind==='err' ? '#f85149' : (kind==='warn' ? '#d29922' : 'var(--fg-muted)'));
       s.style.color=col; s.innerHTML=html||'';
     }
-    // ── Step 1: choose target ──────────────────────────────────────────────
+    // ── Config form + existing-sessions list ───────────────────────────
     function renderStep1(){
-      var caps=linuxCaps();
       var revs=HIST.slice(0,200).map(function(r){ return '<option value="'+esc(r.sha)+'">'+esc(r.short||r.sha.slice(0,7))+' &mdash; '+esc((r.msg||'').slice(0,60))+'</option>'; }).join('');
-      var acts=caps.length ? caps.map(function(c){ return '<label style="display:block;margin:.15em 0"><input type="checkbox" class="dbg-act" value="'+esc(c)+'"> '+esc(CAP_LABEL[c]||c)+'</label>'; }).join('')
-                           : '<div style="color:var(--fg-muted)">No Linux activity runners are installed; you can still open an interactive session.</div>';
       var body=''
-        + '<p style="margin:0 0 12px;color:var(--fg-muted);font-size:.9em">Boot a worker container with a full LabVIEW desktop you can remote into, log in / activate LabVIEW, then run CI activities live. One session at a time.</p>'
+        + '<p style="margin:0 0 12px;color:var(--fg-muted);font-size:.9em">Boot a worker container with a full LabVIEW desktop you can remote into, log in / activate LabVIEW, then run CI activities live. Start as many as you need &mdash; each runs on the runner (independent of this browser) and shows up in the list below; extra ones queue and start as earlier sessions finish.</p>'
         + '<div style="margin:0 0 12px"><label style="font-weight:600;font-size:.85em">Container</label><br>'
         +   '<label style="margin-right:14px"><input type="radio" name="dbg-plat" value="linux" checked> Linux</label>'
-        +   '<label style="color:var(--fg-muted)"><input type="radio" name="dbg-plat" value="windows" disabled> Windows (coming soon)</label></div>'
+        +   '<label><input type="radio" name="dbg-plat" value="windows"> Windows</label></div>'
         + '<div style="margin:0 0 12px"><label style="font-weight:600;font-size:.85em" for="dbg-rev">Revision</label><br>'
         +   '<select id="dbg-rev" style="width:100%;max-width:100%;padding:6px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--fg)">'+revs+'</select></div>'
-        + '<div style="margin:0 0 12px"><label style="font-weight:600;font-size:.85em">Run these activities on the go signal</label>'+acts+'</div>'
+        + '<div style="margin:0 0 12px"><label style="font-weight:600;font-size:.85em">Run these activities on the go signal</label><div id="dbg-acts"></div></div>'
         + '<div style="margin:0 0 14px"><label style="font-weight:600;font-size:.85em" for="dbg-min">Auto-end after</label><br>'
         +   '<select id="dbg-min" style="padding:6px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--fg)">'
         +     '<option value="30">30 minutes</option><option value="45" selected>45 minutes</option><option value="60">60 minutes</option><option value="90">90 minutes</option><option value="120">120 minutes</option></select></div>'
         + (getTok()?'':'<div style="margin:0 0 12px"><label style="font-weight:600;font-size:.85em" for="dbg-tok">Dispatch token</label><br><input id="dbg-tok" type="password" placeholder="fine-grained PAT with Actions: write" style="width:100%;padding:6px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--fg)"><div style="font-size:.8em;color:var(--fg-muted);margin-top:3px"><a href="'+tokenSetupUrl()+'" target="_blank" rel="noopener">Create one &#8599;</a></div></div>')
-        + '<div style="display:flex;gap:8px;align-items:center;margin-top:6px"><button id="dbg-start" style="background:#1f6feb;border:1px solid #1f6feb;color:#fff;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:.9em">Start debug session</button><span id="dbg-status" style="font-size:.85em;color:var(--fg-muted)"></span></div>'
-        + '<div id="dbg-live" style="margin:16px 0 0;border-top:1px solid var(--border);padding-top:12px"></div>';
+        + '<div style="display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap"><button id="dbg-start" style="background:#1f6feb;border:1px solid #1f6feb;color:#fff;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:.9em">Start debug session</button><button id="dbg-src" title="Boot a debug desktop with the LabVIEW project open, so you can view the source" style="background:transparent;border:1px solid var(--border);color:var(--fg);padding:7px 14px;border-radius:6px;cursor:pointer;font-size:.9em">Open source &#8599;</button><span id="dbg-status" style="font-size:.85em;color:var(--fg-muted)"></span></div>'
+        + '<div id="dbg-live" style="margin:16px 0 0;border-top:1px solid var(--border);padding-top:12px;max-height:280px;overflow-y:auto"></div>';
       $('cidash-debug-body').innerHTML=body;
+      renderActs(selectedPlat());
+      var plats=document.querySelectorAll('input[name="dbg-plat"]');
+      for(var i=0;i<plats.length;i++){ plats[i].addEventListener('change', function(){ renderActs(selectedPlat()); }); }
       try{ if(typeof window.lvciRevPicker==='function') window.lvciRevPicker($('dbg-rev')); }catch(e){}
-      $('dbg-start').addEventListener('click', startSession);
+      $('dbg-start').addEventListener('click', function(){ startSession(false); });
+      var sb=$('dbg-src'); if(sb){ sb.addEventListener('click', function(){ startSession(true); }); }
       refreshLiveSessions();
       clearLiveTimer(); liveTimer=setInterval(refreshLiveSessions, 5000);
     }
-    function startSession(){
+    // Dispatch a debug session. openSrc=true boots the same container but opens
+    // the LabVIEW project in the IDE (view source) instead of running activities.
+    function startSession(openSrc){
       var t=$('dbg-tok'); if(t && t.value.trim()){ setTok(t.value.trim()); }
       if(!getTok()){ debugStatus('Enter a token with <strong>Actions: write</strong> to start.', 'err'); return; }
       var sha=$('dbg-rev') ? $('dbg-rev').value : '';
       if(!sha){ debugStatus('Pick a revision.', 'err'); return; }
-      var acts=[].slice.call(document.querySelectorAll('.dbg-act:checked')).map(function(b){ return b.value; });
+      var acts=openSrc ? [] : [].slice.call(document.querySelectorAll('.dbg-act:checked')).map(function(b){ return b.value; });
       var mins=$('dbg-min') ? $('dbg-min').value : '45';
-      var btn=$('dbg-start'); if(btn){ btn.disabled=true; btn.textContent='Starting...'; }
-      debugStatus('Dispatching the debug session...');
-      var dispatchAt=Date.now();
+      var plat=selectedPlat();
+      var startBtn=$('dbg-start'), srcBtn=$('dbg-src');
+      if(startBtn) startBtn.disabled=true; if(srcBtn) srcBtn.disabled=true;
+      var busy = openSrc ? srcBtn : startBtn; if(busy){ busy.textContent='Starting...'; }
+      debugStatus(openSrc ? 'Opening the source in a debug desktop...' : 'Dispatching the debug session...');
+      function reset(){ if(startBtn){ startBtn.disabled=false; startBtn.textContent='Start debug session'; } if(srcBtn){ srcBtn.disabled=false; srcBtn.innerHTML='Open source &#8599;'; } }
+      var inputs={ commit_sha:sha, platform:plat, actions:acts.join(' '), minutes:String(mins) };
+      if(openSrc){ inputs.open_source='true'; }
       fetch('https://api.github.com/repos/'+REPO+'/actions/workflows/'+encodeURIComponent(WF)+'/dispatches', {
         method:'POST', headers:Object.assign({'Content-Type':'application/json'}, ghHeaders()),
-        body:JSON.stringify({ ref:BRANCH, inputs:{ commit_sha:sha, platform:'linux', actions:acts.join(' '), minutes:String(mins) } })
+        body:JSON.stringify({ ref:BRANCH, inputs:inputs })
       }).then(function(r){
-        if(btn){ btn.disabled=false; btn.textContent='Start debug session'; }
-        if(r.status===204){ renderStep2(dispatchAt, sha, acts, mins); return; }
+        reset();
+        if(r.status===204){ debugStatus(openSrc ? 'Opening source &mdash; the debug desktop will appear below with the LabVIEW project open.' : 'Session dispatched &mdash; it will appear below as it boots.', 'ok'); kickLive(); return; }
         if(r.status===401){ try{ localStorage.removeItem(TOK_KEY); }catch(e){} debugStatus('Token rejected (401). Paste a valid token above.', 'err'); renderStep1(); return; }
         if(r.status===403){ debugStatus('Dispatch forbidden (403). The token needs <strong>Actions: write</strong> for <code>'+esc(REPO)+'</code>.', 'err'); return; }
         if(r.status===404){ debugStatus('Not found (404). <code>'+esc(WF)+'</code> is not installed, or the token cannot see this repo.', 'err'); return; }
         debugStatus('Dispatch failed (HTTP '+r.status+').', 'err');
-      }).catch(function(e){ if(btn){ btn.disabled=false; btn.textContent='Start debug session'; } debugStatus('Network error: '+esc(String(e&&e.message||e)), 'err'); });
-    }
-    // ── Step 2: connect ────────────────────────────────────────────────────
-    function renderStep2(dispatchAt, sha, acts, mins, savedRunId){
-      clearLiveTimer();
-      $('cidash-debug-body').innerHTML=''
-        + '<p style="margin:0 0 10px"><strong>Bringing up the debug desktop&hellip;</strong></p>'
-        + '<ol id="dbg-steps" style="margin:0 0 12px 1.1em;padding:0;color:var(--fg-muted);font-size:.9em;line-height:1.7">'
-        +   '<li id="dbg-s-run">Waiting for the runner to pick up the job&hellip;</li>'
-        +   '<li id="dbg-s-tunnel">Booting the container + LabVIEW, opening the tunnel (this can take a few minutes)&hellip;</li>'
-        + '</ol>'
-        + '<div id="dbg-stage" style="font-size:.85em;color:var(--fg-muted);margin:0 0 8px">Booting&hellip;</div>'
-        + '<div id="dbg-open" style="display:none;margin:10px 0"><a id="dbg-open-link" href="#" target="_blank" rel="noopener" style="display:inline-block;background:#2ea043;border:1px solid #2ea043;color:#fff;padding:8px 18px;border-radius:6px;text-decoration:none;font-size:.92em">Open remote desktop &#8599;</a><div style="font-size:.8em;color:var(--fg-muted);margin-top:5px">If a new tab did not open, click the button (pop-up blockers stop automatic tabs).</div></div>'
-        + '<p style="font-size:.8em;color:var(--fg-muted);margin:8px 0 0">You can close this dialog and reopen Debug Run &mdash; the session keeps booting and you will return here.</p>'
-        + '<div id="dbg-status" style="font-size:.85em;color:var(--fg-muted)"></div>';
-      var expiresAt = dispatchAt + ((parseInt(mins,10)||45)+3)*60000;
-      tr = { runId:savedRunId||null, dispatchAt:dispatchAt, sha:sha, acts:acts, mins:mins, expiresAt:expiresAt, url:'', opened:false, timer:null };
-      persist();
-      if(savedRunId){ var s0=$('dbg-s-run'); if(s0){ s0.innerHTML='Runner picked up the job (<a href="https://github.com/'+esc(REPO)+'/actions/runs/'+savedRunId+'" target="_blank" rel="noopener">run #'+savedRunId+' &#8599;</a>).'; } }
-      pollConnect();
-      tr.timer=setInterval(pollConnect, 5000);
-    }
-    function pollConnect(){
-      if(!tr) return;
-      if(tr.expiresAt && Date.now()>tr.expiresAt){ sessionEnded('The session time elapsed.'); return; }
-      if(!tr.runId){
-        fetch('https://api.github.com/repos/'+REPO+'/actions/workflows/'+encodeURIComponent(WF)+'/runs?event=workflow_dispatch&per_page=10', { headers:ghHeaders(), cache:'no-cache' })
-          .then(function(r){ return r.ok?r.json():null; })
-          .then(function(d){
-            var runs=(d&&d.workflow_runs)||[];
-            var m=runs.find(function(x){ return new Date(x.created_at).getTime() >= tr.dispatchAt-90000; });
-            if(m && tr){ tr.runId=m.id; persist(); var s=$('dbg-s-run'); if(s){ s.innerHTML='Runner picked up the job (<a href="'+esc(m.html_url)+'" target="_blank" rel="noopener">run #'+m.id+' &#8599;</a>).'; } }
-          }).catch(function(){});
-        return;
-      }
-      // Watch the run's real state so this is never opaque: end a dead session,
-      // show a queued state when blocked behind another session, else the live step.
-      fetch('https://api.github.com/repos/'+REPO+'/actions/runs/'+tr.runId, { headers:ghHeaders(), cache:'no-cache' })
-        .then(function(r){ return r.ok?r.json():null; })
-        .then(function(run){
-          if(!tr || tr.opened || !run) return;
-          if(run.status==='completed'){ sessionEnded('The debug session ended (run '+esc(run.conclusion||'completed')+').'); return; }
-          var st=$('dbg-stage'); if(!st) return;
-          if(run.status==='queued'||run.status==='pending'){ st.innerHTML='Queued &mdash; waiting for a runner or another debug session to finish. You can end a live session from step 1.'; }
-          else { updateStageSteps(st); }
-        })
-        .catch(function(){});
-      var url=pagesBase()+'debug/'+tr.runId+'.json?_='+Date.now();
-      fetch(url, { cache:'no-cache' }).then(function(r){ return r.ok?r.json():null; })
-        .then(function(j){ if(j&&j.url) connected(j.url); })
-        .catch(function(){});
-    }
-    function connected(url){
-      if(!tr || tr.opened) return; tr.opened=true; tr.url=url; persist();
-      if(tr.timer){ clearInterval(tr.timer); }
-      var s=$('dbg-s-tunnel'); if(s){ s.innerHTML='Desktop is live.'; }
-      var open=$('dbg-open'); if(open){ open.style.display='block'; }
-      var link=$('dbg-open-link'); if(link){ link.href=url; }
-      try{ window.open(url, '_blank', 'noopener'); }catch(e){}
-      renderStep3(url);
-    }
-    // ── Step 3: hand off ───────────────────────────────────────────────────
-    function renderStep3(url){
-      clearLiveTimer();
-      var acts=(tr&&tr.acts&&tr.acts.length)?tr.acts.map(function(c){ return CAP_LABEL[c]||c; }).join(', '):'(none - interactive session)';
-      var runId=tr?tr.runId:null;
-      var body=''
-        + '<p style="margin:0 0 8px"><strong>Your debug desktop is ready.</strong></p>'
-        + '<div style="margin:0 0 12px"><a href="'+esc(url)+'" target="_blank" rel="noopener" style="display:inline-block;background:#2ea043;border:1px solid #2ea043;color:#fff;padding:8px 18px;border-radius:6px;text-decoration:none;font-size:.92em">Open remote desktop &#8599;</a></div>'
-        + '<ol style="margin:0 0 12px 1.1em;padding:0;font-size:.9em;line-height:1.7">'
-        +   '<li>In the remote desktop, log into / activate LabVIEW.</li>'
-        +   '<li>When it is ready, click the on-screen terminal and press <strong>ENTER</strong> to run: <strong>'+esc(acts)+'</strong>.</li>'
-        +   '<li>Watch the activities run live, then end the session below.</li>'
-        + '</ol>'
-        + '<div style="display:flex;gap:8px;align-items:center"><button id="dbg-end" style="background:transparent;border:1px solid #f85149;color:#f85149;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:.9em">End session</button><span id="dbg-status" style="font-size:.85em;color:var(--fg-muted)"></span></div>';
-      $('cidash-debug-body').innerHTML=body;
-      var eb=$('dbg-end'); if(eb){ eb.addEventListener('click', function(){ endSession(runId); }); }
-    }
-    function endSession(runId){
-      clearSession(); if(tr&&tr.timer){ clearInterval(tr.timer); }
-      if(!runId){ cidashDebugClose(); return; }
-      var eb=$('dbg-end'); if(eb){ eb.disabled=true; eb.textContent='Ending...'; }
-      debugStatus('Ending the session...');
-      fetch('https://api.github.com/repos/'+REPO+'/actions/runs/'+runId+'/cancel', { method:'POST', headers:ghHeaders() })
-        .then(function(r){ debugStatus(r.ok?'Session ending. You can close this dialog.':'Could not cancel (HTTP '+r.status+'); it will still auto-end.', r.ok?'ok':'warn'); })
-        .catch(function(e){ debugStatus('Network error ending session: '+esc(String(e&&e.message||e)), 'warn'); });
+      }).catch(function(e){ reset(); debugStatus('Network error: '+esc(String(e&&e.message||e)), 'err'); });
     }
     // ── Open ───────────────────────────────────────────────────────────────
     function debugOpen(){
       var m=modal(); if(!m) return;
       m.style.display='block'; document.body.style.overflow='hidden';
-      // Resume an in-flight session so a reload / reopen returns to the live
-      // desktop (or the still-booting connect view) instead of a blank step 1.
-      var s=loadSession();
-      if(s && s.url){ tr={ runId:s.runId, dispatchAt:s.dispatchAt, sha:s.sha, acts:s.acts, mins:s.mins, expiresAt:s.expiresAt, url:s.url, opened:true, timer:null }; renderStep3(s.url); return; }
-      if(s){ renderStep2(s.dispatchAt, s.sha, s.acts, s.mins, s.runId||null); return; }
       renderStep1();
     }
     window.lvciDebugRun = debugOpen;
@@ -2135,7 +2040,7 @@
   </script>
   <main class="lvci-main">
   <h1>CI Dashboard — tsc-pop-up</h1>
-  <div class="sub">Last updated: 2026-07-24 14:00 UTC &nbsp;|&nbsp; Auto-refreshes every 15 min</div>
+  <div class="sub">Last updated: 2026-07-24 14:12 UTC &nbsp;|&nbsp; Auto-refreshes every 15 min</div>
   <div class="nav">
     <a href="https://github.com/danielcoons/tsc-pop-up">GitHub</a>
     <a href="https://github.com/danielcoons/tsc-pop-up/actions">Actions</a>
@@ -2180,6 +2085,25 @@
       </tr>
     </thead>
     <tbody>
+    <tr data-project="false" data-deponly="false">
+      <td class="cidash-rev">
+        <div class="cidash-rev-wrap">
+          <span class="cidash-avatar" style="background:hsl(150,42%,45%)" title="github-actions[bot]" aria-hidden="true">G</span>
+          <div class="cidash-rev-body">
+            <div class="cidash-rev-line1"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=06167f871f90e11b503184f560f1fa7c2986abfe" class="cidash-rev-msg" title="ci: adopt LabVIEW CI tooling v4.11.10 (full update)">ci: adopt LabVIEW CI tooling v4.11.10 (full update)</a></div>
+            <div class="cidash-rev-meta"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=06167f871f90e11b503184f560f1fa7c2986abfe" class="cidash-rev-sha" title="Browse this revision's VIs in the VI Browser">06167f8</a><span class="cidash-rev-dot">&middot;</span>github-actions[bot]<span class="cidash-rev-dot">&middot;</span>2026-07-24</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+      <td style="text-align:center;color:var(--fg-muted);font-size:.75em">—</td>
+    </tr>
+
     <tr data-project="false" data-deponly="false">
       <td class="cidash-rev">
         <div class="cidash-rev-wrap">
@@ -2324,7 +2248,7 @@
         </div>
       </td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="masscompile" data-sha="9322a8fb691dcbaec8c20e939c6b10fe9666578c" data-parent="586ddaa1ea322e43c43cd3ce92b5a972189cba2d" data-short="9322a8f" data-ts="2026-07-22T19:35:07Z"><span class="cidash-chip cc-split" title="Windows 100% (130/130) · Linux 100% (130/130) project VIs compiled; green >= 95%, yellow >= 80%, red < 80% (a compile failure is solid red)"><a href="https://danielcoons.github.io/tsc-pop-up/report/index.html?type=masscompile-report&sha=9322a8fb691dcbaec8c20e939c6b10fe9666578c&short=9322a8f&src=..%2Fmasscompile%2F9322a8fb691dcbaec8c20e939c6b10fe9666578c%2Findex.html&title=Mass%20Compile%20%C2%B7%209322a8f" style="color:inherit"><span class="cidash-vseg cc-pass" data-tip="Windows">100%</span><span class="cidash-vseg-sep">/</span><span class="cidash-vseg cc-pass" data-tip="Linux">100%</span></a></span></td>
-      <td style="text-align:center" class="cidash-cap-cell" data-cap="vi-analyzer" data-sha="9322a8fb691dcbaec8c20e939c6b10fe9666578c" data-parent="586ddaa1ea322e43c43cd3ce92b5a972189cba2d" data-short="9322a8f" data-ts="2026-07-22T19:35:30Z"><span class="cidash-chip cc-pass" title="Windows: 0 findings across 0 VI(s), 1 analyzed"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L1.22 9.28a.75.75 0 1 1 1.06-1.06L6 11.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg><a href="https://danielcoons.github.io/tsc-pop-up/report/index.html?type=vi-analyzer-report&sha=9322a8fb691dcbaec8c20e939c6b10fe9666578c&short=9322a8f&platform=windows&src=..%2Fvi-analyzer%2F9322a8fb691dcbaec8c20e939c6b10fe9666578c%2Findex.html&title=VI%20Analyzer%20%C2%B7%209322a8f" style="color:inherit">0</a></span></td>
+      <td style="text-align:center" class="cidash-cap-cell" data-cap="vi-analyzer" data-sha="9322a8fb691dcbaec8c20e939c6b10fe9666578c" data-parent="586ddaa1ea322e43c43cd3ce92b5a972189cba2d" data-short="9322a8f" data-ts="2026-07-22T19:35:30Z"><span class="cidash-chip cc-pass"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L1.22 9.28a.75.75 0 1 1 1.06-1.06L6 11.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg><a href="https://danielcoons.github.io/tsc-pop-up/report/index.html?type=vi-analyzer-report&sha=9322a8fb691dcbaec8c20e939c6b10fe9666578c&short=9322a8f&src=..%2Fvi-analyzer%2F9322a8fb691dcbaec8c20e939c6b10fe9666578c%2Findex.html&title=VI%20Analyzer%20%C2%B7%209322a8f" style="color:inherit">analyze</a></span></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="vidiff" data-sha="9322a8fb691dcbaec8c20e939c6b10fe9666578c" data-parent="586ddaa1ea322e43c43cd3ce92b5a972189cba2d" data-short="9322a8f" data-ts="2026-07-22T19:34:01Z"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=9322a8fb691dcbaec8c20e939c6b10fe9666578c&changed=1" class="cidash-diffstat" title="VIs changed in this revision: 3 different · 0 new · 0 deleted — click to view the diffs"><span class="ds-mod">3</span><span class="ds-sep">/</span><span class="ds-add ds-zero">0</span><span class="ds-sep">/</span><span class="ds-del ds-zero">0</span></a></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="snapshots" data-sha="9322a8fb691dcbaec8c20e939c6b10fe9666578c" data-parent="586ddaa1ea322e43c43cd3ce92b5a972189cba2d" data-short="9322a8f" data-ts="2026-07-22T19:43:22Z" data-done="true"><span class="cidash-chip cc-info" title="Snapshots rendered for all 140 VIs in this revision"><a href="https://danielcoons.github.io/tsc-pop-up/vi-snapshots/index.html?sha=9322a8fb691dcbaec8c20e939c6b10fe9666578c" style="color:inherit">140</a></span></td>
       <td style="text-align:center" class="cidash-cap-cell" data-cap="unit-tests" data-sha="9322a8fb691dcbaec8c20e939c6b10fe9666578c" data-parent="586ddaa1ea322e43c43cd3ce92b5a972189cba2d" data-short="9322a8f" data-ts="2026-07-22T19:33:01Z"><span class="cidash-chip cc-pass" title="No unit tests found; 0% failed."><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L1.22 9.28a.75.75 0 1 1 1.06-1.06L6 11.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg><a href="https://danielcoons.github.io/tsc-pop-up/report/index.html?type=unit-tests-report&sha=9322a8fb691dcbaec8c20e939c6b10fe9666578c&short=9322a8f&src=..%2Funit-tests%2F9322a8fb691dcbaec8c20e939c6b10fe9666578c%2Findex.html&title=Unit%20Tests%20%C2%B7%209322a8f" style="color:inherit">0% failed</a></span></td>
