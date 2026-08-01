@@ -1,7 +1,7 @@
 {
-  "version": "linux-99f1e44e3d51",
+  "version": "linux-faa4596c3848",
   "platform": "linux",
-  "manifest_url": "https://danielcoons.github.io/tsc-pop-up/workers/linux/linux-99f1e44e3d51/manifest.html",
-  "build_date": "2026-07-13T20:07:47Z",
-  "git_sha": "c072c4e49b5729ab34a4716061178f905462e8a9"
+  "manifest_url": "https://danielcoons.github.io/tsc-pop-up/workers/linux/linux-faa4596c3848/manifest.html",
+  "build_date": "2026-08-01T06:22:18Z",
+  "git_sha": "c5486aaeb3ce681c1246a422dbedb5a257122beb"
 }
