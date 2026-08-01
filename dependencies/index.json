@@ -1060,7 +1060,9 @@
         "Installed",
         "jki_labs_tool_vi_tester-3.0.2.294-1",
         "jki_lib_caraya-1.4.4.148",
+        "jki_lib_state_machine",
         "jki_lib_state_machine-2024.0.3.23",
+        "jki_lib_state_machine-v2024.0.3.23",
         "jki_rsc_toolkits_palette-1.1-1",
         "labview_open_source_lib_epoch_datetime-1.3.0.8",
         "labview_open_source_project_lib_labview_open_source_palette-1.0.2.7",
@@ -1090,9 +1092,6 @@
         "wovalab_lib_antidoc_add_on_labview_toolkit_documentation",
         "wovalab_lib_antidoc_add_on_labview_toolkit_documentation-3.0.0.77",
         "wovalab_lib_antidoc_add_on_labview_toolkit_documentation-v3.0.0.77",
-        "wovalab_lib_antidoc_add_on_teststand",
-        "wovalab_lib_antidoc_add_on_teststand-3.1.0.202",
-        "wovalab_lib_antidoc_add_on_teststand-v3.1.0.202",
         "wovalab_lib_antidoc_cli",
         "wovalab_lib_antidoc_cli-3.4.0.126",
         "wovalab_lib_antidoc_cli-v3.4.0.126",
@@ -3449,7 +3448,7 @@
         }
       ],
       "labview_version": "2026",
-      "version": "win-fbea0694df47"
+      "version": "win-c4d89e2ccf26"
     },
     {
       "key": "linux",
