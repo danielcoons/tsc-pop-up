@@ -1,7 +1,7 @@
 {
-  "version": "linux-faa4596c3848",
+  "version": "linux-4ce478ba9bb6",
   "platform": "linux",
-  "manifest_url": "https://danielcoons.github.io/tsc-pop-up/workers/linux/linux-faa4596c3848/manifest.html",
-  "build_date": "2026-08-01T06:22:18Z",
+  "manifest_url": "https://danielcoons.github.io/tsc-pop-up/workers/linux/linux-4ce478ba9bb6/manifest.html",
+  "build_date": "2026-09-01T09:03:05Z",
   "git_sha": "c5486aaeb3ce681c1246a422dbedb5a257122beb"
 }
