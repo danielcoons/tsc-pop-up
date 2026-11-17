@@ -1,6 +1,6 @@
 ---
 title: Extend the library
-order: 5
+order: 6
 ---
 
 # Extend the library

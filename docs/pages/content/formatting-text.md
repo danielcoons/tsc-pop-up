@@ -1,13 +1,13 @@
 ---
 title: Formatting text
-order: 3
+order: 4
 ---
 
 # Formatting text
 
-The message text can be formatted with HTML-style tags.
+The message text in a pop-up can be formatted with HTML-style tags.
 
-```
+```html
 <b>bold</b>
 <i>italic</i>
 <strong>strong</strong>
