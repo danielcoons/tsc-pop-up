@@ -3,7 +3,7 @@ name: Publish docs to site
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main]
     paths: ['docs/pages/**', '.github/workflows/publish-docs.yml']
   workflow_dispatch:
 
