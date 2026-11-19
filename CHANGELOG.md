@@ -7,9 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 - Future features to include
 
+## [4.2.0] - 11.19.2026
+
+### Changed
+
+- Updated the folder structure for the overall Pop-Up Project
+- Created a documentation workflow to automate the official web documentation when changed
+
 ## [4.1.0] - 07.22.2026
 ### Added
-- Added an input for the `plain` type pop-ups that addresses [#10] (https://github.com/danielcoons/tsc-pop-up/issues/10) - material theme rules say that the buttons on these dialogs should be transparent, but sometimes it isn't obvious, so the launch VIs all have an input to set that to false to use the colors from the theme instead
+- Added an input for the `plain` type pop-ups that addresses [#10](https://github.com/danielcoons/tsc-pop-up/issues/10) - material theme rules say that the buttons on these dialogs should be transparent, but sometimes it isn't obvious, so the launch VIs all have an input to set that to false to use the colors from the theme instead
 
 ### Changed
 - Replaced the function in the palettes for flattening an image with the funcion in `{LabVIEW}\vi.lib\picture\PNG` folder `Draw Flattened Blended Pixmap.vi` which includes the **alpha layer** of the image and gives a much cleaner result for rendering the PNG into the 2d picture control
