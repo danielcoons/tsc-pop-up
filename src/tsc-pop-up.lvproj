@@ -22,39 +22,6 @@
 		<Property Name="server.vi.callsEnabled" Type="Bool">true</Property>
 		<Property Name="server.vi.propertiesEnabled" Type="Bool">true</Property>
 		<Property Name="specify.custom.address" Type="Bool">false</Property>
-		<Item Name="Test" Type="Folder">
-			<Item Name="Dialog Tester - back to back.vi" Type="VI" URL="../Test/Dialog Tester - back to back.vi"/>
-			<Item Name="Dialog Tester - Formatting.vi" Type="VI" URL="../Test/Dialog Tester - Formatting.vi"/>
-			<Item Name="Dialog Tester - Format String.vi" Type="VI" URL="../Test/Dialog Tester - Format String.vi"/>
-			<Item Name="Dialog Tester - Error Prompt.vi" Type="VI" URL="../Test/Dialog Tester - Error Prompt.vi"/>
-			<Item Name="Dialog Tester - Outputs.vi" Type="VI" URL="../Test/Dialog Tester - Outputs.vi"/>
-			<Item Name="Dialog Tester - Preempt.vi" Type="VI" URL="../Test/Dialog Tester - Preempt.vi"/>
-			<Item Name="Dialog Tester - Plain PopUp.vi" Type="VI" URL="../Test/Dialog Tester - Plain PopUp.vi"/>
-			<Item Name="Dialog Tester.vi" Type="VI" URL="../Test/Dialog Tester.vi"/>
-			<Item Name="message.ini" Type="Document" URL="../Test/message.ini"/>
-		</Item>
-		<Item Name="assets" Type="Folder">
-			<Item Name="images" Type="Folder">
-				<Item Name="dbl-input.png" Type="Document" URL="../assets/images/dbl-input.png"/>
-				<Item Name="i32-input.png" Type="Document" URL="../assets/images/i32-input.png"/>
-				<Item Name="one-button.png" Type="Document" URL="../assets/images/one-button.png"/>
-				<Item Name="str-input.png" Type="Document" URL="../assets/images/str-input.png"/>
-				<Item Name="Theme Definer.png" Type="Document" URL="../assets/images/Theme Definer.png"/>
-				<Item Name="timeout-one.png" Type="Document" URL="../assets/images/timeout-one.png"/>
-				<Item Name="timeout-two.png" Type="Document" URL="../assets/images/timeout-two.png"/>
-				<Item Name="timeout.png" Type="Document" URL="../assets/images/timeout.png"/>
-				<Item Name="two-button.png" Type="Document" URL="../assets/images/two-button.png"/>
-				<Item Name="well-done.png" Type="Document" URL="../assets/images/well-done.png"/>
-			</Item>
-			<Item Name="style" Type="Folder">
-				<Item Name="halloween.style" Type="Document" URL="../assets/style/halloween.style"/>
-				<Item Name="tsc-dark-theme.style" Type="Document" URL="../assets/style/tsc-dark-theme.style"/>
-				<Item Name="tsc-default-theme.style" Type="Document" URL="../assets/style/tsc-default-theme.style"/>
-			</Item>
-		</Item>
-		<Item Name="Example" Type="Folder">
-			<Item Name="main--pop up example.vi" Type="VI" URL="../Example/main--pop up example.vi"/>
-		</Item>
 		<Item Name="Pop-Up.lvlib" Type="Library" URL="../Pop-Up.lvlib"/>
 		<Item Name="Theme.lvclass" Type="LVClass" URL="../Theme/Theme.lvclass"/>
 		<Item Name="Theme Definer UI.vi" Type="VI" URL="../Theme Definer UI.vi"/>
@@ -66,7 +33,6 @@
 				<Item Name="Clear Errors.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Clear Errors.vi"/>
 				<Item Name="Create Mask By Alpha.vi" Type="VI" URL="/&lt;vilib&gt;/picture/picture.llb/Create Mask By Alpha.vi"/>
 				<Item Name="Directory of Top Level VI.vi" Type="VI" URL="/&lt;vilib&gt;/picture/jpeg.llb/Directory of Top Level VI.vi"/>
-				<Item Name="Error Cluster From Error Code.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Error Cluster From Error Code.vi"/>
 				<Item Name="imagedata.ctl" Type="VI" URL="/&lt;vilib&gt;/picture/picture.llb/imagedata.ctl"/>
 				<Item Name="LVBoundsTypeDef.ctl" Type="VI" URL="/&lt;vilib&gt;/Utility/miscctls.llb/LVBoundsTypeDef.ctl"/>
 				<Item Name="LVPointTypeDef.ctl" Type="VI" URL="/&lt;vilib&gt;/Utility/miscctls.llb/LVPointTypeDef.ctl"/>
@@ -75,11 +41,6 @@
 				<Item Name="RGB to Color.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/colorconv.llb/RGB to Color.vi"/>
 				<Item Name="Trim Whitespace.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Trim Whitespace.vi"/>
 				<Item Name="whitespace.ctl" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/whitespace.ctl"/>
-				<Item Name="NI_LVConfig.lvlib" Type="Library" URL="/&lt;vilib&gt;/Utility/config.llb/NI_LVConfig.lvlib"/>
-				<Item Name="Check if File or Folder Exists.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/libraryn.llb/Check if File or Folder Exists.vi"/>
-				<Item Name="NI_FileType.lvlib" Type="Library" URL="/&lt;vilib&gt;/Utility/lvfile.llb/NI_FileType.lvlib"/>
-				<Item Name="NI_PackedLibraryUtility.lvlib" Type="Library" URL="/&lt;vilib&gt;/Utility/LVLibp/NI_PackedLibraryUtility.lvlib"/>
-				<Item Name="8.6CompatibleGlobalVar.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/config.llb/8.6CompatibleGlobalVar.vi"/>
 				<Item Name="Set Pen State.vi" Type="VI" URL="/&lt;vilib&gt;/picture/picture.llb/Set Pen State.vi"/>
 				<Item Name="Draw Rectangle.vi" Type="VI" URL="/&lt;vilib&gt;/picture/picture.llb/Draw Rectangle.vi"/>
 				<Item Name="LVSelectionTypeDef.ctl" Type="VI" URL="/&lt;vilib&gt;/Utility/miscctls.llb/LVSelectionTypeDef.ctl"/>
